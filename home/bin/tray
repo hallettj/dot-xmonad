@@ -1,0 +1,14 @@
+#!/bin/sh
+# Script to launch trayer in the correct position next to xmobar.
+# Author: Vic Fryzel
+# http://github.com/vicfryzel/xmonad-config
+#
+# customized by Jesse Hallett
+# http://github.com/hallettj/config_files
+
+# This is setup to display on 1920x1080 monitors.  Adjust margin as
+# necessary for other resolutions/setups.
+
+stalonetray -i 12 --window-type normal --geometry 7x1+1808 \
+    --window-strut none --background "#002b36" --icon-gravity NE \
+    --kludges force_icons_size

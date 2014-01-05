@@ -1,0 +1,15 @@
+#!/bin/bash
+
+change=$1
+cmd=${0##*/}
+
+if [ -z $change ] ; then
+  echo "Usage: $cmd VOLUME"
+  echo "Examples:"
+  echo "    $cmd 10%+"
+  echo "    $cmd 10%-"
+  echo "    $cmd 56%"
+  exit 1
+fi
+
+amixer -D pulse sset Master $change | awk '/Front Left:/ {print $5}' | tr -dc "0-9"

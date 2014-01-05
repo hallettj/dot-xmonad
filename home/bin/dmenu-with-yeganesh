@@ -1,0 +1,9 @@
+#!/bin/sh
+# Script to launch dmenu with colors matching Solarized theme
+# Author: Vic Fryzel
+# http://github.com/vicfryzel/xmonad-config
+#
+# Customized by Jesse Hallett
+# http://github.com/hallettj/config_files
+
+dmenu_path | yeganesh -- -nb '#002b36' -nf '#839496' -sb '#586e75' -sf '#002b36'

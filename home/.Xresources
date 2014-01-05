@@ -1,0 +1,4 @@
+#include ".config/Xresources/solarized-dark"
+#include ".config/Xresources/urxvt"
+#include ".config/Xresources/xscreensaver"
+#include ".config/Xresources/local"

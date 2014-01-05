@@ -1,0 +1,6 @@
+!
+! Make Caps_Lock an add'l Control_L
+!
+remove Lock = Caps_Lock
+keysym Caps_Lock = Control_L
+add Control = Control_L
