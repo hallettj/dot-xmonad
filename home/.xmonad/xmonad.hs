@@ -97,7 +97,7 @@ myScratchPads = [ NS "pandora"      spawnPandora     findPandora     (rightPanel
     findRdio = resource =? "www.rdio.com"
 
     spawnGoogleMusic = chromeApp "https://play.google.com/music"
-    findGoogleMusic = className =? "play.google.com__music"
+    findGoogleMusic = resource =? "play.google.com__music"
 
     spawnPidgin = "pidgin"
     findPidgin  = role =? "buddy_list"
