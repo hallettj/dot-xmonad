@@ -223,7 +223,11 @@ myKeys =
   , ("M-, r", namedScratchpadAction myScratchPads "rdio")
   , ("M-, m", namedScratchpadAction myScratchPads "google music")
   , ("M-, b", namedScratchpadAction myScratchPads "pidgin")
-  , ("M-, ,", sendMessage (IncMasterN (-1))) ]
+  , ("M-, ,", sendMessage (IncMasterN (-1)))
+
+  -- Signals offlineimap to check for new mail immediately.
+  , ("M-, g", spawn "killall -s SIGUSR1 offlineimap")
+  ]
 
 vicfryzelKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   ----------------------------------------------------------------------
