@@ -7,7 +7,7 @@
 
 -- This is setup for 1920x1080 monitors
 Config {
-    font = "xft:monospace:size=8:antialias=true"
+    font = "xft:monospace:size=9:antialias=true"
     bgColor = "#002b36",
     fgColor = "#839496",
     position = Static { xpos = 0, ypos = 0, width = 1808, height = 16 },
@@ -18,8 +18,8 @@ Config {
                     , "-n", "#859900"
                     , "-l", "#dc322f"
                     , "--"
-                    , "-O", "on"
-                    , "-i", "on"
+                    , "-O", "charging"
+                    , "-i", "connected"
                     , "-o", "off"
                     ] 60,
         Run Date "%a %b %_d %l:%M" "date" 10,
