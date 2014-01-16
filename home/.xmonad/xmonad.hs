@@ -28,7 +28,8 @@ import XMonad.Layout.ThreeColumns
 import XMonad.Util.Dzen (addArgs, center, dzenConfig, font, onCurr)
 import XMonad.Util.Run (runProcessWithInput, spawnPipe)
 import XMonad.Util.EZConfig (mkKeymap)
-import XMonad.Util.NamedScratchpad ( NamedScratchpad(NS)
+import XMonad.Util.NamedScratchpad ( NamedScratchpad(..)
+                                   , NamedScratchpads
                                    , customFloating
                                    , namedScratchpadAction
                                    , namedScratchpadFilterOutWorkspacePP
@@ -38,9 +39,10 @@ import qualified XMonad.StackSet as W
 import Data.Char (toLower)
 import Data.List (intercalate)
 import qualified Data.Map        as M
+import Data.Maybe (catMaybes, listToMaybe)
 import Data.Monoid (All (All), mappend)
 import Control.Applicative ((<$>))
-import Control.Monad ((>=>), when)
+import Control.Monad ((>=>), filterM, mapM_, sequence, when, void)
 
 
 ------------------------------------------------------------------------
@@ -84,9 +86,9 @@ myManageHook = composeAll
     , isFullscreen --> (doF W.focusDown <+> doFullFloat)]
     <+> namedScratchpadManageHook myScratchPads
 
-myScratchPads = [ NS "pandora"      spawnPandora     findPandora     (rightPanel 0.50)
-                , NS "rdio"         spawnRdio        findRdio        (rightPanel 0.67)
-                , NS "google music" spawnGoogleMusic findGoogleMusic (rightPanel 0.67)
+myScratchPads = [ NS "pandora"      spawnPandora     findPandora     (leftPanel  0.50)
+                , NS "rdio"         spawnRdio        findRdio        (leftPanel  0.67)
+                , NS "google music" spawnGoogleMusic findGoogleMusic (leftPanel  0.67)
                 , NS "pidgin"       spawnPidgin      findPidgin      (rightPanel 0.25)
                 ]
   where
@@ -110,6 +112,12 @@ myScratchPads = [ NS "pandora"      spawnPandora     findPandora     (rightPanel
         h = 1
         t = 1 - h
         l = 1 - w
+
+    leftPanel w = customFloating $ W.RationalRect l t w h
+      where
+        h = 1
+        t = 1 - h
+        l = 0
 
     role = stringProperty "WM_WINDOW_ROLE"
 
@@ -260,7 +268,7 @@ vicfryzelKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
   -- Mute volume.
   , ((0, 0x1008ff12),
-     toggleMute >> return ())
+     void toggleMute)
 
   -- Decrease volume.
   , ((0, 0x1008ff11),
@@ -272,15 +280,15 @@ vicfryzelKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
   -- Audio previous.
   , ((0, 0x1008FF16),
-     spawn "")
+     prevTrack)
 
   -- Play/pause.
   , ((0, 0x1008FF14),
-     spawn "")
+     playPause)
 
   -- Audio next.
   , ((0, 0x1008FF17),
-     spawn "")
+     nextTrack)
 
   -- Eject CD tray.
   , ((0, 0x1008FF2C),
@@ -366,7 +374,7 @@ vicfryzelKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
   -- Quit xmonad.
   , ((modMask .|. shiftMask, xK_q),
-     io (exitWith ExitSuccess))
+     io exitSuccess)
 
   -- Restart xmonad.
   , ((modMask, xK_q),
@@ -396,19 +404,19 @@ vicfryzelKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 myFocusFollowsMouse :: Bool
 myFocusFollowsMouse = True
 
-myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
+myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList
   [
     -- mod-button1, Set the window to floating mode and move by dragging
     ((modMask, button1),
-     (\w -> focus w >> mouseMoveWindow w))
+     \w -> focus w >> mouseMoveWindow w)
 
     -- mod-button2, Raise the window to the top of the stack
     , ((modMask, button2),
-       (\w -> focus w >> windows W.swapMaster))
+       \w -> focus w >> windows W.swapMaster)
 
     -- mod-button3, Set the window to floating mode and resize by dragging
     , ((modMask, button3),
-       (\w -> focus w >> mouseResizeWindow w))
+       \w -> focus w >> mouseResizeWindow w)
 
     -- you may also bind events to the mouse scroll wheel (button4 and button5)
   ]
@@ -439,7 +447,7 @@ myLogHook h = dynamicLogWithPP $ namedScratchpadFilterOutWorkspacePP $ xmobarPP 
 -- with mod-q.  Used by, e.g., XMonad.Layout.PerWorkspace to initialize
 -- per-workspace layout choices.
 --
-myStartupHook = do
+myStartupHook =
   setWMName "LG3D" -- Improves compatibility with Java applications.
 
 
@@ -494,7 +502,7 @@ main = do
     mouseBindings      = myMouseBindings,
 
     -- hooks, layouts
-    layoutHook         = smartBorders $ myLayout,
+    layoutHook         = smartBorders myLayout,
     manageHook         = myManageHook,
     handleEventHook    = myHandleEventHook,
     logHook            = myLogHook xmproc,
@@ -512,4 +520,52 @@ toggleMute :: (MonadIO m) => m ()
 toggleMute = spawn "amixer -D pulse sset Master toggle"
 
 alert :: (Show a) => a -> X ()
-alert a = spawn $ "echo \"" ++ (show a) ++ "\" > ~/.config/statnot/notification.pipe"
+alert a = spawn $ "echo \"" ++ show a ++ "\" > ~/.config/statnot/notification.pipe"
+
+playPause :: X ()
+playPause =
+    withActiveNamedScratchpad (sendKeyPress "space") confs players
+  where
+    confs   = myScratchPads
+    players = ["pandora", "rdio", "google music"]
+
+nextTrack :: X ()
+nextTrack =
+    withActiveNamedScratchpad (sendKeyPress "Right") confs players
+  where
+    confs   = myScratchPads
+    players = ["pandora", "rdio", "google music"]
+
+prevTrack :: X ()
+prevTrack =
+    withActiveNamedScratchpad (sendKeyPress "Left") confs players
+  where
+    confs   = myScratchPads
+    players = ["pandora", "rdio", "google music"]
+
+withActiveNamedScratchpad :: (Window -> X ())
+                          -> NamedScratchpads
+                          -> [String]
+                          -> X ()
+withActiveNamedScratchpad f confs names =
+    catMaybes <$> sequence pads >>= mapM_ f
+  where
+    pads    = findActiveNamedScratchpad confs <$> names
+
+sendKeyPress :: String -> Window -> X ()
+sendKeyPress key win = spawn $ "xdotool key --window " ++ show win ++ " " ++ key
+
+-- generalized from someNamedScratchpadAction in XMonad.Util.NamedScratchpad
+findActiveNamedScratchpad :: NamedScratchpads
+                          -> String
+                          -> X (Maybe Window)
+findActiveNamedScratchpad confs n
+  | Just conf <- findByName confs n = withWindowSet $ \s -> do
+                   filterCurrent <- filterM (runQuery (query conf))
+                                      ((maybe [] W.integrate . W.stack . W.workspace . W.current) s)
+                   filterAll <- filterM (runQuery (query conf)) (W.allWindows s)
+                   return $ listToMaybe $ filterCurrent ++ filterAll
+  | otherwise = return Nothing
+
+findByName :: NamedScratchpads -> String -> Maybe NamedScratchpad
+findByName c s = listToMaybe $ filter ((s==) . name) c

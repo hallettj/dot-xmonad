@@ -15,6 +15,7 @@ ensure_packages([
   'stalonetray',
   'suckless-tools',
   'xbacklight',
+  'xdotool',
   'xscreensaver'
 ])
 
