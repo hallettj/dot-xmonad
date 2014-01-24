@@ -6,4 +6,5 @@ xscreensaver.dpmsStandby: 0:12:00
 xscreensaver.dpmsSuspend: 0:12:00
 xscreensaver.dpmsOff:     0:12:00
 xscreensaver.splash:      False
-
+xscreensaver.fade:        False
+xscreensaver.unfade:      False
