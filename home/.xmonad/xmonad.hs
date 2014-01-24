@@ -447,8 +447,9 @@ myLogHook h = dynamicLogWithPP $ namedScratchpadFilterOutWorkspacePP $ xmobarPP 
 -- with mod-q.  Used by, e.g., XMonad.Layout.PerWorkspace to initialize
 -- per-workspace layout choices.
 --
-myStartupHook =
+myStartupHook = do
   setWMName "LG3D" -- Improves compatibility with Java applications.
+  spawn "bash ~/.Xsession"
 
 
 ------------------------------------------------------------------------
