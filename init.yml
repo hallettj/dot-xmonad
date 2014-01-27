@@ -1,0 +1,47 @@
+#!/usr/bin/env ansible-playbook
+---
+- hosts: workstations
+  tasks:
+    - name: install apt packages
+      action: apt pkg={{ item }} state=present
+      sudo: yes
+      with_items:
+        - haskell-platform
+        - xmonad
+        - alsa-utils
+        - dzen2
+        - rxvt-unicode
+        - stalonetray
+        - suckless-tools
+        - xbacklight
+        - xdotool
+        - xscreensaver
+
+        # These are dependencies of xmonad and xmonad-related cabal
+        # packages.
+        - libxinerama-dev
+        - libxrandr-dev
+        - libxss-dev
+        - libxft2-dev
+        - pkg-config
+
+    - name: cabal update
+      shell: cabal update
+
+    - name: install xmonad
+      shell: cabal install xmonad xmonad-contrib xmonad-extras xmobar yeganesh
+      creates: ~/.cabal/bin/xmonad
+
+    - name: compile xmonad config
+      shell: xmonad --recompile
+
+    - name: ensure local Xresources config file is present
+      file: path=~/.config/Xresources/local state=touch
+
+    # Install fonts
+    - name: create font directory
+      file: path=~/.fonts state=directory
+    - name: install powerline fonts
+      git: repo=git@github.com:Lokaltog/powerline-fonts.git
+           dest=~/.fonts/powerline-fonts
+           update=no
