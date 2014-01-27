@@ -1,6 +1,8 @@
 #!/usr/bin/env ansible-playbook
 ---
-- hosts: workstations
+- name: configures xmonad
+  hosts: localhost
+  connection: local
   tasks:
     - name: install apt packages
       action: apt pkg={{ item }} state=present
@@ -22,15 +24,19 @@
         - libxinerama-dev
         - libxrandr-dev
         - libxss-dev
-        - libxft2-dev
+        # - libxft2-dev
         - pkg-config
+
+    - name: the ansible module seems to have problems with libxft2-dev
+      shell: apt-get install libxft2-dev
+      sudo: yes
 
     - name: cabal update
       shell: cabal update
 
     - name: install xmonad
       shell: cabal install xmonad xmonad-contrib xmonad-extras xmobar yeganesh
-      creates: ~/.cabal/bin/xmonad
+             creates=~/.cabal/bin/xmonad
 
     - name: compile xmonad config
       shell: xmonad --recompile
