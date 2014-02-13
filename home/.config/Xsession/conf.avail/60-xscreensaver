@@ -1,0 +1,3 @@
+killall -q gnome-screensaver || true
+xscreensaver -no-splash &
+
