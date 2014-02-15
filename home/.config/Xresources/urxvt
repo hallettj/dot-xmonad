@@ -1,6 +1,6 @@
 URxvt.font: xft:monospace:size=12
 URxvt.boldFont: xft:monospace:size=12
-URxvt.intensityStyles: true
+URxvt.intensityStyles: false
 URxvt*letterSpace: -1
 URxvt.scrollstyle: plain
 URxvt.scrollBar: false
