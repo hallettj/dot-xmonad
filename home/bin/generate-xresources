@@ -1,0 +1,17 @@
+#!/bin/bash
+#
+# Produces a ~/.Xresources file by listing files in
+# ~/.config/Xresources/conf.d/
+
+XRESOURCES="$HOME/.Xresources"
+RESOURCE_DIR="$HOME/.config/Xresources/conf.d"
+
+echo '' > "$XRESOURCES"
+
+if [ -d "$RESOURCE_DIR" ]; then
+	for file in "$RESOURCE_DIR"/*; do
+		if [ -f "$file" ]; then
+			echo "#include \"$file\"" >> "$XRESOURCES"
+		fi
+	done
+fi
