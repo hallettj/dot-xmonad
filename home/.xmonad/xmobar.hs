@@ -9,7 +9,7 @@
 Config {
     font = "xft:monospace:size=9:antialias=true"
     bgColor = "#002b36",
-    fgColor = "#839496",
+    fgColor = "#93a1a1",
     position = Static { xpos = 0, ypos = 0, width = 1808, height = 16 },
     lowerOnStart = True,
     commands = [
