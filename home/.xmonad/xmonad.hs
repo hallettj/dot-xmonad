@@ -447,8 +447,7 @@ myLogHook h = dynamicLogWithPP $ namedScratchpadFilterOutWorkspacePP $ xmobarPP 
 -- with mod-q.  Used by, e.g., XMonad.Layout.PerWorkspace to initialize
 -- per-workspace layout choices.
 --
-myStartupHook =
-  spawn "bash ~/.Xsession"
+myStartupHook = spawn "bash ~/.Xsession"
 
 
 ------------------------------------------------------------------------

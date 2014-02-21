@@ -1,0 +1,1 @@
+run-one xcape -d -t 250 -e 'Control_L=Escape' &

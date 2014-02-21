@@ -1,10 +1,10 @@
 #!/bin/bash
 #
 # Produces a ~/.Xresources file by listing files in
-# ~/.config/Xresources/conf.d/
+# ~/.config/X11/Xresources.d/
 
 XRESOURCES="$HOME/.Xresources"
-RESOURCE_DIR="$HOME/.config/Xresources/conf.d"
+RESOURCE_DIR="$HOME/.config/X11/Xresources.d"
 
 echo '' > "$XRESOURCES"
 

@@ -1,0 +1,3 @@
+# Sets desktop background color
+xsetroot -solid "#002b36"
+
