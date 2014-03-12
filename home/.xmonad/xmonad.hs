@@ -273,21 +273,31 @@ vicfryzelKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   -- Decrease volume.
   , ((0, 0x1008ff11),
      volume "1%-" >>= alert . ("Volume: " ++) . show)
+  , ((modMask, xK_Page_Down),
+     volume "1%-" >>= alert . ("Volume: " ++) . show)
 
   -- Increase volume.
   , ((0, 0x1008ff13),
+     volume "1%+" >>= alert . ("Volume: " ++) . show)
+  , ((modMask, xK_Page_Up),
      volume "1%+" >>= alert . ("Volume: " ++) . show)
 
   -- Audio previous.
   , ((0, 0x1008FF16),
      prevTrack)
+  , ((modMask, xK_Home),
+     prevTrack)
 
   -- Play/pause.
   , ((0, 0x1008FF14),
      playPause)
+  , ((modMask, xK_Insert),
+     playPause)
 
   -- Audio next.
   , ((0, 0x1008FF17),
+     nextTrack)
+  , ((modMask, xK_End),
      nextTrack)
 
   -- Eject CD tray.
