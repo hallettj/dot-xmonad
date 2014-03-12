@@ -12,6 +12,7 @@
         - xmonad
         - alsa-utils
         - dzen2
+        - murrine-themes
         - rxvt-unicode
         - stalonetray
         - suckless-tools
