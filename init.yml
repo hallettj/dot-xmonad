@@ -16,6 +16,7 @@
         - rxvt-unicode
         - stalonetray
         - suckless-tools
+        - unclutter
         - xbacklight
         - xdotool
         - xscreensaver
@@ -35,13 +36,8 @@
     - name: cabal update
       shell: cabal update
 
-    # xmonad-contrib and xmonad-extras are dependencies of my xmonad
-    # configuration.
-    #
-    # xmonad-utils provides the hhp utility, which hides the mouse
-    # pointer when it is not being actively used.
     - name: install xmonad
-      shell: cabal install xmonad xmonad-contrib xmonad-extras xmonad-utils xmobar yeganesh
+      shell: cabal install xmonad xmonad-contrib xmonad-extras xmobar yeganesh
              creates=~/.cabal/bin/xmonad
 
     - name: compile xmonad config

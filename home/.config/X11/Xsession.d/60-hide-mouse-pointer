@@ -1,4 +1,4 @@
 # Hides the mouse pointer after some period of inactivity.  The command
 # `hhp` comes from xmonad-utils.
 
-run-one hhp &
+run-one unclutter &
