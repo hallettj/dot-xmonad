@@ -522,32 +522,27 @@ main = do
 ------------------------------------------------------------------------
 -- Helpers
 --
+alert :: (Show a) => a -> X ()
+alert a = spawn $ "echo \"" ++ show a ++ "\" > ~/.config/statnot/notification.pipe"
+
 volume :: (MonadIO m, Functor m) => String -> m Int
 volume change = read <$> runProcessWithInput "volume" [change] ""
 
 toggleMute :: (MonadIO m) => m ()
 toggleMute = spawn "amixer -D pulse sset Master toggle"
 
-alert :: (Show a) => a -> X ()
-alert a = spawn $ "echo \"" ++ show a ++ "\" > ~/.config/statnot/notification.pipe"
-
 playPause :: X ()
-playPause =
-    withActiveNamedScratchpad (sendKeyPress "space") confs players
-  where
-    confs   = myScratchPads
-    players = ["pandora", "rdio", "google music"]
+playPause = sendToMusicPlayer "space"
 
 nextTrack :: X ()
-nextTrack =
-    withActiveNamedScratchpad (sendKeyPress "Right") confs players
-  where
-    confs   = myScratchPads
-    players = ["pandora", "rdio", "google music"]
+nextTrack = sendToMusicPlayer "Right"
 
 prevTrack :: X ()
-prevTrack =
-    withActiveNamedScratchpad (sendKeyPress "Left") confs players
+prevTrack = sendToMusicPlayer "Left"
+
+sendToMusicPlayer :: String -> X ()
+sendToMusicPlayer key =
+    withActiveNamedScratchpad (sendKeyPress key) confs players
   where
     confs   = myScratchPads
     players = ["pandora", "rdio", "google music"]
