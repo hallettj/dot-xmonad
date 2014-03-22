@@ -1,6 +1,46 @@
 !
+! Invert number row
+!
+keycode  10 = exclam 1 1 exclam
+keycode  11 = at 2 2 at
+keycode  12 = numbersign 3 3 numbersign
+keycode  13 = dollar 4 4 dollar
+keycode  14 = percent 5 5 percent
+keycode  15 = asciicircum 6 6 asciicircum dead_circumflex dead_circumflex dead_circumflex
+keycode  16 = ampersand 7 7 ampersand
+keycode  17 = asterisk 8 8 asterisk
+keycode  18 = parenleft 9 9 parenleft dead_grave NoSymbol dead_grave
+keycode  19 = parenright 0 0 parenright
+
+!
+! Normal number row
+!
+! keycode  10 = 1 exclam 1 exclam
+! keycode  11 = 2 at 2 at
+! keycode  12 = 3 numbersign 3 numbersign
+! keycode  13 = 4 dollar 4 dollar
+! keycode  14 = 5 percent 5 percent
+! keycode  15 = 6 asciicircum 6 asciicircum dead_circumflex dead_circumflex dead_circumflex
+! keycode  16 = 7 ampersand 7 ampersand
+! keycode  17 = 8 asterisk 8 asterisk
+! keycode  18 = 9 parenleft 9 parenleft dead_grave NoSymbol dead_grave
+! keycode  19 = 0 parenright 0 parenright
+
+!
 ! Make Caps_Lock an add'l Control_L
 !
-remove Lock = Caps_Lock
-keysym Caps_Lock = Control_L
-add Control = Control_L
+clear      lock
+clear   control
+clear      mod1
+clear      mod2
+clear      mod3
+clear      mod4
+clear      mod5
+keycode      66 = Control_L
+keycode      37 = Control_L
+add     control = Control_L Control_R
+add        mod1 = Alt_L Alt_R Meta_L
+add        mod2 = Num_Lock
+add        mod3 = Hyper_L
+add        mod4 = Super_L Super_R
+add        mod5 = Mode_switch ISO_Level3_Shift

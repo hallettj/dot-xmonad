@@ -399,12 +399,32 @@ vicfryzelKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
       , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
   ++
 
+  -- So that workspace shortcuts work with inverted number row:
+  -- mod-[!@#$%^&*()], Switch to workspace N
+  -- mod-shift-[!@#$%^&*()], Move client to workspace N
+  [((m .|. modMask, k), windows $ f i)
+      | (i, k) <- zip (XMonad.workspaces conf) symbols
+      , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
+  ++
+
   -- mod-{w,e,r}, Switch to physical/Xinerama screens 1, 2, or 3
   -- mod-shift-{w,e,r}, Move client to screen 1, 2, or 3
   [((m .|. modMask, key), screenWorkspace sc >>= flip whenJust (windows . f))
       | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
       , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
 
+-- Symbols from the number row, in order
+symbols :: [KeySym]
+symbols = [ xK_exclam
+          , xK_at
+          , xK_numbersign
+          , xK_dollar
+          , xK_percent
+          , xK_asciicircum
+          , xK_ampersand
+          , xK_asterisk
+          , xK_parenleft
+          , xK_parenright ]
 
 ------------------------------------------------------------------------
 -- Mouse bindings
