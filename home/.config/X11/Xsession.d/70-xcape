@@ -1,1 +1,5 @@
-run-one xcape -d -t 250 -e 'Control_L=Escape' &
+CTRL='Control_L=Escape'
+SHIFT='Shift_L=Shift_L|braceleft;Shift_R=Shift_L|braceright'
+ALT='Alt_L=Shift_L|asciitilde;Alt_R=Shift_L|bar'
+
+run-one xcape -d -t 250 -e "$CTRL;$SHIFT;$ALT"
