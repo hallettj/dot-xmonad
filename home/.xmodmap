@@ -1,6 +1,9 @@
 !
 ! Invert number row
 !
+! This changes the behavior of keys in the number row, but does not
+! affect the number pad.
+!
 keycode  10 = exclam 1 1 exclam
 keycode  11 = at 2 2 at
 keycode  12 = numbersign 3 3 numbersign
@@ -15,6 +18,9 @@ keycode  19 = parenright 0 0 parenright
 !
 ! Normal number row
 !
+! Comment the above block and uncomment this one to return to the
+! original number row behavior.
+!
 ! keycode  10 = 1 exclam 1 exclam
 ! keycode  11 = 2 at 2 at
 ! keycode  12 = 3 numbersign 3 numbersign
@@ -26,8 +32,16 @@ keycode  19 = parenright 0 0 parenright
 ! keycode  18 = 9 parenleft 9 parenleft dead_grave NoSymbol dead_grave
 ! keycode  19 = 0 parenright 0 parenright
 
+! These mappings are based on the defaults for my keyboard layout.  You
+! can get the default mappings for your keyboard with the command:
 !
-! Make Caps_Lock an add'l Control_L
+!     xmodmap -pke
+!
+! I recommend saving the output in a file for reference.
+
+!
+! Remap Caps_Lock to Control_L and remap the original Control_L to
+! Hyper_L
 !
 clear      lock
 clear   control
