@@ -1,4 +1,4 @@
-#!/usr/bin/env ansible-playbook
+#!/usr/bin/ansible-playbook -K
 ---
 - name: configures xmonad
   hosts: localhost
@@ -43,9 +43,6 @@
     - name: compile xmonad config
       shell: xmonad --recompile
 
-    - name: ensure local Xresources config file is present
-      file: path=~/.config/Xresources/local state=touch
-
     # Install fonts
     - name: create font directory
       file: path=~/.fonts state=directory
@@ -53,3 +50,11 @@
       git: repo=git@github.com:Lokaltog/powerline-fonts.git
            dest=~/.fonts/powerline-fonts
            update=no
+
+    - file: path=/usr/local/lib/urxvt state=directory
+      sudo: yes
+    - name: install extensions for urxvt
+      git: repo=https://github.com/muennich/urxvt-perls.git
+           dest=/usr/local/lib/urxvt/perl
+           update=no
+      sudo: yes
