@@ -1,5 +1,5 @@
 CTRL='Control_L=Escape'
-SHIFT='Shift_L=Shift_L|braceleft;Shift_R=Shift_L|braceright'
+SHIFT='Shift_L=Shift_L|braceleft;Shift_R=Shift_L|braceright;Mode_switch=Shift_L|braceright'
 ALT='Alt_L=F12;Alt_R=F12'
 
 run-one xcape -d -t 250 -e "$CTRL;$SHIFT;$ALT"
