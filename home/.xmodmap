@@ -118,8 +118,17 @@ keycode 21 = bracketright braceright 0x3571 braceright
 
 
 !
-! Remap Caps_Lock to Control_L and remap the original Control_L to
-! Hyper_L
+! Remap modifiers:
+! Caps_Lock -> Control_L
+! Return    -> Control_R
+! Control_L -> Hyper_L
+! Control_R -> Hyper_R
+!
+! This leaves me without a Return key.  But I get it back with xcape.
+! By combining this configuration with xcape:
+! - Caps_Lock acts like Control_L when held or like Escape when tapped.
+! - Return acts like Control_R when held or like Return when tapped.
+! - I get two additional modifiers, Hyper_L and Hyper_R.
 !
 clear      lock
 clear   control
@@ -130,10 +139,14 @@ clear      mod4
 clear      mod5
 keycode      66 = Control_L
 keycode      37 = Hyper_L
+keycode       8 = 0x3573
+keycode      36 = Control_R
+keycode     105 = Hyper_R
+keycode     any = Return
 add     control = Control_L Control_R
 add        mod1 = Alt_L Alt_R Meta_L
 add        mod2 = Num_Lock
-add        mod3 = Hyper_L
+add        mod3 = Hyper_L Hyper_R
 add        mod4 = Super_L Super_R
 ! add        mod5 = Mode_switch ISO_Level3_Shift
 ! For the time being I am using Mode_switch to simulate Shift_R
