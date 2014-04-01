@@ -131,18 +131,10 @@ myScratchPads = [ NS "pandora"      spawnPandora     findPandora     (leftPanel 
 -- The available layouts.  Note that each layout is separated by |||,
 -- which denotes layout choice.
 --
-myLayout = avoidStruts (
-    onWorkspaces ["1:web", "4:terminal", "7", "8"] leftTiled tiled |||
-    tiled |||
-    leftTiled |||
-    Full) |||
-    noBorders (fullscreenFull Full)
+myLayout = avoidStruts (tiled ||| Full)
   where
     -- default tiling algorithm partitions the screen into two panes
     tiled   = ResizableTall nmaster delta ratio []
-
-    -- like tiled, but puts the master window on the right
-    leftTiled = Flip tiled
 
     -- The default number of windows in the master pane
     nmaster = 1
