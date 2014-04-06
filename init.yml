@@ -13,6 +13,10 @@
         - alsa-utils
         - dzen2
         - murrine-themes
+        - network-manager
+        - network-manager-gnome
+        - network-manager-openvpn
+        - network-manager-openvpn-gnome
         - rxvt-unicode
         - stalonetray
         - suckless-tools
