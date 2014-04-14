@@ -3,4 +3,4 @@ SHIFT='Shift_L=Shift_L|braceleft;Shift_R=Shift_L|braceright'
 ALT='Alt_L=F12;Alt_R=F12'
 RETURN='Control_R=Return'
 
-run-one xcape -d -t 250 -e "$CTRL;$SHIFT;$ALT;$RETURN" &
+run-this-one xcape -d -t 250 -e "$CTRL;$SHIFT;$ALT;$RETURN" &
