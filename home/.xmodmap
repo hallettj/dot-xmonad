@@ -44,6 +44,23 @@ keycode  51 = bar backslash bar backslash
 !
 ! I recommend saving the output in a file for reference.
 
+!
+! Turns a portion of the layout into a temporary numpad while holding
+! Mode_switch.
+!
+keycode  29 = f F 7     F
+keycode  30 = g G 8     G
+keycode  31 = c C 9     C
+keycode  32 = r R equal R
+keycode  43 = d D 4     D
+keycode  44 = h H 5     H
+keycode  45 = t T 6     T
+keycode  46 = n N plus  N
+keycode  57 = b B 1     B
+keycode  58 = m M 2     M
+keycode  59 = w W 3     W
+keycode  60 = v V minus V
+keycode  65 = space NoSymbol 0
 
 
 
@@ -71,10 +88,13 @@ clear      shift
 keycode      50 = Shift_L
 keycode      62 = Shift_R
 keycode      66 = Control_L
-keycode      37 = Hyper_L
+keycode      37 = Mode_switch NoSymbol Mode_switch
 keycode       8 = 0x3573
 keycode      36 = Control_R
 keycode     105 = Hyper_R
+keycode      64 = Alt_L
+keycode     108 = Alt_R
+keycode      23 = Tab
 keycode     any = Return
 add     control = Control_L Control_R
 add        mod1 = Alt_L Alt_R Meta_L
