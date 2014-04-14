@@ -62,7 +62,13 @@ keycode  59 = w W 3     W
 keycode  60 = v V minus V
 keycode  65 = space NoSymbol 0
 
-
+!
+! Emulates arrow keys on .oeu while holding Mode_switch
+!
+keycode  26 = period greater Up greater dead_abovedot periodcentered dead_abovedot
+keycode  39 = o O Left  O
+keycode  40 = e E Down  E
+keycode  41 = u U Right U
 
 !
 ! Remap modifiers:
@@ -91,7 +97,7 @@ keycode      66 = Control_L
 keycode      37 = Mode_switch NoSymbol Mode_switch
 keycode       8 = 0x3573
 keycode      36 = Control_R
-keycode     105 = Hyper_R
+keycode     105 = Mode_switch NoSymbol Mode_switch
 keycode      64 = Alt_L
 keycode     108 = Alt_R
 keycode      23 = Tab
@@ -110,4 +116,6 @@ add       shift = Shift_L Shift_R
 !  23 = Tab
 !  36 = Return
 !  37 = Control_L
+! 105 = Control_R
+! 133 = Super_L
 !
