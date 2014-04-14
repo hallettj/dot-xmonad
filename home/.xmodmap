@@ -102,6 +102,7 @@ keycode      64 = Alt_L
 keycode     108 = Alt_R
 keycode      23 = Tab
 keycode     any = Return
+keycode     133 = Multi_key
 add     control = Control_L Control_R
 add        mod1 = Alt_L Alt_R Meta_L
 add        mod2 = Num_Lock
