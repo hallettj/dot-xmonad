@@ -4,17 +4,18 @@
 ! This changes the behavior of keys in the number row, but does not
 ! affect the number pad.
 !
-! keycode  49 = asciitilde grave grave asciitilde
-! keycode  10 = exclam 1 1 exclam
-! keycode  11 = at 2 2 at
-! keycode  12 = numbersign 3 3 numbersign
-! keycode  13 = dollar 4 4 dollar
-! keycode  14 = percent 5 5 percent
-! keycode  15 = asciicircum 6 6 asciicircum dead_circumflex dead_circumflex dead_circumflex
-! keycode  16 = ampersand 7 7 ampersand
-! keycode  17 = asterisk 8 8 asterisk
-! keycode  18 = parenleft 9 9 parenleft dead_grave NoSymbol dead_grave
-! keycode  19 = parenright 0 0 parenright
+keycode  49 = asciitilde grave asciitilde grave dead_grave dead_tilde dead_grave
+keycode  10 = exclam 1 exclam 1
+keycode  11 = at 2 at 2
+keycode  12 = numbersign 3 numbersign 3
+keycode  13 = dollar 4 dollar 4
+keycode  14 = percent 5 percent 5
+keycode  15 = asciicircum 6 asciicircum 6 dead_circumflex dead_circumflex dead_circumflex
+keycode  16 = ampersand 7 ampersand 7
+keycode  17 = asterisk 8 asterisk 8
+keycode  18 = parenleft 9 parenleft 9 dead_grave NoSymbol dead_grave
+keycode  19 = parenright 0 parenright 0
+keycode  51 = bar backslash bar backslash
 
 !
 ! Normal number row
@@ -22,7 +23,7 @@
 ! Comment the above block and uncomment this one to return to the
 ! original number row behavior.
 !
-! keycode  49 = grave asciitilde asciitilde grave
+! keycode  49 = grave asciitilde grave asciitilde dead_grave dead_tilde dead_grave
 ! keycode  10 = 1 exclam 1 exclam
 ! keycode  11 = 2 at 2 at
 ! keycode  12 = 3 numbersign 3 numbersign
@@ -33,6 +34,8 @@
 ! keycode  17 = 8 asterisk 8 asterisk
 ! keycode  18 = 9 parenleft 9 parenleft dead_grave NoSymbol dead_grave
 ! keycode  19 = 0 parenright 0 parenright
+! keycode  34 = slash question slash question
+! keycode  51 = backslash bar backslash bar
 
 ! These mappings are based on the defaults for my keyboard layout.  You
 ! can get the default mappings for your keyboard with the command:
@@ -41,79 +44,6 @@
 !
 ! I recommend saving the output in a file for reference.
 
-
-
-! A script to rebind all shifted keys to force you to use the correct shift
-! button for minimum risk of rsi.
-
-! Buttons not really on either side, make either shift work:
-keycode  15 = asciicircum 6 6 6 dead_circumflex dead_circumflex dead_circumflex
-keycode  29 = f F F F
-keycode  56 = x X X X
-
-! Might need to replace 0x3571 with a keysym which is not used elsewhere in
-! your key map so that pressing the wrong key generates nothing. This
-! keysym should be fine for most people. Note: this may interfere with
-! emacs in annoying ways because emacs because it print warnings when
-! undefined keys are pressed, the answer is to learn not to press them!
-
-! Set right shift to be a sort of temporary caps lock (only on while button held)
-keycode 62 = Mode_switch NoSymbol Mode_switch
-
-! Bind lhs of keyboard to only work with this "temporary caps lock
-! modifier" as shift and rhs to only work with Shift_L.
-
-! lhs letters (Dvorak)
-keycode  24 = apostrophe 0x3571 quotedbl quotedbl
-keycode  25 = comma      0x3571 less     less
-keycode  26 = period     0x3571 greater  greater
-keycode  27 = p 0x3571 P P
-keycode  28 = y 0x3571 Y Y
-keycode  38 = a 0x3571 A A
-keycode  39 = o 0x3571 O O
-keycode  40 = e 0x3571 E E
-keycode  41 = u 0x3571 U U
-keycode  42 = i 0x3571 I I
-keycode  52 = semicolon 0x3571 colon colon
-keycode  53 = q 0x3571 Q Q
-keycode  54 = j 0x3571 J J
-keycode  55 = k 0x3571 K K
-
-! lhs symbols
-keycode  49 = asciitilde 0x3571 grave grave
-keycode  10 = exclam     0x3571 1     1
-keycode  11 = at         0x3571 2     2
-keycode  12 = numbersign 0x3571 3     3
-keycode  13 = dollar     0x3571 4     4
-keycode  14 = percent    0x3571 5     5
-
-! rhs letters (Dvorak)
-keycode  30 = g G 0x3571 G
-keycode  31 = c C 0x3571 C
-keycode  32 = r R 0x3571 R
-keycode  33 = l L 0x3571 L
-keycode  34 = slash question  0x3571 question
-keycode  35 = equal plus      0x3571 plus
-keycode  51 = bar   backslash 0x3571 backslash
-keycode  43 = d D 0x3571 D
-keycode  44 = h H 0x3571 H
-keycode  45 = t T 0x3571 T
-keycode  46 = n N 0x3571 N
-keycode  47 = s S 0x3571 S
-keycode  48 = minus underscore 0x3571 underscore
-keycode  57 = b B 0x3571 B
-keycode  58 = m M 0x3571 M
-keycode  59 = w W 0x3571 W
-keycode  60 = v V 0x3571 V
-keycode  61 = z Z 0x3571 Z
-
-! rhs symbols
-keycode 16 = ampersand    7          0x3571 7
-keycode 17 = asterisk     8          0x3571 8
-keycode 18 = parenleft    9          0x3571 9 dead_grave NoSymbol dead_grave
-keycode 19 = parenright   0          0x3571 0
-keycode 20 = bracketleft  braceleft  0x3571 braceleft
-keycode 21 = bracketright braceright 0x3571 braceright
 
 
 
@@ -137,6 +67,9 @@ clear      mod2
 clear      mod3
 clear      mod4
 clear      mod5
+clear      shift
+keycode      50 = Shift_L
+keycode      62 = Shift_R
 keycode      66 = Control_L
 keycode      37 = Hyper_L
 keycode       8 = 0x3573
@@ -148,6 +81,13 @@ add        mod1 = Alt_L Alt_R Meta_L
 add        mod2 = Num_Lock
 add        mod3 = Hyper_L Hyper_R
 add        mod4 = Super_L Super_R
-! add        mod5 = Mode_switch ISO_Level3_Shift
-! For the time being I am using Mode_switch to simulate Shift_R
-add        mod5 = ISO_Level3_Shift
+add        mod5 = Mode_switch ISO_Level3_Shift
+add       shift = Shift_L Shift_R
+
+!
+! Reference for modifier mappings in default layout:
+!
+!  23 = Tab
+!  36 = Return
+!  37 = Control_L
+!
