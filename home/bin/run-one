@@ -69,8 +69,12 @@ case "$base" in
 		ps="$CMD"
 		# Loop through matching pids
 		for p in $(pgrep -u "$USER" -f "^$ps$" || true); do
+			# Don't kill yourself
+			if [ $p = $$ ]; then
+				continue
+			fi
 			# Try to kill pid
-			kill $p
+			kill $p 2>/dev/null || true
 			# And then block until killed
 			while ps $p >/dev/null 2>&1; do
 				kill $p
