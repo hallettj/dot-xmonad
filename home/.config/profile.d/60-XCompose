@@ -1,0 +1,2 @@
+export XCOMPOSEFILE=~/.config/X11/Compose
+export GTK_IM_MODULE="xim"
