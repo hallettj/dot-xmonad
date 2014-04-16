@@ -1,0 +1,27 @@
+# Include executables installed by cabal-install in PATH
+if [ -d "$HOME/.cabal/bin" ] ; then
+    PATH="$HOME/.cabal/bin:$PATH"
+fi
+
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/bin" ] ; then
+    PATH="$HOME/bin:$PATH"
+fi
+
+export PATH
+
+# That's right
+export EDITOR=vim
+# And again
+export VISUAL=$EDITOR
+
+# Run all scripts in ~/.config/profile.d"
+PROFILES_DIR="$HOME/.config/profile.d"
+if [ -d "$PROFILES_DIR" ]; then
+  PROFILES=$(run-parts --list $PROFILES_DIR)
+  if [ -n "$PROFILES" ]; then
+    for PROFILE in $PROFILES; do
+      source $PROFILE
+    done
+  fi
+fi
