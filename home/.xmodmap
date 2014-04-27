@@ -94,14 +94,15 @@ clear      shift
 keycode      50 = Shift_L
 keycode      62 = Shift_R
 keycode      66 = Control_L
-keycode      37 = Mode_switch NoSymbol Mode_switch
+keycode      37 = Hyper_L
 keycode       8 = 0x3573
 keycode      36 = Control_R
 keycode     105 = Mode_switch NoSymbol Mode_switch
 keycode      64 = Alt_L
 keycode     108 = Alt_R
-keycode      23 = Tab
+keycode      23 = Mode_switch NoSymbol Mode_switch
 keycode     any = Return
+keycode     any = Tab
 keycode     133 = Multi_key
 add     control = Control_L Control_R
 add        mod1 = Alt_L Alt_R Meta_L
