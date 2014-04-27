@@ -307,7 +307,7 @@ vicfryzelKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   --
 
   -- Close focused window.
-  , ((modMask .|. shiftMask, xK_c),
+  , ((modMask, xK_Escape),
      kill)
 
   -- Cycle through the available layout algorithms.
@@ -323,8 +323,12 @@ vicfryzelKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
      refresh)
 
   -- Move focus to the next window.
-  , ((modMask, xK_Tab),
+  , ((modMask, xK_Mode_switch),
      windows W.focusDown)
+
+  -- Move focus to the previous window.
+  , ((modMask .|. shiftMask, xK_Mode_switch),
+     windows W.focusUp)
 
   -- Move focus to the next window.
   , ((modMask, xK_j),
@@ -335,7 +339,7 @@ vicfryzelKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
      windows W.focusUp  )
 
   -- Move focus to the master window.
-  , ((modMask, xK_m),
+  , ((modMask .|. controlMask, xK_m),
      windows W.focusMaster  )
 
   -- Swap the focused window and the master window.
@@ -351,15 +355,15 @@ vicfryzelKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
      windows W.swapUp    )
 
   -- Shrink the master area.
-  , ((modMask, xK_h),
+  , ((modMask .|. controlMask, xK_h),
      sendMessage Shrink)
 
   -- Expand the master area.
-  , ((modMask, xK_l),
+  , ((modMask .|. shiftMask, xK_l),
      sendMessage Expand)
 
   -- Push window back into tiling.
-  , ((modMask, xK_t),
+  , ((modMask .|. controlMask, xK_t),
      withFocused $ windows . W.sink)
 
   -- Increment the number of windows in the master area.
@@ -387,36 +391,26 @@ vicfryzelKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   -- mod-[1..9], Switch to workspace N
   -- mod-shift-[1..9], Move client to workspace N
   [((m .|. modMask, k), windows $ f i)
-      | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
+      | (i, k) <- zip (XMonad.workspaces conf) emulatedNumpadKeys
       , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
-  ++
+  -- ++
 
-  -- So that workspace shortcuts work with inverted number row:
-  -- mod-[!@#$%^&*()], Switch to workspace N
-  -- mod-shift-[!@#$%^&*()], Move client to workspace N
-  [((m .|. modMask, k), windows $ f i)
-      | (i, k) <- zip (XMonad.workspaces conf) symbols
-      , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
-  ++
+  -- -- mod-{w,e,r}, Switch to physical/Xinerama screens 1, 2, or 3
+  -- -- mod-shift-{w,e,r}, Move client to screen 1, 2, or 3
+  -- [((m .|. modMask, key), screenWorkspace sc >>= flip whenJust (windows . f))
+  --     | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
+  --     , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
 
-  -- mod-{w,e,r}, Switch to physical/Xinerama screens 1, 2, or 3
-  -- mod-shift-{w,e,r}, Move client to screen 1, 2, or 3
-  [((m .|. modMask, key), screenWorkspace sc >>= flip whenJust (windows . f))
-      | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
-      , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
-
--- Symbols from the number row, in order
-symbols :: [KeySym]
-symbols = [ xK_exclam
-          , xK_at
-          , xK_numbersign
-          , xK_dollar
-          , xK_percent
-          , xK_asciicircum
-          , xK_ampersand
-          , xK_asterisk
-          , xK_parenleft
-          , xK_parenright ]
+emulatedNumpadKeys :: [KeySym]
+emulatedNumpadKeys = [ xK_b
+                     , xK_m
+                     , xK_w
+                     , xK_d
+                     , xK_h
+                     , xK_t
+                     , xK_f
+                     , xK_g
+                     , xK_c ]
 
 ------------------------------------------------------------------------
 -- Mouse bindings
