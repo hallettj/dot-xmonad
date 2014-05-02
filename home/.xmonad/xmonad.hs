@@ -323,11 +323,15 @@ vicfryzelKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
      refresh)
 
   -- Move focus to the next window.
-  , ((modMask, xK_Mode_switch),
+  , ((modMask, xK_Tab),
+     windows W.focusDown)
+  , ((modMask .|. mod5Mask, xK_Tab),
      windows W.focusDown)
 
   -- Move focus to the previous window.
-  , ((modMask .|. shiftMask, xK_Mode_switch),
+  , ((modMask .|. shiftMask, xK_Tab),
+     windows W.focusUp)
+  , ((modMask .|. shiftMask .|. mod5Mask, xK_Tab),
      windows W.focusUp)
 
   -- Move focus to the next window.
