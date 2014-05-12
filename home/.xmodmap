@@ -55,12 +55,12 @@ keycode  32 = r R equal R
 keycode  43 = d D 4     D
 keycode  44 = h H 5     H
 keycode  45 = t T 6     T
-keycode  46 = n N plus  N
+keycode  46 = n N 0     N
 keycode  57 = b B 1     B
 keycode  58 = m M 2     M
 keycode  59 = w W 3     W
 keycode  60 = v V minus V
-keycode  65 = space NoSymbol 0
+keycode  47 = s S plus  S
 
 !
 ! Emulates arrow keys on .oeu while holding Mode_switch
@@ -91,6 +91,7 @@ clear      mod3
 clear      mod4
 clear      mod5
 clear      shift
+keycode      22 = BackSpace
 keycode      50 = Shift_L
 keycode      62 = Shift_R
 keycode      66 = Control_L
@@ -100,10 +101,13 @@ keycode      36 = Control_R
 keycode     105 = Mode_switch NoSymbol Mode_switch
 keycode      64 = Alt_L
 keycode     108 = Alt_R
-keycode      23 = Mode_switch NoSymbol Mode_switch
+keycode      23 = Tab
+keycode      65 = Mode_switch NoSymbol Mode_switch
 keycode     any = Return
-keycode     any = Tab
+keycode     any = space
 keycode     133 = Multi_key
+keycode     111 = Up
+keycode     114 = Right
 add     control = Control_L Control_R
 add        mod1 = Alt_L Alt_R Meta_L
 add        mod2 = Num_Lock
@@ -118,6 +122,7 @@ add       shift = Shift_L Shift_R
 !  23 = Tab
 !  36 = Return
 !  37 = Control_L
+!  65 = space
 ! 105 = Control_R
 ! 133 = Super_L
 !

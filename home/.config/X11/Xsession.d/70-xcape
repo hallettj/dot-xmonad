@@ -2,6 +2,6 @@ CTRL='Control_L=Escape'
 SHIFT='Shift_L=Multi_key;Shift_R=Multi_key'
 ALT='Alt_L=F12;Alt_R=F12'
 RETURN='Control_R=Return'
-TAB='Mode_switch=Tab'
+SPACE='Mode_switch=space'
 
-run-this-one xcape -d -t 250 -e "$CTRL;$SHIFT;$ALT;$RETURN;$TAB" &
+run-this-one xcape -d -t 250 -e "$CTRL;$SHIFT;$ALT;$RETURN;$SPACE" &
