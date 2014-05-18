@@ -48,19 +48,25 @@ keycode  51 = bar backslash bar backslash
 ! Turns a portion of the layout into a temporary numpad while holding
 ! Mode_switch.
 !
-keycode  29 = f F 7     F
-keycode  30 = g G 8     G
-keycode  31 = c C 9     C
-keycode  32 = r R equal R
-keycode  43 = d D 4     D
-keycode  44 = h H 5     H
-keycode  45 = t T 6     T
-keycode  46 = n N 0     N
-keycode  57 = b B 1     B
-keycode  58 = m M 2     M
-keycode  59 = w W 3     W
-keycode  60 = v V minus V
-keycode  47 = s S plus  S
+keycode  29 = f F F     F
+keycode  30 = g G 7     G
+keycode  31 = c C 8     C
+keycode  32 = r R 9     R
+keycode  33 = l L plus  L
+
+keycode  43 = d D D     D
+keycode  44 = h H 4     H
+keycode  45 = t T 5     T
+keycode  46 = n N 6     N
+keycode  47 = s S equal S
+
+keycode  57 = b B B     B
+keycode  58 = m M 1     M
+keycode  59 = w W 2     W
+keycode  60 = v V 3     V
+keycode  61 = z Z Z     Z
+
+keycode 108 = Alt_R Alt_R 0 Alt_R
 
 !
 ! Emulates arrow keys on .oeu while holding Mode_switch

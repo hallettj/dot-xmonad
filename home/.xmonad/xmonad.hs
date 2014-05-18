@@ -406,15 +406,15 @@ vicfryzelKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   --     , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
 
 emulatedNumpadKeys :: [KeySym]
-emulatedNumpadKeys = [ xK_b
-                     , xK_m
+emulatedNumpadKeys = [ xK_m
                      , xK_w
-                     , xK_d
+                     , xK_v
                      , xK_h
                      , xK_t
-                     , xK_f
+                     , xK_n
                      , xK_g
-                     , xK_c ]
+                     , xK_c
+                     , xK_r ]
 
 ------------------------------------------------------------------------
 -- Mouse bindings
