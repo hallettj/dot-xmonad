@@ -98,8 +98,8 @@ clear      mod4
 clear      mod5
 clear      shift
 keycode      22 = BackSpace
-keycode      50 = Shift_L
-keycode      62 = Shift_R
+keycode      50 = ISO_Level2_Latch
+keycode      62 = ISO_Level2_Latch
 keycode      66 = Control_L
 keycode      37 = Hyper_L
 keycode       8 = 0x3573
@@ -120,7 +120,7 @@ add        mod2 = Num_Lock
 add        mod3 = Hyper_L Hyper_R
 add        mod4 = Super_L Super_R
 add        mod5 = Mode_switch ISO_Level3_Shift
-add       shift = Shift_L Shift_R
+add       shift = Shift_L Shift_R ISO_Level2_Latch
 
 !
 ! Reference for modifier mappings in default layout:
