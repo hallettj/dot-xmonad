@@ -54,7 +54,7 @@ keycode  31 = c C 8     C
 keycode  32 = r R 9     R
 keycode  33 = l L plus  L
 
-keycode  43 = d D D     D
+keycode  43 = d D 0     D
 keycode  44 = h H 4     H
 keycode  45 = t T 5     T
 keycode  46 = n N 6     N
