@@ -8,10 +8,11 @@
       action: apt pkg={{ item }} state=present
       sudo: yes
       with_items:
-        - haskell-platform
         - xmonad
         - alsa-utils
         - dzen2
+        - cabal-install
+        - ghc
         - murrine-themes
         - network-manager
         - network-manager-gnome
