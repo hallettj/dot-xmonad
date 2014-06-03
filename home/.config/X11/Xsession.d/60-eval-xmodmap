@@ -1,1 +1,4 @@
-xmodmap ~/.xmodmap 2>/dev/null || true
+MAP=$(lsusb | grep "Kinesis Advantage" &> /dev/null && ~/.xmodmap-kinesis || ~/.xmodmap)
+if [ -f "$MAP" ]; then
+  xmodmap "$MAP" 2>/dev/null || true
+fi

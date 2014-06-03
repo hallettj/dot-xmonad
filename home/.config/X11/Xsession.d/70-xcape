@@ -4,4 +4,9 @@ ALT='Alt_L=F12;Alt_R=F12'
 RETURN='Control_R=Return'
 SPACE='Mode_switch=space'
 
-run-this-one xcape -d -t 250 -e "$CTRL;$SHIFT;$ALT;$RETURN;$SPACE" &
+KINESIS=$(lsusb | grep "Kinesis Advantage" &> /dev/null && 1 || 0)
+if [ $KINESIS -ne 1 ]; then
+  run-this-one xcape -d -t 250 -e "$CTRL;$SHIFT;$ALT;$RETURN;$SPACE" &
+else
+  killall xcape &> /dev/null || true
+fi
