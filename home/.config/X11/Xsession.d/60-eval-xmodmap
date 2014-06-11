@@ -1,4 +1,14 @@
-MAP=$(lsusb | grep "Kinesis Advantage" &> /dev/null && ~/.xmodmap-kinesis || ~/.xmodmap)
-if [ -f "$MAP" ]; then
-  xmodmap "$MAP" 2>/dev/null || true
+function kinesis_connected {
+  lsusb | grep "Kinesis Advantage" &> /dev/null
+}
+
+function apply_map {
+  local map=$1
+  xmodmap "$map" &>/dev/null || true
+}
+
+if [ kinesis_connected ]; then
+  apply_map ~/.xmodmap-kinesis
+else
+  apply_map ~/.xmodmap
 fi

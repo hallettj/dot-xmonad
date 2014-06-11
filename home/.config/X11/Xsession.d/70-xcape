@@ -4,9 +4,20 @@ ALT='Alt_L=F12;Alt_R=F12'
 RETURN='Control_R=Return'
 SPACE='Mode_switch=space'
 
-KINESIS=$(lsusb | grep "Kinesis Advantage" &> /dev/null && 1 || 0)
-if [ $KINESIS -ne 1 ]; then
+function kinesis_connected {
+  lsusb | grep "Kinesis Advantage" &> /dev/null
+}
+
+function start_xcape {
   run-this-one xcape -d -t 250 -e "$CTRL;$SHIFT;$ALT;$RETURN;$SPACE" &
-else
+}
+
+function stop_xcape {
   killall xcape &> /dev/null || true
+}
+
+if [ kinesis_connected ]; then
+  stop_xcape
+else
+  start_xcape
 fi
