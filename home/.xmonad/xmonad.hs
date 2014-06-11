@@ -131,7 +131,7 @@ myScratchPads = [ NS "pandora"      spawnPandora     findPandora     (leftPanel 
 -- The available layouts.  Note that each layout is separated by |||,
 -- which denotes layout choice.
 --
-myLayout = avoidStruts (tiled ||| Full)
+myLayout = avoidStruts (tiled ||| Full) ||| Full
   where
     -- default tiling algorithm partitions the screen into two panes
     tiled   = ResizableTall nmaster delta ratio []
@@ -467,7 +467,9 @@ myLogHook h = dynamicLogWithPP $ namedScratchpadFilterOutWorkspacePP $ xmobarPP 
 -- with mod-q.  Used by, e.g., XMonad.Layout.PerWorkspace to initialize
 -- per-workspace layout choices.
 --
-myStartupHook = spawn "bash ~/.Xsession"
+myStartupHook = do
+  setWMName "LG3D"
+  spawn "bash ~/.Xsession"
 
 
 ------------------------------------------------------------------------
