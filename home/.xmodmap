@@ -101,7 +101,7 @@ keycode      22 = BackSpace
 keycode      50 = ISO_Level2_Latch
 keycode      62 = ISO_Level2_Latch
 keycode      66 = Control_L
-keycode      37 = Hyper_L
+keycode      37 = Control_L
 keycode       8 = 0x3573
 keycode      36 = Control_R
 keycode     105 = Mode_switch NoSymbol Mode_switch
@@ -129,6 +129,7 @@ add       shift = Shift_L Shift_R ISO_Level2_Latch
 !  36 = Return
 !  37 = Control_L
 !  65 = space
+!  66 = Caps_Lock
 ! 105 = Control_R
 ! 133 = Super_L
 !
