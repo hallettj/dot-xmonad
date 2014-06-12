@@ -1,0 +1,61 @@
+partial modifier_keys
+xkb_symbols "sticky_shift" {
+    key <LFSH> { [ ISO_Level2_Latch ] };
+    key <RTSH> { [ ISO_Level2_Latch ] };
+    modifier_map Shift { <LFSH> };
+    modifier_map Shift { <RTSH> };
+};
+
+partial modifier_keys
+xkb_symbols "lsgt_lvl3_latch" {
+    key <LSGT> {
+       type[Group1]="THREE_LEVEL",
+       symbols[Group1] = [ ISO_Level3_Latch, ISO_Level3_Latch, ISO_Level3_Latch ]
+    };
+    include "level3(modifier_mapping)"
+};
+
+partial alphanumeric_keys
+xkb_symbols "invert_number_row" {
+    key <TLDE> { [  asciitilde,     grave ] };
+    key <AE01> { [      exclam,         1 ] };
+    key <AE02> { [          at,         2 ] };
+    key <AE03> { [  numbersign,         3 ] };
+    key <AE04> { [      dollar,         4 ] };
+    key <AE05> { [     percent,         5 ] };
+    key <AE06> { [ asciicircum,         6 ] };
+    key <AE07> { [   ampersand,         7 ] };
+    key <AE08> { [    asterisk,         8 ] };
+    key <AE09> { [   parenleft,         9 ] };
+    key <AE10> { [  parenright,         0 ] };
+    key <BKSL> { [         bar, backslash ] };
+};
+
+partial alphanumeric_keys
+xkb_symbols "virtual_numpad" {
+    key <AD07> { [ g, G,     7 ] };
+    key <AD08> { [ c, C,     8 ] };
+    key <AD09> { [ r, R,     9 ] };
+    key <AD10> { [ l, L,  plus ] };
+
+    key <AC06> { [ d, D,     0 ] };
+    key <AC07> { [ h, H,     4 ] };
+    key <AC08> { [ t, T,     5 ] };
+    key <AC09> { [ n, N,     6 ] };
+    key <AC10> { [ s, S, equal ] };
+
+    key <AB07> { [ m, M,     1 ] };
+    key <AB08> { [ w, W,     2 ] };
+    key <AB09> { [ v, V,     3 ] };
+    key <AB10> { [ z, Z        ] };
+
+    key <RTRN> { [Return, Return, 0] };
+};
+
+partial alphanumeric_keys
+xkb_symbols "virtual_movement" {
+    key <AD03> { [ period, greater,    Up ] };
+    key <AC02> { [      o,       O,  Left ] };
+    key <AC03> { [      e,       E,  Down ] };
+    key <AC04> { [      u,       U, Right ] };
+};

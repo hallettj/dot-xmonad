@@ -7,8 +7,13 @@ function apply_map {
   xmodmap "$map" &>/dev/null || true
 }
 
+function apply_xkb_map {
+  local map=$1
+  xkbcomp -w 0 -I"$HOME/.config/X11/xkb" "$map" $DISPLAY
+}
+
 if [ kinesis_connected ]; then
-  apply_map ~/.xmodmap-kinesis
+  apply_xkb_map ~/.config/X11/xkb/keymap/kinesis
 else
   apply_map ~/.xmodmap
 fi
