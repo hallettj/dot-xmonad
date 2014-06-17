@@ -9,7 +9,8 @@ function kinesis_connected {
 }
 
 function start_xcape {
-  run-this-one xcape -d -t 250 -e "$CTRL;$SHIFT;$ALT;$RETURN;$SPACE" &
+  local mappings=$1
+  run-this-one xcape -d -t 250 -e "$mappings" &
 }
 
 function stop_xcape {
@@ -17,7 +18,7 @@ function stop_xcape {
 }
 
 if [ kinesis_connected ]; then
-  stop_xcape
+  start_xcape "$ALT"
 else
-  start_xcape
+  start_xcape "$CTRL;$SHIFT;$ALT;$RETURN;$SPACE"
 fi
