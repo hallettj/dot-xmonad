@@ -1,15 +1,22 @@
 partial modifier_keys
 xkb_symbols "sticky_shift" {
-    key <LFSH> { [ ISO_Level2_Latch ] };
-    key <RTSH> { [ ISO_Level2_Latch ] };
-    modifier_map Shift { <LFSH> };
-    modifier_map Shift { <RTSH> };
+    name[Group1]= "sticky";
+    name[Group2]= "legacy";
+    key <LFSH> {
+        symbols[Group1]= [ ISO_Level2_Latch ],
+        symbols[Group2]= [ Shift_L ]
+    };
+    key <RTSH> {
+        symbols[Group1]= [ ISO_Level2_Latch ],
+        symbols[Group2]= [ Shift_R ]
+    };
+    modifier_map Shift { Shift_L, Shift_R, ISO_Level2_Latch };
 };
 
 partial modifier_keys
 xkb_symbols "lsgt_lvl3_latch" {
     key <LSGT> {
-       type[Group1]="THREE_LEVEL",
+       type[Group1]= "THREE_LEVEL",
        symbols[Group1] = [ ISO_Level3_Latch, ISO_Level3_Latch, ISO_Level3_Latch ]
     };
     include "level3(modifier_mapping)"

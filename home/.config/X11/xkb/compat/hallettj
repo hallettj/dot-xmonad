@@ -1,0 +1,32 @@
+partial
+xkb_compatibility "shift_lock_indicator" {
+    indicator "Caps Lock" {
+        !allowExplicit;
+        whichModState= locked;
+        modifiers= Shift;
+    };
+};
+
+partial
+xkb_compatibility "level3_lock_indicator" {
+    indicator "Num Lock" {
+        !allowExplicit;
+        whichModState= locked;
+        modifiers= LevelThree;
+    };
+};
+
+partial
+xkb_compatibility "pause_lock_next_group" {
+    interpret Pause+AnyOfOrNone(all) {
+        action= LockGroup(group=+1);
+    };
+};
+
+partial
+xkb_compatibility "group_indicator" {
+    indicator "Scroll Lock" {
+        !allowExplicit;
+        groups= All-Group1;
+    };
+};

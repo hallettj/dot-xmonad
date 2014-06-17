@@ -1,19 +1,13 @@
 xkb_keymap {
     xkb_keycodes  { include "evdev+aliases(qwerty)" };
     xkb_types     { include "complete" };
-    xkb_compat    {
+    xkb_compatibility {
         include "complete"
- 
-        indicator "Caps Lock" {
-            !allowExplicit;
-            whichModState= locked;
-            modifiers= Shift;
-        };
-        indicator "Num Lock" {
-            !allowExplicit;
-            whichModState= locked;
-            modifiers= LevelThree;
-        };
+
+        include "hallettj(pause_lock_next_group)"
+        include "hallettj(group_indicator)"
+        include "hallettj(level3_lock_indicator)"
+        include "hallettj(shift_lock_indicator)"
     };
     xkb_symbols   {
         include "pc"
