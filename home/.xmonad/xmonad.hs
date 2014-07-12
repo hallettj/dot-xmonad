@@ -1,8 +1,7 @@
--- xmonad config used by Vic Fryzel
--- Author: Vic Fryzel
--- http://github.com/vicfryzel/xmonad-config
+{-# LANGUAGE DeriveDataTypeable, MultiParamTypeClasses, TypeSynonymInstances #-}
+
 --
--- customized by Jesse Hallett
+-- xmonad config used by Jesse Hallett
 -- http://github.com/hallettj/config_files
 
 import Graphics.X11.ExtraTypes.XF86 (xF86XK_MonBrightnessDown, xF86XK_MonBrightnessUp)
@@ -17,14 +16,20 @@ import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.MarkAsUrgent (markAsUrgent)
 import XMonad.Hooks.SetWMName
 import XMonad.Hooks.UrgencyHook (UrgencyHook, NoUrgencyHook(..), clearUrgents, focusUrgent, urgencyHook, withUrgencyHook)
+import XMonad.Layout.Dishes (Dishes(..))
+import XMonad.Layout.FixedColumn (FixedColumn(..))
 import XMonad.Layout.Flip (Flip(..))
 import XMonad.Layout.Fullscreen hiding (fullscreenEventHook)
+import XMonad.Layout.LimitWindows (limitWindows)
+import XMonad.Layout.Magnifier (magnifiercz', maximizeVertical)
+import XMonad.Layout.MultiToggle (EOT(..), Toggle(..), Transformer, (??), mkToggle, mkToggle1, transform)
+import XMonad.Layout.MultiToggle.Instances (StdTransformers(FULL))
 import XMonad.Layout.NoBorders
 import XMonad.Layout.PerWorkspace (onWorkspaces)
+import XMonad.Layout.Renamed (Rename(..), renamed)
 import XMonad.Layout.ResizableTile (MirrorResize(MirrorExpand, MirrorShrink), ResizableTall(..))
 import XMonad.Layout.Spiral
-import XMonad.Layout.Tabbed
-import XMonad.Layout.ThreeColumns
+import XMonad.Layout.ThreeColumns (ThreeCol(ThreeColMid))
 import XMonad.Util.Dzen (addArgs, center, dzenConfig, font, onCurr)
 import XMonad.Util.Run (runProcessWithInput, spawnPipe)
 import XMonad.Util.EZConfig (mkKeymap)
@@ -36,8 +41,6 @@ import XMonad.Util.NamedScratchpad ( NamedScratchpad(..)
                                    , namedScratchpadManageHook )
 import XMonad.Util.NamedWindows (getName)
 import qualified XMonad.StackSet as W
-import Data.Char (toLower)
-import Data.List (intercalate)
 import qualified Data.Map        as M
 import Data.Maybe (catMaybes, listToMaybe)
 import Data.Monoid (All (All), mappend)
@@ -131,20 +134,49 @@ myScratchPads = [ NS "pandora"      spawnPandora     findPandora     (leftPanel 
 -- The available layouts.  Note that each layout is separated by |||,
 -- which denotes layout choice.
 --
-myLayout = avoidStruts (tiled ||| Full) ||| Full
+myLayout = smartBorders                    $
+           mkToggle (SFULL ?? FULL ?? EOT) $
+           avoidStruts
+           perWS
+
+perWS = onWorkspaces ["1:web",   "2:web"]      splitFirst  $
+        onWorkspaces ["3:comms", "4:terminal"] codingFirst $
+        splitFirst
+
+splitFirst  = split ||| coding ||| dishes ||| book
+codingFirst = coding ||| dishes ||| book ||| split
+
+split = renamed [Replace "tall"] $
+        magnifiercz' 1.4          $
+        ResizableTall nmaster delta ratio []
   where
-    -- default tiling algorithm partitions the screen into two panes
-    tiled   = ResizableTall nmaster delta ratio []
-
-    -- The default number of windows in the master pane
     nmaster = 1
-
-    -- Default proportion of screen occupied by master pane
-    ratio   = 3/4
-
-    -- Percent of screen to increment by when resizing panes
+    ratio   = 60/100
     delta   = 3/100
 
+coding = renamed [Replace "fixed column"] $
+         limitWindows 3             $
+         magnifiercz' 1.4           $
+         FixedColumn 1 20 100 10
+
+dishes = renamed [Replace "dishes"] $
+         limitWindows 5 $ Dishes nmaster ratio
+  where
+    nmaster = 1
+    ratio   = 1/5
+
+book = renamed [Replace "book"] $
+       ThreeColMid nmaster delta ratio
+  where
+    nmaster = 1
+    delta   = 3/100
+    ratio   = 60/100
+
+data MyTransformers = SFULL
+    deriving (Read, Show, Eq, Typeable)
+
+instance Transformer MyTransformers Window where
+    transform SFULL x k = k (avoidStruts Full) (const x)
 
 ------------------------------------------------------------------------
 -- Colors and borders
@@ -171,16 +203,6 @@ green  = "#859900"
 myNormalBorderColor  = base00
 myFocusedBorderColor = orange
 
--- Colors for text and backgrounds of each tab when in "Tabbed" layout.
-tabConfig = defaultTheme {
-    activeBorderColor   = orange,
-    activeTextColor     = base0,
-    activeColor         = base03,
-    inactiveBorderColor = base00,
-    inactiveTextColor   = base02,
-    inactiveColor       = base03
-}
-
 -- Color of current window title in xmobar.
 xmobarTitleColor = orange
 
@@ -204,20 +226,14 @@ myBorderWidth = 1
 --
 myModMask = mod1Mask
 
-myKeys :: [(String, X())]
-myKeys =
-  [ ("M-<Backspace>", focusUrgent)
+myKeys :: XConfig a -> [(String, X())]
+myKeys conf =
+  [ ("M-, t", spawn $ XMonad.terminal conf)
+
+  , ("M-o", spawn "xfce4-appfinder")
+
+  , ("M-<Backspace>", focusUrgent)
   , ("M-S-<Backspace>", clearUrgents)
-
-  -- Toggle the status bar gap.
-  -- TODO: update this binding with avoidStruts, ((modMask, xK_b),
-  --, ("M-b", sendMessage ToggleGaps)
-  , ("M-a",   sendMessage MirrorShrink)
-  , ("M-;",   sendMessage MirrorExpand)
-
-  , ("M-s",   nextScreen)
-  , ("M-S-s", swapNextScreen)
-  , ("M-z",   toggleWS' ["NSP"])
 
   , ("M-, p", namedScratchpadAction myScratchPads "pandora")
   , ("M-, r", namedScratchpadAction myScratchPads "rdio")
@@ -227,19 +243,27 @@ myKeys =
 
   -- Signals offlineimap to check for new mail immediately.
   , ("M-, g", spawn "killall -s SIGUSR1 offlineimap")
+
+  -- Arranging windows
+
+  , ("M-<Return>", windows W.focusMaster)
+  , ("M-S-<Return>", windows W.swapMaster)
+
+  , ("M-S-z", sendMessage (Toggle SFULL))
+  , ("M-<F11>", sendMessage (Toggle FULL))
+  , ("M-C-b", sendMessage ToggleStruts)
+
+  , ("M-a",   sendMessage MirrorShrink)
+  , ("M-;",   sendMessage MirrorExpand)
+
+  , ("M-s",   nextScreen)
+  , ("M-S-s", swapNextScreen)
+  , ("M-z",   toggleWS' ["NSP"])
   ]
 
 vicfryzelKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
-  ----------------------------------------------------------------------
-  -- Custom key bindings
-  --
-
-  -- Start a terminal.  Terminal to start is specified by myTerminal variable.
-  [ ((modMask .|. shiftMask, xK_Return),
-     spawn $ XMonad.terminal conf)
-
   -- Lock the screen using xscreensaver.
-  , ((modMask .|. controlMask, xK_l),
+  [ ((modMask .|. controlMask, xK_l),
      spawn "xscreensaver-command -lock")
 
   -- Launch dmenu via yeganesh.
@@ -342,14 +366,6 @@ vicfryzelKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   , ((modMask, xK_k),
      windows W.focusUp  )
 
-  -- Move focus to the master window.
-  , ((modMask .|. controlMask, xK_m),
-     windows W.focusMaster  )
-
-  -- Swap the focused window and the master window.
-  , ((modMask, xK_Return),
-     windows W.swapMaster)
-
   -- Swap the focused window with the next window.
   , ((modMask .|. shiftMask, xK_j),
      windows W.swapDown  )
@@ -378,9 +394,6 @@ vicfryzelKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   -- Decrement the number of windows in the master area.
   , ((modMask, xK_period),
      sendMessage (IncMasterN (-1)))
-
-  -- Toggle the status bar gap.
-  -- TODO: update this binding with avoidStruts, ((modMask, xK_b),
 
   -- Quit xmonad.
   , ((modMask .|. shiftMask, xK_q),
@@ -419,10 +432,6 @@ emulatedNumpadKeys = [ xK_m
 ------------------------------------------------------------------------
 -- Mouse bindings
 --
--- Focus rules
--- True if your focus should follow your mouse cursor.
-myFocusFollowsMouse :: Bool
-myFocusFollowsMouse = True
 
 myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList
   [
@@ -479,31 +488,6 @@ myHandleEventHook = handleEventHook defaultConfig `mappend` fullscreenEventHook
 
 
 ------------------------------------------------------------------------
--- Urgency Hooks:
---
--- data LibNotifyUrgencyHook = LibNotifyUrgencyHook deriving (Read, Show)
-
--- instance UrgencyHook LibNotifyUrgencyHook where
---     urgencyHook LibNotifyUrgencyHook w = do
---         name <- getName w
---         ws   <- gets windowset
---         c    <- withDisplay $ \d -> fmap resClass $ io $ getClassHint d w
---         whenJust (W.findTag w ws) (flash name c)
---       where
---         flash _ "Pidgin" _  = spawn "true"
---         flash _ "emesene" _ = spawn "true"
---         flash name c index  = spawn $
---                               intercalate " " $
---                               [ "notify-send -i"
---                               , icon
---                               , show $ show name
---                               , show $ "on " ++ index ]
---           where icon = case c of
---                          "URxvt"   -> "gnome-terminal"
---                          otherwise -> map toLower c
-
-
-------------------------------------------------------------------------
 -- Run xmonad
 --
 main = do
@@ -511,7 +495,7 @@ main = do
   xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig {
     -- simple stuff
     terminal           = myTerminal,
-    focusFollowsMouse  = myFocusFollowsMouse,
+    focusFollowsMouse  = False,
     borderWidth        = myBorderWidth,
     modMask            = myModMask,
     workspaces         = myWorkspaces,
@@ -519,11 +503,11 @@ main = do
     focusedBorderColor = myFocusedBorderColor,
 
     -- key bindings
-    keys               = \c -> vicfryzelKeys c `M.union` mkKeymap c myKeys,
+    keys               = \c -> vicfryzelKeys c `M.union` mkKeymap c (myKeys c),
     mouseBindings      = myMouseBindings,
 
     -- hooks, layouts
-    layoutHook         = smartBorders myLayout,
+    layoutHook         = myLayout,
     manageHook         = myManageHook,
     handleEventHook    = myHandleEventHook,
     logHook            = myLogHook xmproc,
