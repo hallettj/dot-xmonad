@@ -17,7 +17,7 @@ function stop_xcape {
   killall xcape &> /dev/null || true
 }
 
-if [ kinesis_connected ]; then
+if [ kinesis_connected -eq 0 ]; then
   start_xcape "$ALT"
 else
   start_xcape "$CTRL;$SHIFT;$ALT;$RETURN;$SPACE"

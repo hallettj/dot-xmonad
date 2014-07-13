@@ -12,7 +12,7 @@ function apply_xkb_map {
   xkbcomp -w 0 -I"$HOME/.config/X11/xkb" "$map" $DISPLAY
 }
 
-if [ kinesis_connected ]; then
+if [ kinesis_connected -eq 0 ]; then
   apply_xkb_map ~/.config/X11/xkb/keymap/kinesis
 else
   apply_map ~/.xmodmap
