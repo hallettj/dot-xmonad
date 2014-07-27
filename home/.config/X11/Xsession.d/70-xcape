@@ -5,8 +5,7 @@ RETURN='Control_R=Return'
 SPACE='Mode_switch=space'
 
 function kinesis_connected {
-  lsusb | grep "Kinesis Advantage" &> /dev/null
-  return $?
+  lsusb | grep "Kinesis Advantage" || true
 }
 
 function start_xcape {
@@ -18,8 +17,7 @@ function stop_xcape {
   killall xcape &> /dev/null || true
 }
 
-kinesis_connected
-if [ $? -eq 0 ]; then
+if [ -n "$(kinesis_connected)" ]; then
   start_xcape "$CTRL;$ALT"
 else
   start_xcape "$CTRL;$SHIFT;$ALT;$RETURN;$SPACE"

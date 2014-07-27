@@ -1,6 +1,5 @@
 function kinesis_connected {
-  lsusb | grep "Kinesis Advantage" &> /dev/null
-  return $?
+  lsusb | grep "Kinesis Advantage" || true
 }
 
 function apply_map {
@@ -13,8 +12,7 @@ function apply_xkb_map {
   xkbcomp -w 0 -I"$HOME/.config/X11/xkb" "$map" $DISPLAY
 }
 
-kinesis_connected
-if [ $? -eq 0 ]; then
+if [ -n "$(kinesis_connected)" ]; then
   apply_xkb_map ~/.config/X11/xkb/keymap/kinesis
 else
   apply_map ~/.xmodmap
