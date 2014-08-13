@@ -1,4 +1,5 @@
 CTRL='Control_L=Escape'
+CTRL_R='Control_R=Escape'
 SHIFT='Shift_L=Multi_key;Shift_R=Multi_key'
 ALT='Alt_L=F12;Alt_R=F12'
 RETURN='Control_R=Return'
@@ -18,7 +19,7 @@ function stop_xcape {
 }
 
 if [ -n "$(kinesis_connected)" ]; then
-  start_xcape "$CTRL;$ALT"
+  start_xcape "$CTRL;$CTRL_R;$ALT"
 else
   start_xcape "$CTRL;$SHIFT;$ALT;$RETURN;$SPACE"
 fi
