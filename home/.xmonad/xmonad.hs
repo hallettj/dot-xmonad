@@ -92,7 +92,7 @@ myManageHook = composeAll
 myScratchPads = [ NS "pandora"      spawnPandora     findPandora     (leftPanel  0.50)
                 , NS "rdio"         spawnRdio        findRdio        (leftPanel  0.67)
                 , NS "google music" spawnGoogleMusic findGoogleMusic (leftPanel  0.67)
-                , NS "pidgin"       spawnPidgin      findPidgin      (rightPanel 0.25)
+                , NS "slack"        spawnSlack       findSlack       (rightPanel 0.67)
                 ]
   where
     spawnPandora = chromeApp "http://www.pandora.com/"
@@ -104,8 +104,8 @@ myScratchPads = [ NS "pandora"      spawnPandora     findPandora     (leftPanel 
     spawnGoogleMusic = chromeApp "https://play.google.com/music"
     findGoogleMusic = resource =? "play.google.com__music"
 
-    spawnPidgin = "pidgin"
-    findPidgin  = role =? "buddy_list"
+    spawnSlack = chromeApp "https://tozny.slack.com/"
+    findSlack = resource =? "tozny.slack.com"
 
     chromeApp = (("google-chrome --user-data-dir=" ++ dataDir ++ " --app=") ++)
     dataDir   = "$HOME/.config/google-chrome-apps"
@@ -151,7 +151,7 @@ split = renamed [Replace "tall"] $
         ResizableTall nmaster delta ratio []
   where
     nmaster = 1
-    ratio   = 60/100
+    ratio   = 66/100
     delta   = 3/100
 
 coding = renamed [Replace "fixed column"] $
@@ -238,7 +238,7 @@ myKeys conf =
   , ("M-, p", namedScratchpadAction myScratchPads "pandora")
   , ("M-, r", namedScratchpadAction myScratchPads "rdio")
   , ("M-, m", namedScratchpadAction myScratchPads "google music")
-  , ("M-, b", namedScratchpadAction myScratchPads "pidgin")
+  , ("M-, s", namedScratchpadAction myScratchPads "slack")
   , ("M-, ,", sendMessage (IncMasterN (-1)))
 
   -- Signals offlineimap to check for new mail immediately.
