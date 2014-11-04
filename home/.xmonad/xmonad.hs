@@ -263,7 +263,7 @@ myKeys conf =
 
 vicfryzelKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   -- Lock the screen using xscreensaver.
-  [ ((modMask .|. controlMask, xK_l),
+  [ ((modMask .|. shiftMask, xK_l),
      spawn "xscreensaver-command -lock")
 
   -- Launch dmenu via yeganesh.
@@ -379,7 +379,7 @@ vicfryzelKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
      sendMessage Shrink)
 
   -- Expand the master area.
-  , ((modMask .|. shiftMask, xK_l),
+  , ((modMask .|. controlMask, xK_l),
      sendMessage Expand)
 
   -- Push window back into tiling.
