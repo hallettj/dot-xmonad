@@ -20,6 +20,7 @@ import XMonad.Layout.Dishes (Dishes(..))
 import XMonad.Layout.FixedColumn (FixedColumn(..))
 import XMonad.Layout.Flip (Flip(..))
 import XMonad.Layout.Fullscreen hiding (fullscreenEventHook)
+import XMonad.Layout.IM (Property(Title), withIM)
 import XMonad.Layout.LimitWindows (limitWindows)
 import XMonad.Layout.Magnifier (magnifiercz', maximizeVertical)
 import XMonad.Layout.MultiToggle (EOT(..), Toggle(..), Transformer, (??), mkToggle, mkToggle1, transform)
@@ -30,6 +31,7 @@ import XMonad.Layout.Renamed (Rename(..), renamed)
 import XMonad.Layout.ResizableTile (MirrorResize(MirrorExpand, MirrorShrink), ResizableTall(..))
 import XMonad.Layout.Spiral
 import XMonad.Layout.ThreeColumns (ThreeCol(ThreeColMid))
+import XMonad.Layout.WindowNavigation (Navigate(Go), Direction2D(U, D, L, R), windowNavigation)
 import XMonad.Util.Dzen (addArgs, center, dzenConfig, font, onCurr)
 import XMonad.Util.Run (runProcessWithInput, spawnPipe)
 import XMonad.Util.EZConfig (mkKeymap)
@@ -44,6 +46,7 @@ import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 import Data.Maybe (catMaybes, listToMaybe)
 import Data.Monoid (All (All), mappend)
+import Data.Ratio ((%))
 import Control.Applicative ((<$>))
 import Control.Monad ((>=>), filterM, mapM_, sequence, when, void)
 
@@ -143,8 +146,10 @@ perWS = onWorkspaces ["1:web",   "2:web"]      splitFirst  $
         onWorkspaces ["3:comms", "4:terminal"] codingFirst $
         splitFirst
 
-splitFirst  = split ||| coding ||| dishes ||| book
-codingFirst = coding ||| dishes ||| book ||| split
+splitFirst  = wNav $ browsing ||| split ||| coding ||| dishes ||| book
+codingFirst = wNav $ coding ||| dishes ||| book ||| browsing ||| split
+
+wNav l = windowNavigation l
 
 split = renamed [Replace "tall"] $
         magnifiercz' 1.4          $
@@ -153,6 +158,9 @@ split = renamed [Replace "tall"] $
     nmaster = 1
     ratio   = 66/100
     delta   = 3/100
+
+browsing = renamed [Replace "browsing"] $
+           withIM (1%6) (Title "Tabs Outliner") split
 
 coding = renamed [Replace "fixed column"] $
          limitWindows 3             $
@@ -366,6 +374,15 @@ vicfryzelKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   , ((modMask, xK_k),
      windows W.focusUp  )
 
+  , ((modMask, xK_period),
+     sendMessage $ Go U)
+  , ((modMask, xK_e),
+     sendMessage $ Go D)
+  , ((modMask, xK_o),
+     sendMessage $ Go L)
+  , ((modMask, xK_u),
+     sendMessage $ Go R)
+
   -- Swap the focused window with the next window.
   , ((modMask .|. shiftMask, xK_j),
      windows W.swapDown  )
@@ -391,9 +408,9 @@ vicfryzelKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   -- , ((modMask, xK_comma),
   --    sendMessage (IncMasterN 1))
 
-  -- Decrement the number of windows in the master area.
-  , ((modMask, xK_period),
-     sendMessage (IncMasterN (-1)))
+  -- -- Decrement the number of windows in the master area.
+  -- , ((modMask, xK_period),
+  --    sendMessage (IncMasterN (-1)))
 
   -- Quit xmonad.
   , ((modMask .|. shiftMask, xK_q),
