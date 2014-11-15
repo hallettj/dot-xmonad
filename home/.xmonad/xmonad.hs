@@ -238,7 +238,7 @@ myKeys :: XConfig a -> [(String, X())]
 myKeys conf =
   [ ("M-, t", spawn $ XMonad.terminal conf)
 
-  , ("M-o", spawn "xfce4-appfinder")
+  , ("M-f", spawn "xfce4-appfinder")
 
   , ("M-<Backspace>", focusUrgent)
   , ("M-S-<Backspace>", clearUrgents)
@@ -247,7 +247,6 @@ myKeys conf =
   , ("M-, r", namedScratchpadAction myScratchPads "rdio")
   , ("M-, m", namedScratchpadAction myScratchPads "google music")
   , ("M-, s", namedScratchpadAction myScratchPads "slack")
-  , ("M-, ,", sendMessage (IncMasterN (-1)))
 
   -- Signals offlineimap to check for new mail immediately.
   , ("M-, g", spawn "killall -s SIGUSR1 offlineimap")
@@ -264,9 +263,14 @@ myKeys conf =
   , ("M-a",   sendMessage MirrorShrink)
   , ("M-;",   sendMessage MirrorExpand)
 
-  , ("M-s",   nextScreen)
-  , ("M-S-s", swapNextScreen)
   , ("M-z",   toggleWS' ["NSP"])
+
+  , ("M-C-w", kill)  -- close focused window
+
+  -- Increment the number of windows in the master area.
+  , ("M-l",   sendMessage $ IncMasterN 1)
+  -- Decrement the number of windows in the master area.
+  , ("M-s",   sendMessage $ IncMasterN (-1))
   ]
 
 vicfryzelKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
@@ -338,10 +342,6 @@ vicfryzelKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   -- "Standard" xmonad key bindings
   --
 
-  -- Close focused window.
-  , ((modMask, xK_Escape),
-     kill)
-
   -- Cycle through the available layout algorithms.
   , ((modMask, xK_space),
      sendMessage NextLayout)
@@ -402,15 +402,6 @@ vicfryzelKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   -- Push window back into tiling.
   , ((modMask .|. controlMask, xK_t),
      withFocused $ windows . W.sink)
-
-  -- Increment the number of windows in the master area.
-  -- Disabled because it conflicts with my <leader> shortcuts.
-  -- , ((modMask, xK_comma),
-  --    sendMessage (IncMasterN 1))
-
-  -- -- Decrement the number of windows in the master area.
-  -- , ((modMask, xK_period),
-  --    sendMessage (IncMasterN (-1)))
 
   -- Quit xmonad.
   , ((modMask .|. shiftMask, xK_q),
