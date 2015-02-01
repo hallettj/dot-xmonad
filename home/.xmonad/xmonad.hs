@@ -13,12 +13,10 @@ import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops (fullscreenEventHook)
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
-import XMonad.Hooks.MarkAsUrgent (markAsUrgent)
 import XMonad.Hooks.SetWMName
 import XMonad.Hooks.UrgencyHook (UrgencyHook, NoUrgencyHook(..), clearUrgents, focusUrgent, urgencyHook, withUrgencyHook)
 import XMonad.Layout.Dishes (Dishes(..))
 import XMonad.Layout.FixedColumn (FixedColumn(..))
-import XMonad.Layout.Flip (Flip(..))
 import XMonad.Layout.Fullscreen hiding (fullscreenEventHook)
 import XMonad.Layout.IM (Property(Title), withIM)
 import XMonad.Layout.LimitWindows (limitWindows)
@@ -86,7 +84,6 @@ myManageHook = composeAll
     , className =? "Steam"          --> doFloat
     , className =? "steam"          --> doFullFloat  -- bigpicture-mode
     , className =? "Gimp"           --> doFloat
-    , className =? "Pidgin"         --> doF (W.shift "3:chat") <+> markAsUrgent
     , className =? "stalonetray"    --> doIgnore
     , isDialog                      --> doCenterFloat
     , isFullscreen --> (doF W.focusDown <+> doFullFloat)]
