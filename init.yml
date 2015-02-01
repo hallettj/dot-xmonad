@@ -42,9 +42,13 @@
     - name: cabal update
       shell: cabal update
 
+    - name: install cabin
+      shell: cabal install cabin
+             creates=~/.cabal/bin/cabin
+
     - name: install xmonad
-      shell: cabal install xmonad xmonad-contrib xmonad-extras xmobar yeganesh
-             creates=~/.cabal/bin/xmonad
+      shell: cabin install xmonad && cp ~/.cabin/cabins/xmonad && cabal install xmonad-contrib xmonad-extras xmobar yeganesh && cabin load xmonad
+             creates=~/.cabin/bin/xmonad
 
     - name: compile xmonad config
       shell: xmonad --recompile
