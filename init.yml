@@ -29,6 +29,7 @@
         # These are dependencies of xmonad and xmonad-related cabal
         # packages.
         - libxinerama-dev
+        - libxpm-dev
         - libxrandr-dev
         - libxss-dev
         # - libxft2-dev
