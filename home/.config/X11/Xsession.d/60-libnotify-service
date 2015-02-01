@@ -1,3 +1,2 @@
 killall -q notify-osd || true
-run-one statnot ~/.config/statnot/config.py &
-
+run-this-one statnot ~/.config/statnot/config.py &
