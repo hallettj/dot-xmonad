@@ -3,6 +3,10 @@ CTRL_R='Control_R=Escape'
 ALT='Alt_L=F12;Alt_R=F12'
 RETURN='Control_R=Return'
 
+function ergodox_connected {
+  lsusb | grep "Ergodox" || true
+}
+
 function kinesis_connected {
   lsusb | grep "Kinesis Advantage" || true
 }
@@ -16,7 +20,9 @@ function stop_xcape {
   killall xcape &> /dev/null || true
 }
 
-if [ -n "$(kinesis_connected)" ]; then
+if [ -n "$(ergodox_connected)" ]; then
+  stop_xcape
+elif [ -n "$(kinesis_connected)" ]; then
   start_xcape "$CTRL;$CTRL_R;$ALT"
 else
   start_xcape "$CTRL;$ALT;$RETURN"
