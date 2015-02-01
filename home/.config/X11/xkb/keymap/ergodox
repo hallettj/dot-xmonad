@@ -11,6 +11,8 @@ xkb_keymap {
 
         include "compose(sclk)"
         include "terminate(ctrl_alt_bksp)"
+
+        include "hallettj(invert_number_row)"
     };
     xkb_geometry  { include "kinesis(model100)" };
 };
