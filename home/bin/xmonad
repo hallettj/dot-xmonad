@@ -1,9 +1,11 @@
 #!/bin/sh
 
-GHC_PACKAGE_PATH="/usr/lib/ghc/package.conf.d"
-for path in ~/.cabin/cabins/xmonad/.cabal-sandbox/*packages.conf.d; do
-	GHC_PACKAGE_PATH="$path:$GHC_PACKAGE_PATH"
-done
-export GHC_PACKAGE_PATH
+if [ "$1" = "--recompile" ]; then
+	GHC_PACKAGE_PATH="/usr/lib/ghc/package.conf.d"
+	for path in ~/.cabin/cabins/xmonad/.cabal-sandbox/*packages.conf.d; do
+		GHC_PACKAGE_PATH="$path:$GHC_PACKAGE_PATH"
+	done
+	export GHC_PACKAGE_PATH
+fi
 cabin load xmonad
 ~/.cabin/bin/xmonad "$@"
