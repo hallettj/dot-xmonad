@@ -234,6 +234,9 @@ myModMask = mod1Mask
 myKeys :: XConfig a -> [(String, X())]
 myKeys conf =
   [ ("M-, t", spawn $ XMonad.terminal conf)
+  , ("M-q", restart "xmonad" True)
+  , ("M-S-q", io exitSuccess)
+  , ("M-S-x", spawn "dm-tool switch-to-greeter")
 
   , ("M-f", spawn "xfce4-appfinder")
 
@@ -399,14 +402,6 @@ vicfryzelKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   -- Push window back into tiling.
   , ((modMask .|. controlMask, xK_t),
      withFocused $ windows . W.sink)
-
-  -- Quit xmonad.
-  , ((modMask .|. shiftMask, xK_q),
-     io exitSuccess)
-
-  -- Restart xmonad.
-  , ((modMask, xK_q),
-     restart "xmonad" True)
   ]
   ++
 
