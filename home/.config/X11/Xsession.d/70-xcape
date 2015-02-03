@@ -4,7 +4,7 @@ ALT='Alt_L=F12;Alt_R=F12'
 RETURN='Control_R=Return'
 
 function ergodox_connected {
-  lsusb | grep "Ergodox" || true
+  grep "Ergodox" /proc/bus/input/devices || true
 }
 
 function kinesis_connected {
