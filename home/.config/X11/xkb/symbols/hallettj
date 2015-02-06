@@ -59,6 +59,27 @@ xkb_symbols "virtual_numpad" {
     key <RTRN> { [Return, Return, 0] };
 };
 
+partial keypad_keys
+xkb_symbols "default_numlock" {
+    key  <KP7> { [ 7,           KP_Home     ] };
+    key  <KP8> { [ 8,           KP_Up       ] };
+    key  <KP9> { [ 9,           KP_Prior    ] };
+
+    key  <KP4> { [ 4,           KP_Left     ] };
+    key  <KP5> { [ 5,           KP_Begin    ] };
+    key  <KP6> { [ 6,           KP_Right    ] };
+
+    key  <KP1> { [ 1,           KP_End      ] };
+    key  <KP2> { [ 2,           KP_Down     ] };
+    key  <KP3> { [ 3,           KP_Next     ] };
+    key <KPEN> { [              KP_Enter    ] };
+    key <KPEQ> { [              KP_Equal    ] };
+
+    key  <KP0> { [ 0,           KP_Insert   ] };
+    key <KPDL> { [ KP_Decimal,  KP_Delete   ] };
+    key <KPPT> { [ KP_Decimal,  KP_Decimal  ] };
+};
+
 partial alphanumeric_keys
 xkb_symbols "virtual_movement" {
     key <AD03> { [ period, greater,    Up ] };

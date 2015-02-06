@@ -3,6 +3,8 @@ xkb_keymap {
     xkb_types     { include "complete" };
     xkb_compatibility {
         include "complete"
+        include "hallettj(level3_lock_indicator)"
+        include "hallettj(shift_lock_indicator)"
     };
     xkb_symbols   {
         include "pc"
@@ -11,6 +13,10 @@ xkb_keymap {
 
         include "compose(sclk)"
         include "terminate(ctrl_alt_bksp)"
+
+        include "hallettj(invert_number_row)"
+        include "hallettj(sticky_shift)"
+        include "hallettj(default_numlock)"
     };
     xkb_geometry  { include "kinesis(model100)" };
 };
