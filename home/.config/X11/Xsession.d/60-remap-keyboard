@@ -6,11 +6,6 @@ function kinesis_connected {
   lsusb | grep "Kinesis Advantage" || true
 }
 
-function apply_map {
-  local map=$1
-  xmodmap "$map" &>/dev/null || true
-}
-
 function apply_xkb_map {
   local map=$1
   xkbcomp -w 0 -I"$HOME/.config/X11/xkb" "$map" $DISPLAY
@@ -21,5 +16,5 @@ if [ -n "$(ergodox_connected)" ]; then
 elif [ -n "$(kinesis_connected)" ]; then
   apply_xkb_map ~/.config/X11/xkb/keymap/kinesis
 else
-  apply_map ~/.xmodmap
+  apply_xkb_map ~/.config/X11/xkb/keymap/basic
 fi

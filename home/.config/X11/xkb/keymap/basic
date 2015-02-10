@@ -1,0 +1,25 @@
+xkb_keymap {
+    xkb_keycodes  { include "evdev+aliases(qwerty)" };
+    xkb_types     { include "complete" };
+    xkb_compatibility {
+        include "complete"
+        include "hallettj(level3_lock_indicator)"
+        include "hallettj(shift_lock_indicator)"
+    };
+    xkb_symbols   {
+        include "pc"
+        include "us(dvorak)"
+        include "inet(evdev)"
+
+        include "ctrl(nocaps)"
+        include "compose(sclk)"
+        include "terminate(ctrl_alt_bksp)"
+
+		include "hallettj(return_ctrl_r)"
+        include "hallettj(invert_number_row)"
+		include "hallettj(lwin_lvl3_latch)"
+        include "hallettj(sticky_shift)"
+        include "hallettj(virtual_movement)"
+        include "hallettj(virtual_numpad)"
+    };
+};
