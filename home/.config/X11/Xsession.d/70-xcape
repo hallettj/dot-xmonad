@@ -13,7 +13,7 @@ function kinesis_connected {
 
 function start_xcape {
   local mappings=$1
-  run-this-one xcape -d -t 250 -e "$mappings" &
+  run-this-one xcape -d -t 250 -e "$mappings" &> /dev/null &
 }
 
 function stop_xcape {
