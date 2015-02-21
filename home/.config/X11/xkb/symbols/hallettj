@@ -30,7 +30,7 @@ xkb_symbols "lwin_lvl3_latch" {
 
 partial modifier_keys
 xkb_symbols "return_ctrl_r" {
-    replace key <RTRN> { [ Control_R, Control_R ] };
+    key <RTRN> { [ Control_R ] };
     modifier_map Control { Control_L, Control_R, Return };
 };
 
@@ -86,7 +86,8 @@ xkb_symbols "default_numlock" {
     key  <KP2> { [ 2,           KP_Down     ] };
     key  <KP3> { [ 3,           KP_Next     ] };
     key <KPEN> { [              KP_Enter    ] };
-    key <KPEQ> { [              KP_Equal    ] };
+    key <KPEQ> { [ equal,       KP_Equal    ] };
+	key <KPAD> { [ plus,        KP_Add      ] };
 
     key  <KP0> { [ 0,           KP_Insert   ] };
     key <KPDL> { [ KP_Decimal,  KP_Delete   ] };
