@@ -1,5 +1,5 @@
 function ergodox_connected {
-  lsusb | grep "Ergodox" || true
+  grep "Ergodox" /proc/bus/input/devices || true
 }
 
 function kinesis_connected {

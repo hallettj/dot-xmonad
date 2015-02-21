@@ -47,8 +47,12 @@
              creates=~/.cabal/bin/cabin
 
     - name: install xmonad
-      shell: cabin install xmonad && cp ~/.cabin/cabins/xmonad && cabal install xmonad-contrib xmonad-extras xmobar yeganesh && cabin load xmonad
+      shell: cabin install xmonad
              creates=~/.cabin/bin/xmonad
+
+    - name: install more xmonad stuff
+      shell: cabal install xmonad-contrib xmonad-extras xmobar yeganesh
+             chdir=~/.cabin/cabins/xmonad
 
     - name: compile xmonad config
       shell: xmonad --recompile
