@@ -23,7 +23,9 @@ function stop_xcape {
 if [ -n "$(ergodox_connected)" ]; then
   stop_xcape
 elif [ -n "$(kinesis_connected)" ]; then
+  stop_xcape
   start_xcape "$CTRL;$CTRL_R;$ALT"
 else
+  stop_xcape
   start_xcape "$CTRL;$ALT;$RETURN"
 fi
