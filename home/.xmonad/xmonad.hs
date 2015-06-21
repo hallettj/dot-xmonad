@@ -92,6 +92,7 @@ myManageHook = composeAll
 myScratchPads = [ NS "pandora"      spawnPandora     findPandora     (leftPanel  0.50)
                 , NS "rdio"         spawnRdio        findRdio        (leftPanel  0.67)
                 , NS "google music" spawnGoogleMusic findGoogleMusic (leftPanel  0.67)
+                , NS "amazon music" spawnAmazonMusic findAmazonMusic (leftPanel  0.67)
                 , NS "slack"        spawnSlack       findSlack       (rightPanel 0.67)
                 ]
   where
@@ -103,6 +104,9 @@ myScratchPads = [ NS "pandora"      spawnPandora     findPandora     (leftPanel 
 
     spawnGoogleMusic = chromeApp "https://play.google.com/music"
     findGoogleMusic = resource =? "play.google.com__music"
+
+    spawnAmazonMusic = chromeApp "https://www.amazon.com/gp/dmusic/cloudplayer/player?ie=UTF8&*Version*=1&*entries*=0&ref_=dm_wcp_el_mp"
+    findAmazonMusic = resource =? "www.amazon.com__gp_dmusic_cloudplayer_player"
 
     spawnSlack = chromeApp "https://tozny.slack.com/"
     findSlack = resource =? "tozny.slack.com"
@@ -246,6 +250,7 @@ myKeys conf =
   , ("M-, p", namedScratchpadAction myScratchPads "pandora")
   , ("M-, r", namedScratchpadAction myScratchPads "rdio")
   , ("M-, m", namedScratchpadAction myScratchPads "google music")
+  , ("M-, a", namedScratchpadAction myScratchPads "amazon music")
   , ("M-, s", namedScratchpadAction myScratchPads "slack")
 
   -- Signals offlineimap to check for new mail immediately.
