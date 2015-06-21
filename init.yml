@@ -14,6 +14,7 @@
         - dzen2
         - cabal-install
         - ghc
+        - ghc-mod
         - murrine-themes
         - network-manager
         - network-manager-gnome
