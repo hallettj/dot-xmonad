@@ -41,6 +41,7 @@ import XMonad.Util.NamedScratchpad ( NamedScratchpad(..)
                                    , namedScratchpadManageHook )
 import XMonad.Util.NamedWindows (getName)
 import qualified XMonad.StackSet as W
+import Data.List (isPrefixOf)
 import qualified Data.Map        as M
 import Data.Maybe (catMaybes, listToMaybe)
 import Data.Monoid (All (All), mappend)
@@ -85,6 +86,7 @@ myManageHook = composeAll
     , className =? "steam"          --> doFullFloat  -- bigpicture-mode
     , className =? "Gimp"           --> doFloat
     , className =? "stalonetray"    --> doIgnore
+    , ("Tabhunter" `isPrefixOf`) <$> title --> doFloat
     , isDialog                      --> doCenterFloat
     , isFullscreen --> (doF W.focusDown <+> doFullFloat)]
     <+> namedScratchpadManageHook myScratchPads
