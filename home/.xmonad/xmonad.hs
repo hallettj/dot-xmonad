@@ -96,6 +96,7 @@ myScratchPads = [ NS "pandora"      spawnPandora     findPandora     (leftPanel 
                 , NS "google music" spawnGoogleMusic findGoogleMusic (leftPanel  0.67)
                 , NS "amazon music" spawnAmazonMusic findAmazonMusic (leftPanel  0.67)
                 , NS "slack"        spawnSlack       findSlack       (rightPanel 0.67)
+                , NS "poodle"       spawnPoodle      findPoodle      (rightPanel 0.67)
                 ]
   where
     spawnPandora = chromeApp "http://www.pandora.com/"
@@ -112,6 +113,9 @@ myScratchPads = [ NS "pandora"      spawnPandora     findPandora     (leftPanel 
 
     spawnSlack = chromeApp "https://tozny.slack.com/"
     findSlack = resource =? "tozny.slack.com"
+
+    spawnPoodle = "cd /home/jesse/projects/socialmail/poodle && npm start"
+    findPoodle = className =? "poodle"
 
     chromeApp = (("google-chrome --user-data-dir=" ++ dataDir ++ " --app=") ++)
     dataDir   = "$HOME/.config/google-chrome-apps"
@@ -254,6 +258,7 @@ myKeys conf =
   , ("M-, m", namedScratchpadAction myScratchPads "google music")
   , ("M-, a", namedScratchpadAction myScratchPads "amazon music")
   , ("M-, s", namedScratchpadAction myScratchPads "slack")
+  , ("M-, c", namedScratchpadAction myScratchPads "poodle")
 
   -- Signals offlineimap to check for new mail immediately.
   , ("M-, g", spawn "killall -s SIGUSR1 offlineimap")
