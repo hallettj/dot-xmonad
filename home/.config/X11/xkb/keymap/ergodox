@@ -8,7 +8,7 @@ xkb_keymap {
     };
     xkb_symbols   {
         include "pc"
-        include "us(basic)"
+        include "us(dvorak)"
         include "inet(evdev)"
 
         include "compose(sclk)"
@@ -16,7 +16,6 @@ xkb_keymap {
 
         include "hallettj(invert_number_row)"
         include "hallettj(sticky_shift)"
-        include "hallettj(default_numlock)"
     };
     xkb_geometry  { include "kinesis(model100)" };
 };
