@@ -20,7 +20,6 @@ import XMonad.Layout.FixedColumn (FixedColumn(..))
 import XMonad.Layout.Fullscreen hiding (fullscreenEventHook)
 import XMonad.Layout.IM (Property(Title), withIM)
 import XMonad.Layout.LimitWindows (limitWindows)
-import XMonad.Layout.Magnifier (magnifiercz', maximizeVertical)
 import XMonad.Layout.MultiToggle (EOT(..), Toggle(..), Transformer, (??), mkToggle, mkToggle1, transform)
 import XMonad.Layout.MultiToggle.Instances (StdTransformers(FULL))
 import XMonad.Layout.NoBorders
@@ -159,7 +158,6 @@ codingFirst = wNav $ coding ||| dishes ||| book ||| browsing ||| split
 wNav l = windowNavigation l
 
 split = renamed [Replace "tall"] $
-        magnifiercz' 1.4          $
         ResizableTall nmaster delta ratio []
   where
     nmaster = 1
@@ -171,7 +169,6 @@ browsing = renamed [Replace "browsing"] $
 
 coding = renamed [Replace "fixed column"] $
          limitWindows 3             $
-         magnifiercz' 1.4           $
          FixedColumn 1 20 100 10
 
 dishes = renamed [Replace "dishes"] $
