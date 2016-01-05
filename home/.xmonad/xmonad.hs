@@ -505,6 +505,7 @@ main = do
     -- simple stuff
     terminal           = myTerminal,
     focusFollowsMouse  = False,
+    clickJustFocuses   = False,
     borderWidth        = myBorderWidth,
     modMask            = myModMask,
     workspaces         = myWorkspaces,
