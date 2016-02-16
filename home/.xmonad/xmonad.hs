@@ -96,6 +96,8 @@ myScratchPads = [ NS "pandora"      spawnPandora     findPandora     (leftPanel 
                 , NS "amazon music" spawnAmazonMusic findAmazonMusic (leftPanel  0.67)
                 , NS "slack"        spawnSlack       findSlack       (rightPanel 0.67)
                 , NS "poodle"       spawnPoodle      findPoodle      (rightPanel 0.67)
+                , NS "telegram"     spawnTelegram    findTelegram    (rightPanel 0.67)
+                , NS "tox"          spawnTox         findTox         (rightPanel 0.67)
                 ]
   where
     spawnPandora = chromeApp "http://www.pandora.com/"
@@ -115,6 +117,12 @@ myScratchPads = [ NS "pandora"      spawnPandora     findPandora     (leftPanel 
 
     spawnPoodle = "cd /home/jesse/projects/socialmail/poodle && npm start"
     findPoodle = className =? "poodle"
+
+    spawnTelegram = "/home/jesse/opt/Telegram/Telegram"
+    findTelegram = className =? "Telegram"
+
+    spawnTox = "qtox"
+    findTox = className =? "qTox"
 
     chromeApp = (("google-chrome --user-data-dir=" ++ dataDir ++ " --app=") ++)
     dataDir   = "$HOME/.config/google-chrome-apps"
@@ -251,11 +259,12 @@ myKeys conf =
   , ("M-S-<Backspace>", clearUrgents)
 
   , ("M-, p", namedScratchpadAction myScratchPads "pandora")
-  , ("M-, r", namedScratchpadAction myScratchPads "rdio")
+  , ("M-, r", namedScratchpadAction myScratchPads "telegram")
   , ("M-, m", namedScratchpadAction myScratchPads "google music")
   , ("M-, a", namedScratchpadAction myScratchPads "amazon music")
   , ("M-, s", namedScratchpadAction myScratchPads "slack")
   , ("M-, c", namedScratchpadAction myScratchPads "poodle")
+  , ("M-, x", namedScratchpadAction myScratchPads "tox")
 
   -- Signals offlineimap to check for new mail immediately.
   , ("M-, g", spawn "killall -s SIGUSR1 offlineimap")
