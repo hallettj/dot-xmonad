@@ -137,8 +137,8 @@ myScratchPads = [ NS "pandora"      spawnPandora     findPandora     (leftPanel 
     spawnMatterMost = chromeApp "https://mattermost.galois.com/"
     findMatterMost = resource =? "mattermost.galois.com"
 
-    spawnWhatsapp = "whatsie"
-    findWhatsapp = className =? "Whatsie"
+    spawnWhatsapp = chromeApp "https://web.whatsapp.com/"
+    findWhatsapp = resource =? "web.whatsapp.com"
 
     chromeApp  = (("google-chrome --user-data-dir=" ++ dataDir ++ " --app=") ++)
     chromeApp' = (("google-chrome --user-data-dir=" ++ dataDir ++ " --app-id=") ++)
