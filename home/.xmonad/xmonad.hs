@@ -99,6 +99,9 @@ myScratchPads = [ NS "pandora"      spawnPandora     findPandora     (leftPanel 
                 , NS "telegram"     spawnTelegram    findTelegram    (rightPanel 0.67)
                 , NS "tox"          spawnTox         findTox         (rightPanel 0.67)
                 , NS "gitter"       spawnGitter      findGitter      (rightPanel 0.67)
+                , NS "hangouts"     spawnHangouts    findHangouts    (rightPanel 0.67)
+                , NS "mattermost"   spawnMatterMost  findMatterMost  (rightPanel 0.67)
+                , NS "whatsapp"     spawnWhatsapp    findWhatsapp    (rightPanel 0.67)
                 ]
   where
     spawnPandora = chromeApp "http://www.pandora.com/"
@@ -128,7 +131,17 @@ myScratchPads = [ NS "pandora"      spawnPandora     findPandora     (leftPanel 
     spawnGitter = "/opt/Gitter/linux64/Gitter"
     findGitter = title =? "Gitter"
 
-    chromeApp = (("google-chrome --user-data-dir=" ++ dataDir ++ " --app=") ++)
+    spawnHangouts = chromeApp' "knipolnnllmklapflnccelgolnpehhpl"
+    findHangouts = title =? "Hangouts - hallettj@gmail.com"
+
+    spawnMatterMost = chromeApp "https://mattermost.galois.com/"
+    findMatterMost = resource =? "mattermost.galois.com"
+
+    spawnWhatsapp = "whatsie"
+    findWhatsapp = className =? "Whatsie"
+
+    chromeApp  = (("google-chrome --user-data-dir=" ++ dataDir ++ " --app=") ++)
+    chromeApp' = (("google-chrome --user-data-dir=" ++ dataDir ++ " --app-id=") ++)
     dataDir   = "$HOME/.config/google-chrome-apps"
 
     rightPanel w = customFloating $ W.RationalRect l t w h
@@ -267,9 +280,11 @@ myKeys conf =
   , ("M-, m", namedScratchpadAction myScratchPads "google music")
   , ("M-, a", namedScratchpadAction myScratchPads "amazon music")
   , ("M-, s", namedScratchpadAction myScratchPads "slack")
-  , ("M-, c", namedScratchpadAction myScratchPads "poodle")
   , ("M-, x", namedScratchpadAction myScratchPads "tox")
   , ("M-, g", namedScratchpadAction myScratchPads "gitter")
+  , ("M-, h", namedScratchpadAction myScratchPads "hangouts")
+  , ("M-, c", namedScratchpadAction myScratchPads "mattermost")
+  , ("M-, w", namedScratchpadAction myScratchPads "whatsapp")
 
   -- Arranging windows
 
