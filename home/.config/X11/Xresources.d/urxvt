@@ -1,5 +1,5 @@
-URxvt.font: xft:monospace:size=12
-URxvt.boldFont: xft:monospace:size=12
+URxvt.font: xft:monospace:size=12, xft:Symbola:size=8
+URxvt.boldFont: xft:monospace:size=12, xft:Symbola:size=8
 URxvt.intensityStyles: true
 URxvt*letterSpace: -1
 URxvt.scrollstyle: plain
