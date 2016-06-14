@@ -13,7 +13,7 @@ if [ -z $change ] ; then
 fi
 
 function running_sink {
-  pactl list short | grep RUNNING | cut -f1
+  pactl list short | grep RUNNING | cut -f1 | head -n1
 }
 
 function current_volume {
