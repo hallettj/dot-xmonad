@@ -5,12 +5,12 @@
 -- customized by Jesse Hallett
 -- http://github.com/hallettj/config_files
 
--- This is setup for 1920x1080 monitors
+-- This is setup for 3200x1800 monitors
 Config {
-    font = "xft:monospace:size=9:antialias=true"
+    font = "xft:monospace:size=10:antialias=true"
     bgColor = "#002b36",
     fgColor = "#93a1a1",
-    position = Static { xpos = 0, ypos = 0, width = 1808, height = 16 },
+    position = Static { xpos = 0, ypos = 0, width = 3000, height = 24 },
     lowerOnStart = True,
     commands = [
         Run Battery [ "-t", "AC: <acstatus>   Batt: <left>% / <timeleft>"
