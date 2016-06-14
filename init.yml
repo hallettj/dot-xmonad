@@ -30,6 +30,7 @@
         - xfce4-appfinder
         - xmobar
         - xscreensaver
+        - xss-lock
 
     - name: compile xmonad config
       shell: xmonad --recompile

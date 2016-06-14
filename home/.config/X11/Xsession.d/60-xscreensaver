@@ -1,2 +1,3 @@
 killall -q gnome-screensaver || true
 (xscreensaver -no-splash || true) &
+xss-lock -- xscreensaver-command --lock &
