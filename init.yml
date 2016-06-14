@@ -13,6 +13,7 @@
         - alsa-utils
         - dzen2
         - cabal-install
+        - feh
         - ghc
         - ghc-mod
         - murrine-themes
@@ -26,6 +27,7 @@
         - unclutter
         - xbacklight
         - xdotool
+        - xfce4-appfinder
         - xmobar
         - xscreensaver
 
