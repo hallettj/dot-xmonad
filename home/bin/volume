@@ -6,10 +6,23 @@ cmd=${0##*/}
 if [ -z $change ] ; then
   echo "Usage: $cmd VOLUME"
   echo "Examples:"
-  echo "    $cmd 10%+"
-  echo "    $cmd 10%-"
+  echo "    $cmd +10%"
+  echo "    $cmd -10%"
   echo "    $cmd 56%"
   exit 1
 fi
 
-amixer sset Master $change | awk '/Front Left:/ {print $5}' | tr -dc "0-9"
+function running_sink {
+  pactl list short | grep RUNNING | cut -f1
+}
+
+function current_volume {
+  local sink="$1"
+  # From https://unix.stackexchange.com/a/230533
+  pactl list sinks | grep '^[[:space:]]Volume:' | \
+	head -n $(( $sink + 1 )) | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,'
+}
+
+SINK=$(running_sink)
+pactl set-sink-volume "$SINK" $change
+current_volume "$SINK"
