@@ -12,4 +12,4 @@ if [ -z $change ] ; then
   exit 1
 fi
 
-amixer -D pulse sset Master $change | awk '/Front Left:/ {print $5}' | tr -dc "0-9"
+amixer sset Master $change | awk '/Front Left:/ {print $5}' | tr -dc "0-9"
