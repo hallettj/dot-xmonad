@@ -1,1 +1,3 @@
-git-annex assistant --autostart
+if type git-annex 2>/dev/null; then
+  git-annex assistant --autostart
+fi
