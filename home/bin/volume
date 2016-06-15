@@ -13,7 +13,12 @@ if [ -z $change ] ; then
 fi
 
 function running_sink {
-  pactl list short | grep RUNNING | cut -f1 | head -n1
+  pactl list sinks short | grep RUNNING | cut -f1 | head -n1
+}
+
+function default_sink {
+  name=$(pacmd stat | grep 'Default sink name:' | awk -F ': *' '{ print $2 }')
+  pactl list sinks short | fgrep "$name" | cut -f1
 }
 
 function current_volume {
@@ -24,5 +29,8 @@ function current_volume {
 }
 
 SINK=$(running_sink)
+if [ -z "$SINK" ]; then
+  SINK=$(default_sink)
+fi
 pactl set-sink-volume "$SINK" $change
 current_volume "$SINK"
