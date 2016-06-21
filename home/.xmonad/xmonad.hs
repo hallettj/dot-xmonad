@@ -369,9 +369,9 @@ vicfryzelKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
   -- Adjust brightness
   , ((0, xF86XK_MonBrightnessUp),
-     spawn "xbacklight +10")
+     spawn "xbacklight +5")
   , ((0, xF86XK_MonBrightnessDown),
-     spawn "xbacklight -10")
+     spawn "xbacklight -5")
 
   --------------------------------------------------------------------
   -- "Standard" xmonad key bindings
