@@ -43,6 +43,15 @@
            dest=~/.fonts/powerline-fonts
            update=no
 
+    - name: install perl dependencies for urxvt extensions
+      cpanm: name={{ item }}
+      become: yes
+      with_items:
+        - AnyEvent
+        - common::sense
+        - Linux::FD
+        - Log::Log4perl
+
     - file: path=/usr/local/lib/urxvt state=directory
       sudo: yes
     - name: install extensions for urxvt

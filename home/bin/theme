@@ -1,0 +1,23 @@
+#!/bin/bash
+
+set -e
+
+if [ "$#" -ne 1 ]; then
+  echo "Usage: $0 <theme>"
+  echo ""
+  echo "The theme given must match a filename in ~/.config/X11/Xresources.avail"
+fi
+
+THEME="$1"
+CONFIG_DIR="$HOME/.config/X11"
+THEME_PATH="$CONFIG_DIR/Xresources.d/theme"
+
+if [ -L "$THEME_PATH" ]; then
+  rm "$THEME_PATH"
+fi
+ln -s "../Xresources.avail/$THEME" "$THEME_PATH"
+xrdb -merge "$THEME_PATH"
+
+# If config-reload is enabled, this will update colors in running urxvt terms.
+# See https://github.com/regnarg/urxvt-config-reload
+killall --signal SIGUSR1 urxvt

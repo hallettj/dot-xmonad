@@ -8,7 +8,7 @@ URxvt.pointerBlank: true
 URxvt.urgentOnBell: true
 
 URxvt.perl-lib: /usr/local/lib/urxvt/perl/
-URxvt.perl-ext-common: default,url-select
+URxvt.perl-ext-common: default,url-select,config-reload
 
 URxvt.keysym.C-i: perl:url-select:select_next
 URxvt.url-select.launcher: sensible-browser
