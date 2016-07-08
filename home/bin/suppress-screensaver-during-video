@@ -1,0 +1,18 @@
+#!/bin/bash
+
+set -e
+
+function firefox_playing_sound {
+  pacmd list-sink-inputs | grep 'application.name = "CubebUtils"' >/dev/null # Firefox audio stream
+}
+
+function check_and_suppress {
+  if firefox_playing_sound; then
+	xscreensaver-command -deactivate >/dev/null
+  fi
+}
+
+while true; do
+  check_and_suppress
+  sleep 60s
+done
