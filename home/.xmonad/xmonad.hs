@@ -116,8 +116,8 @@ myScratchPads = [ NS "pandora"      spawnPandora     findPandora     (leftPanel 
     spawnAmazonMusic = chromeApp "https://www.amazon.com/gp/dmusic/cloudplayer/player?ie=UTF8&*Version*=1&*entries*=0&ref_=dm_wcp_el_mp"
     findAmazonMusic = resource =? "www.amazon.com__gp_dmusic_cloudplayer_player"
 
-    spawnSlack = chromeApp "https://tozny.slack.com/"
-    findSlack = resource =? "tozny.slack.com"
+    spawnSlack = chromeApp "https://pdxjs.slack.com/"
+    findSlack = resource =? "pdxjs.slack.com"
 
     spawnPoodle = "cd /home/jesse/projects/socialmail/poodle && npm start"
     findPoodle = className =? "poodle"
