@@ -2,13 +2,25 @@
 
 set -e
 
-function firefox_playing_sound {
-  pacmd list-sink-inputs | grep 'application.name = "CubebUtils"' >/dev/null # Firefox audio stream
+function contains() {
+  list=$1
+  val=$2
+  [[ $1 =~ $2 ]]
+}
+
+function browser_playing_sound {
+  apps=$(pacmd list-sink-inputs | grep 'application.name' | cut -d'"' -f2)
+  # CubebUtils is the application name used by Firefox
+  contains "$apps" 'Chrome' || contains "$apps" 'CubebUtils'
+}
+
+function screensaver_is_off {
+  xscreensaver-command -time | grep 'screen non-blanked' >/dev/null
 }
 
 function check_and_suppress {
-  if firefox_playing_sound; then
-	xscreensaver-command -deactivate >/dev/null
+  if browser_playing_sound && screensaver_is_off; then
+    xscreensaver-command -deactivate >/dev/null
   fi
 }
 
