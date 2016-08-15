@@ -87,21 +87,22 @@ myManageHook = composeAll
     , className =? "stalonetray"    --> doIgnore
     , ("Tabhunter" `isPrefixOf`) <$> title --> doFloat
     , isDialog                      --> doCenterFloat
-    , isFullscreen --> (doF W.focusDown <+> doFullFloat)]
+    , isFullscreen --> (doF W.focusDown <+> doFullFloat)
+    ]
     <+> namedScratchpadManageHook myScratchPads
 
-myScratchPads = [ NS "pandora"      spawnPandora     findPandora     (leftPanel  0.50)
-                , NS "rdio"         spawnRdio        findRdio        (leftPanel  0.67)
-                , NS "google music" spawnGoogleMusic findGoogleMusic (leftPanel  0.67)
-                , NS "amazon music" spawnAmazonMusic findAmazonMusic (leftPanel  0.67)
-                , NS "slack"        spawnSlack       findSlack       (rightPanel 0.67)
-                , NS "poodle"       spawnPoodle      findPoodle      (rightPanel 0.67)
-                , NS "telegram"     spawnTelegram    findTelegram    (rightPanel 0.67)
-                , NS "tox"          spawnTox         findTox         (rightPanel 0.67)
-                , NS "gitter"       spawnGitter      findGitter      (rightPanel 0.67)
-                , NS "hangouts"     spawnHangouts    findHangouts    (rightPanel 0.67)
-                , NS "mattermost"   spawnMatterMost  findMatterMost  (rightPanel 0.67)
-                , NS "whatsapp"     spawnWhatsapp    findWhatsapp    (rightPanel 0.67)
+myScratchPads = [ NS "pandora"        spawnPandora       findPandora       (leftPanel  0.50)
+                , NS "google music"   spawnGoogleMusic   findGoogleMusic   (leftPanel  0.67)
+                , NS "amazon music"   spawnAmazonMusic   findAmazonMusic   (leftPanel  0.67)
+                , NS "invision.slack" spawnInvisionSlack findInvisionSlack (rightPanel 0.67)
+                , NS "pdxjs.slack"    spawnPdxjs         findPdxjs         (rightPanel 0.67)
+                , NS "olioapps.slack" spawnOlioApps      findOlioApps      (rightPanel 0.67)
+                , NS "poodle"         spawnPoodle        findPoodle        (rightPanel 0.67)
+                , NS "telegram"       spawnTelegram      findTelegram      (rightPanel 0.67)
+                , NS "tox"            spawnTox           findTox           (rightPanel 0.67)
+                , NS "gitter"         spawnGitter        findGitter        (rightPanel 0.67)
+                , NS "hangouts"       spawnHangouts      findHangouts      (rightPanel 0.67)
+                , NS "whatsapp"       spawnWhatsapp      findWhatsapp      (rightPanel 0.67)
                 ]
   where
     spawnPandora = chromeApp "http://www.pandora.com/"
@@ -116,8 +117,14 @@ myScratchPads = [ NS "pandora"      spawnPandora     findPandora     (leftPanel 
     spawnAmazonMusic = chromeApp "https://www.amazon.com/gp/dmusic/cloudplayer/player?ie=UTF8&*Version*=1&*entries*=0&ref_=dm_wcp_el_mp"
     findAmazonMusic = resource =? "www.amazon.com__gp_dmusic_cloudplayer_player"
 
-    spawnSlack = chromeApp "https://pdxjs.slack.com/"
-    findSlack = resource =? "pdxjs.slack.com"
+    spawnInvisionSlack = chromeApp "https://invisionapp.slack.com/"
+    findInvisionSlack = resource =? "invisionapp.slack.com"
+
+    spawnPdxjs = chromeApp "https://pdxjs.slack.com/"
+    findPdxjs = resource =? "pdxjs.slack.com"
+
+    spawnOlioApps = chromeApp "https://olioapps.slack.com/"
+    findOlioApps = resource =? "olioapps.slack.com"
 
     spawnPoodle = "cd /home/jesse/projects/socialmail/poodle && npm start"
     findPoodle = className =? "poodle"
@@ -133,9 +140,6 @@ myScratchPads = [ NS "pandora"      spawnPandora     findPandora     (leftPanel 
 
     spawnHangouts = chromeApp' "knipolnnllmklapflnccelgolnpehhpl"
     findHangouts = title =? "Hangouts - hallettj@gmail.com"
-
-    spawnMatterMost = chromeApp "https://mattermost.galois.com/"
-    findMatterMost = resource =? "mattermost.galois.com"
 
     spawnWhatsapp = chromeApp "https://web.whatsapp.com/"
     findWhatsapp = resource =? "web.whatsapp.com"
@@ -250,7 +254,7 @@ xmobarUrgentFG = base03
 xmobarUrgentBG = yellow
 
 -- Width of the window border in pixels.
-myBorderWidth = 1
+myBorderWidth = 2
 
 
 ------------------------------------------------------------------------
@@ -275,15 +279,15 @@ myKeys conf =
   , ("M-<Backspace>", focusUrgent)
   , ("M-S-<Backspace>", clearUrgents)
 
-  , ("M-, p", namedScratchpadAction myScratchPads "pandora")
+  , ("M-, p", namedScratchpadAction myScratchPads "pdxjs.slack")
   , ("M-, r", namedScratchpadAction myScratchPads "telegram")
   , ("M-, m", namedScratchpadAction myScratchPads "google music")
   , ("M-, a", namedScratchpadAction myScratchPads "amazon music")
-  , ("M-, s", namedScratchpadAction myScratchPads "slack")
+  , ("M-, o", namedScratchpadAction myScratchPads "olioapps.slack")
   , ("M-, x", namedScratchpadAction myScratchPads "tox")
   , ("M-, g", namedScratchpadAction myScratchPads "gitter")
   , ("M-, h", namedScratchpadAction myScratchPads "hangouts")
-  , ("M-, c", namedScratchpadAction myScratchPads "mattermost")
+  , ("M-, c", namedScratchpadAction myScratchPads "invision.slack")
   , ("M-, w", namedScratchpadAction myScratchPads "whatsapp")
 
   -- Arranging windows
