@@ -111,8 +111,8 @@ myScratchPads = [ NS "pandora"        spawnPandora       findPandora       (left
     spawnRdio = chromeApp "http://www.rdio.com/"
     findRdio = resource =? "www.rdio.com"
 
-    spawnGoogleMusic = "google-play-music-desktop-player"
-    findGoogleMusic = className =? "Google Play Music Desktop Player"
+    spawnGoogleMusic = chromeApp "https://play.google.com/music"
+    findGoogleMusic = resource =? "play.google.com__music"
 
     spawnAmazonMusic = chromeApp "https://www.amazon.com/gp/dmusic/cloudplayer/player?ie=UTF8&*Version*=1&*entries*=0&ref_=dm_wcp_el_mp"
     findAmazonMusic = resource =? "www.amazon.com__gp_dmusic_cloudplayer_player"
