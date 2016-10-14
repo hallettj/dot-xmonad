@@ -32,6 +32,12 @@
         - xscreensaver
         - xss-lock
 
+        # Dependencies for config-reload extension for urxvt
+        - libanyevent-perl
+        - libcommon-sense-perl
+        - liblinux-fd-perl
+        - liblog-log4perl-perl
+
     - name: compile xmonad config
       shell: xmonad --recompile
 
@@ -42,15 +48,6 @@
       git: repo=git@github.com:Lokaltog/powerline-fonts.git
            dest=~/.fonts/powerline-fonts
            update=no
-
-    - name: install perl dependencies for urxvt extensions
-      cpanm: name={{ item }}
-      become: yes
-      with_items:
-        - AnyEvent
-        - common::sense
-        - Linux::FD
-        - Log::Log4perl
 
     - file: path=/usr/local/lib/urxvt state=directory
       become: yes
