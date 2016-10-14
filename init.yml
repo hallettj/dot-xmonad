@@ -6,7 +6,7 @@
   tasks:
     - name: install apt packages
       action: apt pkg={{ item }} state=present
-      sudo: yes
+      become: yes
       with_items:
         - xmonad
         - libghc-xmonad-contrib-dev
@@ -53,9 +53,9 @@
         - Log::Log4perl
 
     - file: path=/usr/local/lib/urxvt state=directory
-      sudo: yes
+      become: yes
     - name: install extensions for urxvt
       git: repo=https://github.com/muennich/urxvt-perls.git
            dest=/usr/local/lib/urxvt/perl
            update=no
-      sudo: yes
+      become: yes
