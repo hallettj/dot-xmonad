@@ -36,18 +36,18 @@ xkb_symbols "return_ctrl_r" {
 
 partial alphanumeric_keys
 xkb_symbols "invert_number_row" {
-    key <TLDE> { [  asciitilde,     grave ] };
-    key <AE01> { [      exclam,         1 ] };
-    key <AE02> { [          at,         2 ] };
-    key <AE03> { [  numbersign,         3 ] };
-    key <AE04> { [      dollar,         4 ] };
-    key <AE05> { [     percent,         5 ] };
-    key <AE06> { [ asciicircum,         6 ] };
-    key <AE07> { [   ampersand,         7 ] };
-    key <AE08> { [    asterisk,         8 ] };
-    key <AE09> { [   parenleft,         9 ] };
-    key <AE10> { [  parenright,         0 ] };
-    key <BKSL> { [         bar, backslash ] };
+    key <TLDE> { [       grave, asciitilde ] };
+    key <AE01> { [      exclam,         1  ] };
+    key <AE02> { [          at,         2  ] };
+    key <AE03> { [  numbersign,         3  ] };
+    key <AE04> { [      dollar,         4  ] };
+    key <AE05> { [     percent,         5  ] };
+    key <AE06> { [ asciicircum,         6  ] };
+    key <AE07> { [   ampersand,         7  ] };
+    key <AE08> { [    asterisk,         8  ] };
+    key <AE09> { [   parenleft,         9  ] };
+    key <AE10> { [  parenright,         0  ] };
+    key <BKSL> { [         bar, backslash  ] };
 };
 
 partial alphanumeric_keys
@@ -87,7 +87,7 @@ xkb_symbols "default_numlock" {
     key  <KP3> { [ 3,           KP_Next     ] };
     key <KPEN> { [              KP_Enter    ] };
     key <KPEQ> { [ equal,       KP_Equal    ] };
-	key <KPAD> { [ plus,        KP_Add      ] };
+    key <KPAD> { [ plus,        KP_Add      ] };
 
     key  <KP0> { [ 0,           KP_Insert   ] };
     key <KPDL> { [ KP_Decimal,  KP_Delete   ] };
