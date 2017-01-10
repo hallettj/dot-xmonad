@@ -23,6 +23,7 @@ xkb_keymap {
         include "hallettj(sticky_shift)"
         include "hallettj(virtual_movement)"
         include "hallettj(virtual_numpad)"
+        include "hallettj(backspace_also_deletes)"
     };
     xkb_geometry  { include "kinesis(model100)" };
 };

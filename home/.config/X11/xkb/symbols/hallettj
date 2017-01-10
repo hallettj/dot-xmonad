@@ -101,3 +101,8 @@ xkb_symbols "virtual_movement" {
     key <AC03> { [      e,       E,  Down ] };
     key <AC04> { [      u,       U, Right ] };
 };
+
+partial alphanumeric_keys modifier_keys
+xkb_symbols "backspace_also_deletes" {
+    key <BKSP> { [ BackSpace, BackSpace, Delete ] };
+};
