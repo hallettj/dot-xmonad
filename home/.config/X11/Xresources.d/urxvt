@@ -7,5 +7,9 @@ URxvt.scrollBar: false
 URxvt.pointerBlank: true
 URxvt.urgentOnBell: true
 
-URxvt.perl-ext-common: default,config-reload,matcher
+URxvt.perl-ext-common: default,config-reload,matcher,remote-clipboard
 URxvt.keysym.C-i: matcher:select
+
+! Use xclip to communicate with the clipboard
+URxvt.remote-selection.store: xsel --input --clipboard
+URxvt.remote-selection.fetch: xsel --output --clipboard
