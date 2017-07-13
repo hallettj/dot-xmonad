@@ -91,18 +91,19 @@ myManageHook = composeAll
     ]
     <+> namedScratchpadManageHook myScratchPads
 
-myScratchPads = [ NS "pandora"        spawnPandora       findPandora       (leftPanel  0.50)
-                , NS "google music"   spawnGoogleMusic   findGoogleMusic   (leftPanel  0.67)
-                , NS "amazon music"   spawnAmazonMusic   findAmazonMusic   (leftPanel  0.67)
-                , NS "invision.slack" spawnInvisionSlack findInvisionSlack (rightPanel 0.67)
-                , NS "pdxjs.slack"    spawnPdxjs         findPdxjs         (rightPanel 0.67)
-                , NS "olioapps.slack" spawnOlioApps      findOlioApps      (rightPanel 0.67)
-                , NS "poodle"         spawnPoodle        findPoodle        (rightPanel 0.67)
-                , NS "telegram"       spawnTelegram      findTelegram      (rightPanel 0.67)
-                , NS "tox"            spawnTox           findTox           (rightPanel 0.67)
-                , NS "gitter"         spawnGitter        findGitter        (rightPanel 0.67)
-                , NS "hangouts"       spawnHangouts      findHangouts      (rightPanel 0.67)
-                , NS "whatsapp"       spawnWhatsapp      findWhatsapp      (rightPanel 0.67)
+myScratchPads = [ NS "pandora"         spawnPandora       findPandora       (leftPanel  0.50)
+                , NS "google music"    spawnGoogleMusic   findGoogleMusic   (leftPanel  0.67)
+                , NS "amazon music"    spawnAmazonMusic   findAmazonMusic   (leftPanel  0.67)
+                , NS "startuprobot.slack"  spawnStartupRobotSlack findStartupRobotSlack (rightPanel 0.67)
+                , NS "pdxjs.slack"     spawnPdxjs         findPdxjs         (rightPanel 0.67)
+                , NS "olioapps.slack"  spawnOlioApps      findOlioApps      (rightPanel 0.67)
+                , NS "poodle"          spawnPoodle        findPoodle        (rightPanel 0.67)
+                , NS "caribtech.slack" spawnCaribTech     findCaribTech     (rightPanel 0.67)
+                , NS "tox"             spawnTox           findTox           (rightPanel 0.67)
+                , NS "gitter"          spawnGitter        findGitter        (rightPanel 0.67)
+                , NS "hangouts"        spawnHangouts      findHangouts      (rightPanel 0.67)
+                , NS "whatsapp"        spawnWhatsapp      findWhatsapp      (rightPanel 0.67)
+                , NS "rememberthemilk" spawnRTM           findRTM           (rightPanel 0.67)
                 ]
   where
     spawnPandora = chromeApp "http://www.pandora.com/"
@@ -117,8 +118,8 @@ myScratchPads = [ NS "pandora"        spawnPandora       findPandora       (left
     spawnAmazonMusic = chromeApp "https://www.amazon.com/gp/dmusic/cloudplayer/player?ie=UTF8&*Version*=1&*entries*=0&ref_=dm_wcp_el_mp"
     findAmazonMusic = resource =? "www.amazon.com__gp_dmusic_cloudplayer_player"
 
-    spawnInvisionSlack = chromeApp "https://invisionapp.slack.com/"
-    findInvisionSlack = resource =? "invisionapp.slack.com"
+    spawnStartupRobotSlack = chromeApp "https://startuprobot.slack.com/"
+    findStartupRobotSlack = resource =? "startuprobot.slack.com"
 
     spawnPdxjs = chromeApp "https://pdxjs.slack.com/"
     findPdxjs = resource =? "pdxjs.slack.com"
@@ -129,8 +130,8 @@ myScratchPads = [ NS "pandora"        spawnPandora       findPandora       (left
     spawnPoodle = "cd /home/jesse/projects/socialmail/poodle && npm start"
     findPoodle = className =? "poodle"
 
-    spawnTelegram = "/home/jesse/opt/Telegram/Telegram"
-    findTelegram = className =? "Telegram"
+    spawnCaribTech = chromeApp "https://caribbeantech.slack.com/"
+    findCaribTech = resource =? "caribbeantech.slack.com"
 
     spawnTox = "qtox"
     findTox = className =? "qTox"
@@ -143,6 +144,9 @@ myScratchPads = [ NS "pandora"        spawnPandora       findPandora       (left
 
     spawnWhatsapp = chromeApp "https://web.whatsapp.com/"
     findWhatsapp = resource =? "web.whatsapp.com"
+
+    spawnRTM = "'/opt/Remember The Milk/Remember The Milk'"
+    findRTM = className =? "Remember The Milk"
 
     chromeApp  = (("google-chrome --user-data-dir=" ++ dataDir ++ " --app=") ++)
     chromeApp' = (("google-chrome --user-data-dir=" ++ dataDir ++ " --app-id=") ++)
@@ -280,15 +284,16 @@ myKeys conf =
   , ("M-S-<Backspace>", clearUrgents)
 
   , ("M-, p", namedScratchpadAction myScratchPads "pdxjs.slack")
-  , ("M-, r", namedScratchpadAction myScratchPads "telegram")
+  , ("M-, r", namedScratchpadAction myScratchPads "caribtech.slack")
   , ("M-, m", namedScratchpadAction myScratchPads "google music")
   , ("M-, a", namedScratchpadAction myScratchPads "amazon music")
   , ("M-, o", namedScratchpadAction myScratchPads "olioapps.slack")
   , ("M-, x", namedScratchpadAction myScratchPads "tox")
   , ("M-, g", namedScratchpadAction myScratchPads "gitter")
   , ("M-, h", namedScratchpadAction myScratchPads "hangouts")
-  , ("M-, c", namedScratchpadAction myScratchPads "invision.slack")
+  , ("M-, c", namedScratchpadAction myScratchPads "startuprobot.slack")
   , ("M-, w", namedScratchpadAction myScratchPads "whatsapp")
+  , ("M-, l", namedScratchpadAction myScratchPads "rememberthemilk")
 
   -- Arranging windows
 
