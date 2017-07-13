@@ -20,4 +20,7 @@ xrdb -merge "$THEME_PATH"
 
 # If config-reload is enabled, this will update colors in running urxvt terms.
 # See https://github.com/regnarg/urxvt-config-reload
-killall --signal SIGUSR1 urxvt
+# killall --signal SIGUSR1 urxvt
+
+# TODO: the `killall` command stopped working on upgrading to Debian Buster
+ps -C urxvt -o pid= | xargs -r kill --signal SIGUSR1
