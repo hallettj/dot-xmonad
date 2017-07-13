@@ -11,6 +11,10 @@ function kinesis_connected {
   lsusb | grep "Kinesis Advantage" || true
 }
 
+function kinesis2_connected {
+  lsusb | grep "29ea:0102" || true
+}
+
 function start_xcape {
   local mappings=$1
   run-this-one xcape -d -t 250 -e "$mappings" &> /dev/null &
@@ -23,6 +27,9 @@ function stop_xcape {
 if [ -n "$(ergodox_connected)" ]; then
   stop_xcape
 elif [ -n "$(kinesis_connected)" ]; then
+  stop_xcape
+  start_xcape "$CTRL;$CTRL_R;$ALT"
+elif [ -n "$(kinesis2_connected)" ]; then
   stop_xcape
   start_xcape "$CTRL;$CTRL_R;$ALT"
 else
