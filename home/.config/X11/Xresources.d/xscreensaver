@@ -8,3 +8,4 @@ xscreensaver.dpmsOff:     0:12:00
 xscreensaver.splash:      False
 xscreensaver.fade:        False
 xscreensaver.unfade:      False
+xscreensaver.newLoginCommand: dm-tool switch-to-greeter
