@@ -11,7 +11,7 @@ function contains() {
 function browser_playing_sound {
   apps=$(pacmd list-sink-inputs | grep 'application.name' | cut -d'"' -f2)
   # CubebUtils is the application name used by Firefox
-  contains "$apps" 'Chrome' || contains "$apps" 'CubebUtils'
+  contains "$apps" 'ALSA plug-in \[chrome\]' || contains "$apps" 'CubebUtils'
 }
 
 function screensaver_is_off {
@@ -21,6 +21,7 @@ function screensaver_is_off {
 function check_and_suppress {
   if browser_playing_sound && screensaver_is_off; then
     xscreensaver-command -deactivate >/dev/null
+    xset s reset
   fi
 }
 
