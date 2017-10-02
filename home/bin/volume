@@ -12,8 +12,8 @@ if [ -z $change ] ; then
   exit 1
 fi
 
-function running_sink {
-  pactl list sinks short | grep RUNNING | cut -f1 | head -n1
+function running_sinks {
+  pactl list sinks short | grep RUNNING | cut -f1
 }
 
 function default_sink {
@@ -25,12 +25,20 @@ function current_volume {
   local sink="$1"
   # From https://unix.stackexchange.com/a/230533
   pactl list sinks | grep '^[[:space:]]Volume:' | \
-	head -n $(( $sink + 1 )) | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,'
+    head -n $(( $sink + 1 )) | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,'
 }
 
-SINK=$(running_sink)
-if [ -z "$SINK" ]; then
-  SINK=$(default_sink)
+function change_volumes {
+  local sinks="$1"
+  for sink in $(running_sinks); do
+    pactl set-sink-volume "$sink" $change
+    current_volume "$sink"
+  done
+}
+
+sinks=$(running_sinks)
+if [ -z "$sinks" ]; then
+  sinks=$(default_sink)
 fi
-pactl set-sink-volume "$SINK" $change
-current_volume "$SINK"
+
+change_volumes "$sinks" | tail -n1
