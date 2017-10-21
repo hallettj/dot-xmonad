@@ -4,6 +4,8 @@
 -- xmonad config used by Jesse Hallett
 -- http://github.com/hallettj/config_files
 
+import Custom.Hooks.MakeFirefoxFullScreen (makeFirefoxFullScreen)
+import Custom.Queries (isOnWorkspace)
 import Graphics.X11.ExtraTypes.XF86 (xF86XK_MonBrightnessDown, xF86XK_MonBrightnessUp)
 import System.IO
 import System.Exit
@@ -11,14 +13,15 @@ import XMonad
 import XMonad.Actions.CycleWS (nextScreen, swapNextScreen, toggleWS')
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops (fullscreenEventHook)
-import XMonad.Hooks.ManageDocks
-import XMonad.Hooks.ManageHelpers
+import XMonad.Hooks.ManageDocks (ToggleStruts(..), avoidStruts, docks)
+import XMonad.Hooks.ManageHelpers (doCenterFloat, doFullFloat, isDialog, isFullscreen)
 import XMonad.Hooks.SetWMName
 import XMonad.Hooks.UrgencyHook (UrgencyHook, NoUrgencyHook(..), clearUrgents, focusUrgent, urgencyHook, withUrgencyHook)
 import XMonad.Layout.Dishes (Dishes(..))
 import XMonad.Layout.FixedColumn (FixedColumn(..))
 import XMonad.Layout.Fullscreen hiding (fullscreenEventHook)
 import XMonad.Layout.IM (Property(Title), withIM)
+import XMonad.Layout.LayoutHints (layoutHintsToCenter)
 import XMonad.Layout.LimitWindows (limitWindows)
 import XMonad.Layout.MultiToggle (EOT(..), Toggle(..), Transformer, (??), mkToggle, mkToggle1, transform)
 import XMonad.Layout.MultiToggle.Instances (StdTransformers(FULL))
@@ -43,7 +46,7 @@ import qualified XMonad.StackSet as W
 import Data.List (isPrefixOf)
 import qualified Data.Map        as M
 import Data.Maybe (catMaybes, listToMaybe)
-import Data.Monoid (All (All), mappend)
+import Data.Monoid (mconcat)
 import Data.Ratio ((%))
 import Control.Applicative ((<$>))
 import Control.Monad ((>=>), filterM, mapM_, sequence, when, void)
@@ -176,7 +179,8 @@ myScratchPads = [ NS "pandora"         spawnPandora       findPandora       (lef
 -- The available layouts.  Note that each layout is separated by |||,
 -- which denotes layout choice.
 --
-myLayout = smartBorders                    $
+myLayout = layoutHintsToCenter             $
+           smartBorders                    $
            mkToggle (SFULL ?? FULL ?? EOT) $
            avoidStruts
            perWS
@@ -301,7 +305,7 @@ myKeys conf =
   , ("M-S-<Return>", windows W.swapMaster)
 
   , ("M-S-z", sendMessage (Toggle SFULL))
-  , ("M-<F11>", sendMessage (Toggle FULL))
+  -- , ("M-<F11>", sendMessage (Toggle FULL))
   , ("M-C-b", sendMessage ToggleStruts)
 
   , ("M-a",   sendMessage MirrorShrink)
@@ -526,17 +530,11 @@ myStartupHook = do
 
 
 ------------------------------------------------------------------------
--- Event Hooks:
---
-myHandleEventHook = handleEventHook defaultConfig `mappend` fullscreenEventHook
-
-
-------------------------------------------------------------------------
 -- Run xmonad
 --
 main = do
   xmproc <- spawnPipe "xmobar ~/.xmonad/xmobar.hs"
-  xmonad $ withUrgencyHook NoUrgencyHook $ defaultConfig {
+  xmonad $ docks $ withUrgencyHook NoUrgencyHook $ defaultConfig {
     -- simple stuff
     terminal           = myTerminal,
     focusFollowsMouse  = False,
@@ -554,7 +552,10 @@ main = do
     -- hooks, layouts
     layoutHook         = myLayout,
     manageHook         = myManageHook,
-    handleEventHook    = myHandleEventHook,
+    handleEventHook    = mconcat [ handleEventHook defaultConfig
+                                 , fullscreenEventHook
+                                 , makeFirefoxFullScreen (isOnWorkspace "1:web")
+                                 ],
     logHook            = myLogHook xmproc,
     startupHook        = myStartupHook
   }
