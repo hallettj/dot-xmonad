@@ -1,5 +1,18 @@
 {-# LANGUAGE NamedFieldPuns #-}
 
+--------------------------------------------------------------------------------
+-- |
+-- Module     : Custom.Hooks.MakeFirefoxFullScreen
+--
+-- Maintainer : Jesse Hallett <jesse@sitr.us>
+--
+-- As of version 57 Firefox leaves full screen when its window is unmapped
+-- (which happens when leaving the workspace that holds the window). I use Tree
+-- Style Tabs and Vimium, and I want Firefox to be in full screen mode all of
+-- the time. This module exports an event hook that sends an F11 keypress to
+-- Firefox windows when they receive a `MapNotifyEvent` to get windows to return
+-- to full screen.
+--------------------------------------------------------------------------------
 module Custom.Hooks.MakeFirefoxFullScreen (makeFirefoxFullScreen) where
 
 import Control.Monad (when)
@@ -14,6 +27,9 @@ import XMonad.Util.WindowState (runStateQuery)
 data FullScreenState = FullScreen | Normal
   deriving (Eq, Read, Show)
 
+-- |
+-- The event hook takes a `query` argument to narrow down window selection to
+-- Firefox windows that also match the given query.
 makeFirefoxFullScreen :: Query Bool -> Event -> X All
 makeFirefoxFullScreen query (MapNotifyEvent { ev_window }) = do
   matchQuery query ev_window engageFullScreen
