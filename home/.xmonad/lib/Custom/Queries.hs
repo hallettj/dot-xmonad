@@ -7,8 +7,7 @@ module Custom.Queries
 
 import Control.Monad.Reader.Class (ask)
 import Control.Monad.State.Class (get)
-import XMonad.Core (Query, WorkspaceId, XState(..))
-import XMonad.ManageHook (liftX)
+import XMonad (Query, WorkspaceId, XState(..), liftX)
 import XMonad.StackSet (current, findTag, tag, workspace)
 
 isOnWorkspace :: WorkspaceId -> Query Bool
