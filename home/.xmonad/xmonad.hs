@@ -5,7 +5,9 @@
 -- http://github.com/hallettj/config_files
 
 import Custom.Hooks.MakeFirefoxFullScreen (makeFirefoxFullScreen)
+import qualified Custom.Prompt.FuzzyWindow as WP
 import Custom.Queries (isOnWorkspace)
+import Data.Default (def)
 import Graphics.X11.ExtraTypes.XF86 (xF86XK_MonBrightnessDown, xF86XK_MonBrightnessUp)
 import System.IO
 import System.Exit
@@ -32,6 +34,7 @@ import XMonad.Layout.ResizableTile (MirrorResize(MirrorExpand, MirrorShrink), Re
 import XMonad.Layout.Spiral
 import XMonad.Layout.ThreeColumns (ThreeCol(ThreeColMid))
 import XMonad.Layout.WindowNavigation (Navigate(Go), Direction2D(U, D, L, R), windowNavigation)
+import qualified XMonad.Prompt as Prompt
 import XMonad.Util.Dzen (addArgs, center, dzenConfig, font, onCurr)
 import XMonad.Util.Run (runProcessWithInput, spawnPipe)
 import XMonad.Util.EZConfig (mkKeymap)
@@ -264,6 +267,31 @@ xmobarUrgentBG = yellow
 -- Width of the window border in pixels.
 myBorderWidth = 2
 
+myFont = "xft:monospace:size=12:antialias=true"
+
+myBgColor     = base03
+myFgColor     = base0
+myTextHLight  = base01
+myNotifyColor = yellow
+myBgHLight    = base3
+myBgDimLight  = base03
+myFgHLight    = base00
+myFgDimLight  = base01
+
+------------------------------------------------------------------------
+-- Prompt style
+--
+
+promptConfig :: Prompt.XPConfig
+promptConfig = def { Prompt.font            = myFont
+                   , Prompt.bgColor         = base03
+                   , Prompt.fgColor         = base0
+                   , Prompt.bgHLight        = base0
+                   , Prompt.fgHLight        = base03
+                   , Prompt.borderColor     = myNormalBorderColor
+                   , Prompt.height          = 48
+                   , Prompt.alwaysHighlight = True
+                   }
 
 ------------------------------------------------------------------------
 -- Key bindings
@@ -319,6 +347,10 @@ myKeys conf =
   , ("M-l",   sendMessage $ IncMasterN 1)
   -- Decrement the number of windows in the master area.
   , ("M-s",   sendMessage $ IncMasterN (-1))
+
+  -- prompts
+  , ("M-b", WP.fuzzyWindowPrompt promptConfig WP.Goto WP.wsWindows)
+  , ("M-S-b", WP.fuzzyWindowPrompt promptConfig WP.Bring WP.allWindows)
   ]
 
 vicfryzelKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
