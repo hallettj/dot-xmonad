@@ -131,3 +131,6 @@ include "%L"
 <Multi_key> <g> <y> : "ψ" U03C8
 <Multi_key> <g> <W> : "Ω" U03A9
 <Multi_key> <g> <w> : "ω" U03C9
+
+<Multi_key> <C> <C> : "✔" U2714
+<Multi_key> <u> <p> : "☝️" U261D
