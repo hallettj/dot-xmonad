@@ -586,7 +586,7 @@ main = do
     manageHook         = myManageHook,
     handleEventHook    = mconcat [ handleEventHook defaultConfig
                                  , fullscreenEventHook
-                                 , makeFirefoxFullScreen (isOnWorkspace "1:web")
+                                 , makeFirefoxFullScreen (return True)
                                  ],
     logHook            = myLogHook xmproc,
     startupHook        = myStartupHook
