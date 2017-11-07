@@ -15,7 +15,7 @@ import XMonad
 import XMonad.Actions.CycleWS (nextScreen, swapNextScreen, toggleWS')
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops (fullscreenEventHook)
-import XMonad.Hooks.ManageDocks (ToggleStruts(..), avoidStruts, docks)
+import XMonad.Hooks.ManageDocks (avoidStruts, docks)
 import XMonad.Hooks.ManageHelpers (doCenterFloat, doFullFloat, isDialog, isFullscreen)
 import XMonad.Hooks.SetWMName
 import XMonad.Hooks.UrgencyHook (UrgencyHook, NoUrgencyHook(..), clearUrgents, focusUrgent, urgencyHook, withUrgencyHook)
@@ -334,7 +334,7 @@ myKeys conf =
 
   , ("M-S-z", sendMessage (Toggle SFULL))
   -- , ("M-<F11>", sendMessage (Toggle FULL))
-  , ("M-C-b", sendMessage ToggleStruts)
+  , ("M-C-b", sendMessage (Toggle FULL))
 
   , ("M-a",   sendMessage MirrorShrink)
   , ("M-;",   sendMessage MirrorExpand)
