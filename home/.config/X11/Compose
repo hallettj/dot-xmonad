@@ -82,6 +82,8 @@ include "%L"
 <Multi_key> <d> <a> : "♬" U266C
 <Multi_key> <d> <i> : "♪" U266A
 <Multi_key> <d> <o> : "♩" U2669
+
+## Greek
 <Multi_key> <g> <A> : "Α" U0391
 <Multi_key> <g> <a> : "α" U03B1
 <Multi_key> <g> <B> : "Β" U0392
@@ -131,6 +133,19 @@ include "%L"
 <Multi_key> <g> <y> : "ψ" U03C8
 <Multi_key> <g> <W> : "Ω" U03A9
 <Multi_key> <g> <w> : "ω" U03C9
+
+## IPA
+# see https://en.wikipedia.org/wiki/IPA_Extensions
+<Multi_key> <i> <a> <a> : "ɑ" U0251
+<Multi_key> <i> <a> <e> : "æ" U00E6
+<Multi_key> <i> <o> : "ɔ" U0254
+<Multi_key> <i> <e> : "ə" U0259
+<Multi_key> <i> <E> : "ɛ" U025B
+<Multi_key> <i> <I> : "ɪ" U026A
+
+<Multi_key> <I> <l> : "ː" U02D0
+
+
 
 <Multi_key> <C> <C> : "✔" U2714
 <Multi_key> <u> <p> : "☝️" U261D
