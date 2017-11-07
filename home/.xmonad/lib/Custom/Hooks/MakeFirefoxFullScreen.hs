@@ -21,7 +21,7 @@ import Data.Monoid (All(..))
 import Graphics.X11.Types (Window)
 import Graphics.X11.Xlib.Extras (Event(..))
 import XMonad.Core (Query, X, runQuery, spawn)
-import XMonad.ManageHook ((=?), (<&&>), className)
+import XMonad.ManageHook ((=?), (<&&>), appName, className)
 import XMonad.Util.WindowState (runStateQuery)
 
 data FullScreenState = FullScreen | Normal
@@ -41,7 +41,7 @@ makeFirefoxFullScreen _ _ = return mempty
 
 matchQuery :: Query Bool -> Window -> (Window -> X ()) -> X ()
 matchQuery query win f = do
-  let fullQuery = (className =? "Firefox") <&&> query
+  let fullQuery = (className =? "Firefox") <&&> (not <$> appName =? "Popup") <&&> query
   matchesQuery <- runQuery fullQuery win
   when matchesQuery $ f win
 
