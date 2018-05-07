@@ -15,6 +15,10 @@ function kinesis2_connected {
   lsusb | grep "29ea:0102" || true
 }
 
+function keyboardio_connected {
+  lsusb | grep "Keyboardio Model 01" || true
+}
+
 function start_xcape {
   local mappings=$1
   run-this-one xcape -d -t 250 -e "$mappings" &> /dev/null &
@@ -32,7 +36,10 @@ elif [ -n "$(kinesis_connected)" ]; then
 elif [ -n "$(kinesis2_connected)" ]; then
   stop_xcape
   start_xcape "$CTRL;$CTRL_R;$ALT"
+elif [ -n "$(keyboardio_connected)" ]; then
+  stop_xcape
+  start_xcape "$CTRL;$CTRL_R;$ALT"
 else
   stop_xcape
-  start_xcape "$CTRL;$ALT;$RETURN"
+  start_xcape "$CTRL;$ALT"
 fi

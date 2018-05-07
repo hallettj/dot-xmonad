@@ -10,6 +10,10 @@ function kinesis2_connected {
   lsusb | grep "29ea:0102" || true
 }
 
+function keyboardio_connected {
+  lsusb | grep "Keyboardio Model 01" || true
+}
+
 function apply_xkb_map {
   local map=$1
   xkbcomp -w 0 -I"$HOME/.config/X11/xkb" "$map" $DISPLAY
@@ -21,6 +25,8 @@ elif [ -n "$(kinesis_connected)" ]; then
   apply_xkb_map ~/.config/X11/xkb/keymap/kinesis
 elif [ -n "$(kinesis2_connected)" ]; then
   apply_xkb_map ~/.config/X11/xkb/keymap/kinesis
+elif [ -n "$(keyboardio_connected)" ]; then
+  apply_xkb_map ~/.config/X11/xkb/keymap/keyboardio
 else
   apply_xkb_map ~/.config/X11/xkb/keymap/basic
 fi

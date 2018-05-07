@@ -51,6 +51,22 @@ xkb_symbols "invert_number_row" {
 };
 
 partial alphanumeric_keys
+xkb_symbols "invert_number_row_offset_parenthesis" {
+    key <TLDE> { [       grave, asciitilde ] };
+    key <AE01> { [      exclam,         1  ] };
+    key <AE02> { [          at,         2  ] };
+    key <AE03> { [  numbersign,         3  ] };
+    key <AE04> { [      dollar,         4  ] };
+    key <AE05> { [     percent,         5  ] };
+    key <AE06> { [ asciicircum,         6  ] };
+    key <AE07> { [    asterisk,         7  ] };
+    key <AE08> { [   parenleft,         8  ] };
+    key <AE09> { [  parenright,         9  ] };
+    key <AE10> { [   ampersand,         0  ] };
+    key <BKSL> { [         bar, backslash  ] };
+};
+
+partial alphanumeric_keys
 xkb_symbols "virtual_numpad" {
     key <AD07> { [ g, G,     7 ] };
     key <AD08> { [ c, C,     8 ] };
