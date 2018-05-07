@@ -15,8 +15,8 @@ isOnWorkspace workspaceId = do
   window <- ask
   XState { windowset } <- liftX get
   case findTag window windowset of
-    Just id -> return (id == workspaceId)
-    Nothing -> return False
+    Just wId -> return (wId == workspaceId)
+    Nothing  -> return False
 
 isOnCurrentWorkspace :: Query Bool
 isOnCurrentWorkspace = do
@@ -24,5 +24,5 @@ isOnCurrentWorkspace = do
   XState { windowset } <- liftX get
   let currentWorkspaceId = tag $ workspace $ current windowset
   case findTag window windowset of
-    Just id -> return (id == currentWorkspaceId)
-    Nothing -> return False
+    Just wId -> return (wId == currentWorkspaceId)
+    Nothing  -> return False

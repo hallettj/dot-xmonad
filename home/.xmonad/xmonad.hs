@@ -1,12 +1,14 @@
-{-# LANGUAGE DeriveDataTypeable, MultiParamTypeClasses, TypeSynonymInstances #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE NamedFieldPuns #-}
+{-# LANGUAGE TypeSynonymInstances #-}
+{-# OPTIONS_GHC -fno-warn-missing-signatures #-}
 
 --
 -- xmonad config used by Jesse Hallett
 -- http://github.com/hallettj/config_files
 
-import Custom.Hooks.MakeFirefoxFullScreen (makeFirefoxFullScreen)
+import qualified Custom.Colors as Colors
 import qualified Custom.Prompt.FuzzyWindow as WP
-import Custom.Queries (isOnWorkspace)
 import Data.Default (def)
 import Graphics.X11.ExtraTypes.XF86 (xF86XK_MonBrightnessDown, xF86XK_MonBrightnessUp)
 import System.IO
@@ -18,24 +20,21 @@ import XMonad.Hooks.EwmhDesktops (fullscreenEventHook)
 import XMonad.Hooks.ManageDocks (avoidStruts, docks)
 import XMonad.Hooks.ManageHelpers (doCenterFloat, doFullFloat, isDialog, isFullscreen)
 import XMonad.Hooks.SetWMName
-import XMonad.Hooks.UrgencyHook (UrgencyHook, NoUrgencyHook(..), clearUrgents, focusUrgent, urgencyHook, withUrgencyHook)
+import XMonad.Hooks.UrgencyHook (NoUrgencyHook(..), clearUrgents, focusUrgent, withUrgencyHook)
 import XMonad.Layout.Dishes (Dishes(..))
 import XMonad.Layout.FixedColumn (FixedColumn(..))
-import XMonad.Layout.Fullscreen hiding (fullscreenEventHook)
 import XMonad.Layout.IM (Property(Title), withIM)
 import XMonad.Layout.LayoutHints (layoutHintsToCenter)
 import XMonad.Layout.LimitWindows (limitWindows)
-import XMonad.Layout.MultiToggle (EOT(..), Toggle(..), Transformer, (??), mkToggle, mkToggle1, transform)
+import XMonad.Layout.MultiToggle (EOT(..), Toggle(..), Transformer, (??), mkToggle, transform)
 import XMonad.Layout.MultiToggle.Instances (StdTransformers(FULL))
 import XMonad.Layout.NoBorders
 import XMonad.Layout.PerWorkspace (onWorkspaces)
 import XMonad.Layout.Renamed (Rename(..), renamed)
 import XMonad.Layout.ResizableTile (MirrorResize(MirrorExpand, MirrorShrink), ResizableTall(..))
-import XMonad.Layout.Spiral
 import XMonad.Layout.ThreeColumns (ThreeCol(ThreeColMid))
 import XMonad.Layout.WindowNavigation (Navigate(Go), Direction2D(U, D, L, R), windowNavigation)
 import qualified XMonad.Prompt as Prompt
-import XMonad.Util.Dzen (addArgs, center, dzenConfig, font, onCurr)
 import XMonad.Util.Run (runProcessWithInput, spawnPipe)
 import XMonad.Util.EZConfig (mkKeymap)
 import XMonad.Util.NamedScratchpad ( NamedScratchpad(..)
@@ -44,22 +43,23 @@ import XMonad.Util.NamedScratchpad ( NamedScratchpad(..)
                                    , namedScratchpadAction
                                    , namedScratchpadFilterOutWorkspacePP
                                    , namedScratchpadManageHook )
-import XMonad.Util.NamedWindows (getName)
 import qualified XMonad.StackSet as W
 import Data.List (isPrefixOf)
 import qualified Data.Map        as M
 import Data.Maybe (catMaybes, listToMaybe)
-import Data.Monoid (mconcat)
+import Data.Monoid (Endo, mconcat)
 import Data.Ratio ((%))
 import Control.Applicative ((<$>))
-import Control.Monad ((>=>), filterM, mapM_, sequence, when, void)
+import Control.Monad (filterM, mapM_, sequence, void)
 
+import qualified XMonad.Util.FirefoxScratchpad as TS
 
 ------------------------------------------------------------------------
 -- Terminal
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
 --
+myTerminal :: String
 myTerminal = "/usr/bin/urxvt"
 
 
@@ -67,7 +67,8 @@ myTerminal = "/usr/bin/urxvt"
 -- Workspaces
 -- The default number of workspaces (virtual screens) and their names.
 --
-myWorkspaces = ["1:web","2:work","3:comms","4:terminal","5:vim"] ++ map show [6..9]
+myWorkspaces :: [String]
+myWorkspaces = ["1:web","2:work","3:comms","4:terminal","5:vim"] ++ map show ([6..9] :: [Int])
 
 
 ------------------------------------------------------------------------
@@ -84,6 +85,7 @@ myWorkspaces = ["1:web","2:work","3:comms","4:terminal","5:vim"] ++ map show [6.
 -- To match on the WM_NAME, you can use 'title' in the same way that
 -- 'className' and 'resource' are used below.
 --
+myManageHook :: Query (Endo WindowSet)
 myManageHook = composeAll
     [ resource  =? "desktop_window" --> doIgnore
     , className =? "Galculator"     --> doFloat
@@ -97,7 +99,8 @@ myManageHook = composeAll
     ]
     <+> namedScratchpadManageHook myScratchPads
 
-myScratchPads = [ NS "pandora"         spawnPandora       findPandora       (leftPanel  0.50)
+myScratchPads :: [NamedScratchpad]
+myScratchPads = [ TS.taggedScratchpad (TS.TS { TS.tag = "primary Firefox", TS.cmd = "firefox", TS.hook = leftPanel 0.67 })
                 , NS "google music"    spawnGoogleMusic   findGoogleMusic   (leftPanel  0.67)
                 , NS "amazon music"    spawnAmazonMusic   findAmazonMusic   (leftPanel  0.67)
                 , NS "startuprobot.slack"  spawnStartupRobotSlack findStartupRobotSlack (rightPanel 0.67)
@@ -105,6 +108,7 @@ myScratchPads = [ NS "pandora"         spawnPandora       findPandora       (lef
                 , NS "olioapps.slack"  spawnOlioApps      findOlioApps      (rightPanel 0.67)
                 , NS "poodle"          spawnPoodle        findPoodle        (rightPanel 0.67)
                 , NS "caribtech.slack" spawnCaribTech     findCaribTech     (rightPanel 0.67)
+                , NS "vanta.slack"     spawnVantaSlack    findVantaSlack    (rightPanel 0.67)
                 , NS "tox"             spawnTox           findTox           (rightPanel 0.67)
                 , NS "gitter"          spawnGitter        findGitter        (rightPanel 0.67)
                 , NS "hangouts"        spawnHangouts      findHangouts      (rightPanel 0.67)
@@ -112,12 +116,6 @@ myScratchPads = [ NS "pandora"         spawnPandora       findPandora       (lef
                 , NS "rememberthemilk" spawnRTM           findRTM           (rightPanel 0.67)
                 ]
   where
-    spawnPandora = chromeApp "http://www.pandora.com/"
-    findPandora = resource =? "www.pandora.com"
-
-    spawnRdio = chromeApp "http://www.rdio.com/"
-    findRdio = resource =? "www.rdio.com"
-
     spawnGoogleMusic = chromeApp "https://play.google.com/music"
     findGoogleMusic = resource =? "play.google.com__music"
 
@@ -138,6 +136,9 @@ myScratchPads = [ NS "pandora"         spawnPandora       findPandora       (lef
 
     spawnCaribTech = chromeApp "https://caribbeantech.slack.com/"
     findCaribTech = resource =? "caribbeantech.slack.com"
+
+    spawnVantaSlack = chromeApp "https://vantahq.slack.com/"
+    findVantaSlack = resource =? "vantahq.slack.com"
 
     spawnTox = "qtox"
     findTox = className =? "qTox"
@@ -169,8 +170,6 @@ myScratchPads = [ NS "pandora"         spawnPandora       findPandora       (lef
         h = 1
         t = 1 - h
         l = 0
-
-    role = stringProperty "WM_WINDOW_ROLE"
 
 ------------------------------------------------------------------------
 -- Layouts
@@ -235,48 +234,22 @@ instance Transformer MyTransformers Window where
 -- Currently based on the solarized theme.
 --
 
-base03 = "#002b36"
-base02 = "#073642"
-base01 = "#586e75"
-base00 = "#657b83"
-base0  = "#839496"
-base1  = "#93a1a1"
-base2  = "#eee8d5"
-base3  = "#fdf6e3"
-yellow = "#b58900"
-orange = "#cb4b16"
-red    = "#dc322f"
-magenta= "#d33682"
-violet = "#6c71c4"
-blue   = "#268bd2"
-cyan   = "#2aa198"
-green  = "#859900"
-
-myNormalBorderColor  = base00
-myFocusedBorderColor = orange
+myNormalBorderColor  = Colors.base00
+myFocusedBorderColor = Colors.orange
 
 -- Color of current window title in xmobar.
-xmobarTitleColor = orange
+xmobarTitleColor = Colors.orange
 
 -- Color of current workspace in xmobar.
-xmobarCurrentWorkspaceColor = yellow
+xmobarCurrentWorkspaceColor = Colors.yellow
 
-xmobarUrgentFG = base03
-xmobarUrgentBG = yellow
+xmobarUrgentFG = Colors.base03
+xmobarUrgentBG = Colors.yellow
 
 -- Width of the window border in pixels.
 myBorderWidth = 2
 
 myFont = "xft:monospace:size=12:antialias=true"
-
-myBgColor     = base03
-myFgColor     = base0
-myTextHLight  = base01
-myNotifyColor = yellow
-myBgHLight    = base3
-myBgDimLight  = base03
-myFgHLight    = base00
-myFgDimLight  = base01
 
 ------------------------------------------------------------------------
 -- Prompt style
@@ -284,10 +257,10 @@ myFgDimLight  = base01
 
 promptConfig :: Prompt.XPConfig
 promptConfig = def { Prompt.font            = myFont
-                   , Prompt.bgColor         = base03
-                   , Prompt.fgColor         = base0
-                   , Prompt.bgHLight        = base0
-                   , Prompt.fgHLight        = base03
+                   , Prompt.bgColor         = Colors.base03
+                   , Prompt.fgColor         = Colors.base0
+                   , Prompt.bgHLight        = Colors.base0
+                   , Prompt.fgHLight        = Colors.base03
                    , Prompt.borderColor     = myNormalBorderColor
                    , Prompt.height          = 48
                    , Prompt.alwaysHighlight = True
@@ -315,11 +288,12 @@ myKeys conf =
   , ("M-<Backspace>", focusUrgent)
   , ("M-S-<Backspace>", clearUrgents)
 
-  , ("M-, p", namedScratchpadAction myScratchPads "pdxjs.slack")
+  , ("M-, p", namedScratchpadAction myScratchPads "primary Firefox")
   , ("M-, r", namedScratchpadAction myScratchPads "caribtech.slack")
   , ("M-, m", namedScratchpadAction myScratchPads "google music")
   , ("M-, a", namedScratchpadAction myScratchPads "amazon music")
   , ("M-, o", namedScratchpadAction myScratchPads "olioapps.slack")
+  , ("M-, v", namedScratchpadAction myScratchPads "vanta.slack")
   , ("M-, x", namedScratchpadAction myScratchPads "tox")
   , ("M-, g", namedScratchpadAction myScratchPads "gitter")
   , ("M-, h", namedScratchpadAction myScratchPads "hangouts")
@@ -343,17 +317,24 @@ myKeys conf =
 
   , ("M-C-w", kill)  -- close focused window
 
-  -- Increment the number of windows in the master area.
-  , ("M-l",   sendMessage $ IncMasterN 1)
-  -- Decrement the number of windows in the master area.
-  , ("M-s",   sendMessage $ IncMasterN (-1))
+  -- -- Increment the number of windows in the master area.
+  -- , ("M-l",   sendMessage $ IncMasterN 1)
+  -- -- Decrement the number of windows in the master area.
+  -- , ("M-s",   sendMessage $ IncMasterN (-1))
+
+  , ("M-s", nextScreen)
+  , ("M-S-s", swapNextScreen)
+
+  -- mouse scroll emulation
+  , ("M-j", sendScrollDown)
+  , ("M-k", sendScrollUp)
 
   -- prompts
   , ("M-b", WP.fuzzyWindowPrompt promptConfig WP.Goto WP.wsWindows)
   , ("M-S-b", WP.fuzzyWindowPrompt promptConfig WP.Bring WP.allWindows)
   ]
 
-vicfryzelKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
+vicfryzelKeys conf@(XConfig {modMask}) = M.fromList $
   -- Lock the screen using xscreensaver.
   [ ((modMask .|. shiftMask, xK_l),
      spawn "xscreensaver-command -lock")
@@ -445,14 +426,6 @@ vicfryzelKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
      windows W.focusUp)
   , ((modMask .|. shiftMask .|. mod5Mask, xK_Tab),
      windows W.focusUp)
-
-  -- Move focus to the next window.
-  , ((modMask, xK_j),
-     windows W.focusDown)
-
-  -- Move focus to the previous window.
-  , ((modMask, xK_k),
-     windows W.focusUp  )
 
   , ((modMask, xK_period),
      sendMessage $ Go U)
@@ -564,9 +537,10 @@ myStartupHook = do
 ------------------------------------------------------------------------
 -- Run xmonad
 --
+main :: IO ()
 main = do
   xmproc <- spawnPipe "xmobar ~/.xmonad/xmobar.hs"
-  xmonad $ docks $ withUrgencyHook NoUrgencyHook $ defaultConfig {
+  xmonad $ docks $ withUrgencyHook NoUrgencyHook $ def {
     -- simple stuff
     terminal           = myTerminal,
     focusFollowsMouse  = False,
@@ -584,9 +558,9 @@ main = do
     -- hooks, layouts
     layoutHook         = myLayout,
     manageHook         = myManageHook,
-    handleEventHook    = mconcat [ handleEventHook defaultConfig
+    handleEventHook    = mconcat [ handleEventHook def
                                  , fullscreenEventHook
-                                 , makeFirefoxFullScreen (return True)
+                                 -- , makeFirefoxFullScreen (return True)
                                  ],
     logHook            = myLogHook xmproc,
     startupHook        = myStartupHook
@@ -619,7 +593,7 @@ sendToMusicPlayer key =
     withActiveNamedScratchpad (sendKeyPress key) confs players
   where
     confs   = myScratchPads
-    players = ["pandora", "rdio", "google music"]
+    players = ["pandora", "google music"]
 
 withActiveNamedScratchpad :: (Window -> X ())
                           -> NamedScratchpads
@@ -632,6 +606,12 @@ withActiveNamedScratchpad f confs names =
 
 sendKeyPress :: String -> Window -> X ()
 sendKeyPress key win = spawn $ "xdotool key --window " ++ show win ++ " " ++ key
+
+sendScrollDown :: X ()
+sendScrollDown = spawn $ "xdotool getwindowfocus --repeat 5 --window '%1' click 5"
+
+sendScrollUp :: X ()
+sendScrollUp = spawn $ "xdotool getwindowfocus --repeat 5 --window '%1' click 4"
 
 -- generalized from someNamedScratchpadAction in XMonad.Util.NamedScratchpad
 findActiveNamedScratchpad :: NamedScratchpads

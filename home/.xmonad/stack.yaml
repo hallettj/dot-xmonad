@@ -1,0 +1,5 @@
+resolver: lts-11.7
+packages:
+  - "."
+extra-deps:
+  - fuzzy-0.1.0.0
