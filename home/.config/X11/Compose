@@ -1,6 +1,8 @@
 # This configuration comes from:
 # https://github.com/kmcallister/math-compose
 
+# Includes the distribution Compose file for the current locale; e.g.:
+# /usr/share/X11/locale/en_US.UTF-8/Compose
 include "%L"
 
 <Multi_key> <a> <asciitilde> : "∝" U221D
@@ -19,13 +21,13 @@ include "%L"
 <Multi_key> <o> <period> : "∘" U2218
 <Multi_key> <asterisk> <asterisk> : "∗" U2217
 <Multi_key> <colon> <colon> : "∷" U2237
-<Multi_key> <period> <asterisk> : "∙" U2219
-<Multi_key> <asterisk> <period> : "∙" U2219
+<Multi_key> <period> <asterisk> : "∙" U2219 # bullet operator
+<Multi_key> <asterisk> <period> : "∙" U2219 # bullet operator
 <Multi_key> <question> <equal> : "≟" U225F
 <Multi_key> <d> <equal> : "≝" U225D
 <Multi_key> <D> <equal> : "≜" U225C
 <Multi_key> <asterisk> <equal> : "≛" U225B
-<Multi_key> <O> <period> : "." U002E
+<Multi_key> <O> <period> : "." U002E # full stop
 <Multi_key> <O> <o> : "⊚" U229A
 <Multi_key> <O> <equal> : "⊜" U229C
 <Multi_key> <c> <period> : "⋯" U22EF
@@ -82,6 +84,14 @@ include "%L"
 <Multi_key> <d> <a> : "♬" U266C
 <Multi_key> <d> <i> : "♪" U266A
 <Multi_key> <d> <o> : "♩" U2669
+<Multi_key> <apostrophe> <1> : "′" U2032 # prime
+<Multi_key> <apostrophe> <KP_1> : "′" U2032 # prime
+<Multi_key> <apostrophe> <2> : "″" U2033 # double prime
+<Multi_key> <apostrophe> <KP_2> : "″" U2033 # double prime
+<Multi_key> <apostrophe> <3> : "‴" U2034 # triple prime
+<Multi_key> <apostrophe> <KP_3> : "‴" U2034 # triple prime
+<Multi_key> <apostrophe> <4> : "⁗" U2057 # quadruple prime
+<Multi_key> <apostrophe> <KP_4> : "⁗" U2057 # quadruple prime
 
 ## Greek
 <Multi_key> <g> <A> : "Α" U0391
@@ -145,7 +155,12 @@ include "%L"
 
 <Multi_key> <I> <l> : "ː" U02D0
 
+## Special punctuation
+<Multi_key> <period> <minus> : "·" periodcentered # MIDDLE DOT; interpunct; formal decimal point
+<Multi_key> <exclam> <question> : "‽"   U203D # INTERROBANG
+<Multi_key> <asciitilde> <question> "⸮" U2E2E # irony mark
+<Multi_key> <asciitilde> <exclam> "¡" U00A1 # inverted exclam; temherte slaqî; sarcasm
 
-
+## Emoji
 <Multi_key> <C> <C> : "✔" U2714
 <Multi_key> <u> <p> : "☝️" U261D
