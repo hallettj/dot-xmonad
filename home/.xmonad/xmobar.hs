@@ -22,7 +22,7 @@ Config {
                     , "-i", "connected"
                     , "-o", "off"
                     ] 60,
-        Run Date "%a %b %_d 12,0%y   %l:%M %P" "date" 10,
+        Run Date "%a %b %_d 12,0%y   %H:%M" "date" 10,
         Run PipeReader "/home/jesse/.config/statnot/notification.pipe" "notifications",
         Run StdinReader
     ],
