@@ -21,15 +21,10 @@ import XMonad.Hooks.ManageDocks (avoidStruts, docks)
 import XMonad.Hooks.ManageHelpers (doCenterFloat, doFullFloat, isDialog, isFullscreen)
 import XMonad.Hooks.SetWMName
 import XMonad.Hooks.UrgencyHook (NoUrgencyHook(..), clearUrgents, focusUrgent, withUrgencyHook)
-import XMonad.Layout.Dishes (Dishes(..))
-import XMonad.Layout.FixedColumn (FixedColumn(..))
-import XMonad.Layout.IM (Property(Title), withIM)
 import XMonad.Layout.LayoutHints (layoutHintsToCenter)
-import XMonad.Layout.LimitWindows (limitWindows)
 import XMonad.Layout.MultiToggle (EOT(..), Toggle(..), Transformer, (??), mkToggle, transform)
 import XMonad.Layout.MultiToggle.Instances (StdTransformers(FULL))
 import XMonad.Layout.NoBorders
-import XMonad.Layout.PerWorkspace (onWorkspaces)
 import XMonad.Layout.Renamed (Rename(..), renamed)
 import XMonad.Layout.ResizableTile (MirrorResize(MirrorExpand, MirrorShrink), ResizableTall(..))
 import XMonad.Layout.ThreeColumns (ThreeCol(ThreeColMid))
@@ -48,7 +43,6 @@ import Data.List (isPrefixOf)
 import qualified Data.Map        as M
 import Data.Maybe (catMaybes, listToMaybe)
 import Data.Monoid (Endo, mconcat)
-import Data.Ratio ((%))
 import Control.Applicative ((<$>))
 import Control.Monad (filterM, mapM_, sequence, void)
 
@@ -60,7 +54,7 @@ import qualified XMonad.Util.FirefoxScratchpad as TS
 -- certain contrib modules.
 --
 myTerminal :: String
-myTerminal = "/usr/bin/urxvt"
+myTerminal = "/usr/bin/konsole"
 
 
 ------------------------------------------------------------------------
@@ -114,6 +108,7 @@ myScratchPads = [ TS.taggedScratchpad (TS.TS { TS.tag = "primary Firefox", TS.cm
                 , NS "hangouts"        spawnHangouts      findHangouts      (rightPanel 0.67)
                 , NS "whatsapp"        spawnWhatsapp      findWhatsapp      (rightPanel 0.67)
                 , NS "rememberthemilk" spawnRTM           findRTM           (rightPanel 0.67)
+                , NS "enpass"          spawnEnpass        findEnpass        (leftPanel 0.67)
                 ]
   where
     spawnGoogleMusic = chromeApp "https://play.google.com/music"
@@ -155,6 +150,9 @@ myScratchPads = [ TS.taggedScratchpad (TS.TS { TS.tag = "primary Firefox", TS.cm
     spawnRTM = "'/opt/Remember The Milk/Remember The Milk'"
     findRTM = className =? "Remember The Milk"
 
+    spawnEnpass = "/opt/Enpass/bin/runenpass.sh"
+    findEnpass = title =? "Enpass"
+
     chromeApp  = (("google-chrome --user-data-dir=" ++ dataDir ++ " --app=") ++)
     chromeApp' = (("google-chrome --user-data-dir=" ++ dataDir ++ " --app-id=") ++)
     dataDir   = "$HOME/.config/google-chrome-apps"
@@ -184,44 +182,16 @@ myScratchPads = [ TS.taggedScratchpad (TS.TS { TS.tag = "primary Firefox", TS.cm
 myLayout = layoutHintsToCenter             $
            smartBorders                    $
            mkToggle (SFULL ?? FULL ?? EOT) $
-           avoidStruts
-           perWS
-
-perWS = onWorkspaces ["1:web",   "2:web"]      splitFirst  $
-        onWorkspaces ["3:comms", "4:terminal"] codingFirst $
-        splitFirst
-
-splitFirst  = wNav $ browsing ||| split ||| coding ||| dishes ||| book
-codingFirst = wNav $ coding ||| dishes ||| book ||| browsing ||| split
-
-wNav l = windowNavigation l
+           avoidStruts                     $
+           windowNavigation                $
+           split ||| ThreeColMid 1 (1/60) (20/60)
 
 split = renamed [Replace "tall"] $
         ResizableTall nmaster delta ratio []
   where
     nmaster = 1
-    ratio   = 66/100
-    delta   = 3/100
-
-browsing = renamed [Replace "browsing"] $
-           withIM (1%6) (Title "Tabs Outliner") split
-
-coding = renamed [Replace "fixed column"] $
-         limitWindows 3             $
-         FixedColumn 1 20 100 10
-
-dishes = renamed [Replace "dishes"] $
-         limitWindows 5 $ Dishes nmaster ratio
-  where
-    nmaster = 1
-    ratio   = 1/5
-
-book = renamed [Replace "book"] $
-       ThreeColMid nmaster delta ratio
-  where
-    nmaster = 1
-    delta   = 3/100
-    ratio   = 60/100
+    ratio   = 30/60
+    delta   = 1/60
 
 data MyTransformers = SFULL
     deriving (Read, Show, Eq, Typeable)
@@ -300,6 +270,7 @@ myKeys conf =
   , ("M-, c", namedScratchpadAction myScratchPads "startuprobot.slack")
   , ("M-, w", namedScratchpadAction myScratchPads "whatsapp")
   , ("M-, l", namedScratchpadAction myScratchPads "rememberthemilk")
+  , ("M-, e", namedScratchpadAction myScratchPads "enpass")
 
   -- Arranging windows
 
@@ -330,8 +301,8 @@ myKeys conf =
   , ("M-k", sendScrollUp)
 
   -- prompts
-  , ("M-b", WP.fuzzyWindowPrompt promptConfig WP.Goto WP.wsWindows)
-  , ("M-S-b", WP.fuzzyWindowPrompt promptConfig WP.Bring WP.allWindows)
+  , ("M-S-b", WP.fuzzyWindowPrompt promptConfig WP.Goto WP.wsWindows)
+  , ("M-b", WP.fuzzyWindowPrompt promptConfig WP.Bring WP.allWindows)
   ]
 
 vicfryzelKeys conf@(XConfig {modMask}) = M.fromList $
