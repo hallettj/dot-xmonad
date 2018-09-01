@@ -38,6 +38,7 @@ elif [ -n "$(kinesis2_connected)" ]; then
   start_xcape "$CTRL;$CTRL_R;$ALT"
 elif [ -n "$(keyboardio_connected)" ]; then
   stop_xcape
+  start_xcape "$CTRL;$CTRL_R;$ALT"
 else
   stop_xcape
   start_xcape "$CTRL;$ALT"
