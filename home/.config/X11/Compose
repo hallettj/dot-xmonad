@@ -158,8 +158,8 @@ include "%L"
 ## Special punctuation
 <Multi_key> <period> <minus> : "·" periodcentered # MIDDLE DOT; interpunct; formal decimal point
 <Multi_key> <exclam> <question> : "‽"   U203D # INTERROBANG
-<Multi_key> <asciitilde> <question> "⸮" U2E2E # irony mark
-<Multi_key> <asciitilde> <exclam> "¡" U00A1 # inverted exclam; temherte slaqî; sarcasm
+<Multi_key> <asciitilde> <question> : "⸮" U2E2E # irony mark
+<Multi_key> <asciitilde> <exclam> : "¡" U00A1 # inverted exclam; temherte slaqî; sarcasm
 
 ## Emoji
 <Multi_key> <C> <C> : "✔" U2714
