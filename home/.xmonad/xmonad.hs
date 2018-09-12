@@ -15,6 +15,7 @@ import System.IO
 import System.Exit
 import XMonad
 import XMonad.Actions.CycleWS (nextScreen, swapNextScreen, toggleWS')
+import XMonad.Actions.TagWindows (addTag, tagPrompt)
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops (fullscreenEventHook)
 import XMonad.Hooks.ManageDocks (avoidStruts, docks)
@@ -301,8 +302,9 @@ myKeys conf =
   , ("M-k", sendScrollUp)
 
   -- prompts
-  , ("M-S-b", WP.fuzzyWindowPrompt promptConfig WP.Goto WP.wsWindows)
-  , ("M-b", WP.fuzzyWindowPrompt promptConfig WP.Bring WP.allWindows)
+  , ("M-S-f", WP.fuzzyWindowPrompt promptConfig WP.Goto WP.matchTitle WP.wsWindows)
+  , ("M-b", WP.fuzzyWindowPrompt promptConfig WP.Bring WP.matchTitleAndTags WP.allWindows)
+  , ("M-, S-t", tagPrompt promptConfig (\s -> withFocused (addTag s)))
   ]
 
 vicfryzelKeys conf@(XConfig {modMask}) = M.fromList $
