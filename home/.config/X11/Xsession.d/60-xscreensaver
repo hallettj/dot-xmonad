@@ -1,3 +1,5 @@
 killall -q gnome-screensaver || true
 (xscreensaver -no-splash || true) &
-xss-lock -- xscreensaver-command --lock &
+xset s 600 600 # activate screensaver after 10 minutes of inactivity
+xset dpms 720 720 720 # turn off display after 12 minutes
+run-one xss-lock -- xscreensaver-command --lock &

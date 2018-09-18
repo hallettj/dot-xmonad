@@ -310,7 +310,7 @@ myKeys conf =
 vicfryzelKeys conf@(XConfig {modMask}) = M.fromList $
   -- Lock the screen using xscreensaver.
   [ ((modMask .|. shiftMask, xK_l),
-     spawn "xscreensaver-command -lock")
+     spawn "xset s activate")
 
   -- Launch dmenu via yeganesh.
   -- Use this to launch programs without a key binding.
