@@ -1,0 +1,14 @@
+[Desktop Entry]
+DefaultProfile=Solarized Dark.profile
+
+[Favorite Profiles]
+Favorites=Solarized Light.profile,Solarized Dark.profile
+
+[KonsoleWindow]
+ShowMenuBarByDefault=false
+
+[MainWindow]
+Height 1800=1776
+State=AAAA/wAAAAD9AAAAAAAADIAAAAbQAAAABAAAAAQAAAAIAAAACPwAAAAA
+ToolBarsMovable=Disabled
+Width 3200=3200
