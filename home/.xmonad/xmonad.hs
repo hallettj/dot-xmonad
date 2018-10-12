@@ -97,7 +97,7 @@ myManageHook = composeAll
 myScratchPads :: [NamedScratchpad]
 myScratchPads = [ TS.taggedScratchpad (TS.TS { TS.tag = "primary Firefox", TS.cmd = "firefox", TS.hook = leftPanel 0.67 })
                 , NS "google music"    spawnGoogleMusic   findGoogleMusic   (leftPanel  0.67)
-                , NS "amazon music"    spawnAmazonMusic   findAmazonMusic   (leftPanel  0.67)
+                , NS "austinspace.slack"   spawnAustinSlack   findAustinSlack   (rightPanel  0.67)
                 , NS "startuprobot.slack"  spawnStartupRobotSlack findStartupRobotSlack (rightPanel 0.67)
                 , NS "pdxjs.slack"     spawnPdxjs         findPdxjs         (rightPanel 0.67)
                 , NS "olioapps.slack"  spawnOlioApps      findOlioApps      (rightPanel 0.67)
@@ -115,8 +115,8 @@ myScratchPads = [ TS.taggedScratchpad (TS.TS { TS.tag = "primary Firefox", TS.cm
     spawnGoogleMusic = chromeApp "https://play.google.com/music"
     findGoogleMusic = resource =? "play.google.com__music"
 
-    spawnAmazonMusic = chromeApp "https://www.amazon.com/gp/dmusic/cloudplayer/player?ie=UTF8&*Version*=1&*entries*=0&ref_=dm_wcp_el_mp"
-    findAmazonMusic = resource =? "www.amazon.com__gp_dmusic_cloudplayer_player"
+    spawnAustinSlack = chromeApp "https://theaustinspace.slack.com/"
+    findAustinSlack = resource =? "theaustinspace.slack.com"
 
     spawnStartupRobotSlack = chromeApp "https://startuprobot.slack.com/"
     findStartupRobotSlack = resource =? "startuprobot.slack.com"
@@ -262,7 +262,7 @@ myKeys conf =
   , ("M-, p", namedScratchpadAction myScratchPads "primary Firefox")
   , ("M-, r", namedScratchpadAction myScratchPads "caribtech.slack")
   , ("M-, m", namedScratchpadAction myScratchPads "google music")
-  , ("M-, a", namedScratchpadAction myScratchPads "amazon music")
+  , ("M-, a", namedScratchpadAction myScratchPads "austinspace.slack")
   , ("M-, o", namedScratchpadAction myScratchPads "olioapps.slack")
   , ("M-, v", namedScratchpadAction myScratchPads "vanta.slack")
   , ("M-, x", namedScratchpadAction myScratchPads "tox")
