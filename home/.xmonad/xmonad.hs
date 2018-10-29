@@ -55,7 +55,7 @@ import qualified XMonad.Util.FirefoxScratchpad as TS
 -- certain contrib modules.
 --
 myTerminal :: String
-myTerminal = "/usr/bin/konsole"
+myTerminal = "/usr/bin/kitty"
 
 
 ------------------------------------------------------------------------
