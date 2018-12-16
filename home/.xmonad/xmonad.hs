@@ -109,6 +109,7 @@ myScratchPads = [ TS.taggedScratchpad (TS.TS { TS.tag = "primary Firefox", TS.cm
                 , NS "hangouts"        spawnHangouts      findHangouts      (rightPanel 0.67)
                 , NS "whatsapp"        spawnWhatsapp      findWhatsapp      (rightPanel 0.67)
                 , NS "rememberthemilk" spawnRTM           findRTM           (rightPanel 0.67)
+                , NS "signal"          spawnSignal        findSignal        (rightPanel 0.67)
                 , NS "enpass"          spawnEnpass        findEnpass        (leftPanel 0.67)
                 ]
   where
@@ -150,6 +151,9 @@ myScratchPads = [ TS.taggedScratchpad (TS.TS { TS.tag = "primary Firefox", TS.cm
 
     spawnRTM = "'/opt/Remember The Milk/Remember The Milk'"
     findRTM = className =? "Remember The Milk"
+
+    spawnSignal = "/opt/Signal/signal-desktop"
+    findSignal = className =? "Signal"
 
     spawnEnpass = "/opt/Enpass/bin/runenpass.sh"
     findEnpass = title =? "Enpass"
@@ -271,6 +275,7 @@ myKeys conf =
   , ("M-, c", namedScratchpadAction myScratchPads "startuprobot.slack")
   , ("M-, w", namedScratchpadAction myScratchPads "whatsapp")
   , ("M-, l", namedScratchpadAction myScratchPads "rememberthemilk")
+  , ("M-, s", namedScratchpadAction myScratchPads "signal")
   , ("M-, e", namedScratchpadAction myScratchPads "enpass")
 
   -- Arranging windows
