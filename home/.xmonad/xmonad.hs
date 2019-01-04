@@ -277,6 +277,7 @@ myKeys conf =
   , ("M-, l", namedScratchpadAction myScratchPads "rememberthemilk")
   , ("M-, s", namedScratchpadAction myScratchPads "signal")
   , ("M-, e", namedScratchpadAction myScratchPads "enpass")
+  , ("M-p", spawn "/opt/enpass/Enpass showassistant")
 
   -- Arranging windows
 
@@ -316,11 +317,6 @@ vicfryzelKeys conf@(XConfig {modMask}) = M.fromList $
   -- Lock the screen using xscreensaver.
   [ ((modMask .|. shiftMask, xK_l),
      spawn "xset s activate")
-
-  -- Launch dmenu via yeganesh.
-  -- Use this to launch programs without a key binding.
-  , ((modMask, xK_p),
-     spawn "exe=`dmenu-with-yeganesh` && eval \"exec $exe\"")
 
   -- Take a screenshot in select mode.
   -- After pressing this key binding, click a window, or draw a rectangle with
