@@ -155,7 +155,7 @@ myScratchPads = [ TS.taggedScratchpad (TS.TS { TS.tag = "primary Firefox", TS.cm
     spawnSignal = "/opt/Signal/signal-desktop"
     findSignal = className =? "Signal"
 
-    spawnEnpass = "/opt/Enpass/bin/runenpass.sh"
+    spawnEnpass = "/opt/enpass/Enpass"
     findEnpass = title =? "Enpass"
 
     chromeApp  = (("google-chrome --user-data-dir=" ++ dataDir ++ " --app=") ++)
