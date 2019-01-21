@@ -149,7 +149,7 @@ myScratchPads = [ TS.taggedScratchpad (TS.TS { TS.tag = "primary Firefox", TS.cm
     spawnWhatsapp = chromeApp "https://web.whatsapp.com/"
     findWhatsapp = resource =? "web.whatsapp.com"
 
-    spawnRTM = "'/opt/Remember The Milk/Remember The Milk'"
+    spawnRTM = "'/opt/Remember The Milk/rememberthemilk'"
     findRTM = className =? "Remember The Milk"
 
     spawnSignal = "/opt/Signal/signal-desktop"
