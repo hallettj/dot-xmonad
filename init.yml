@@ -9,19 +9,18 @@
       become: yes
       with_items:
         - xmonad
-        - libghc-xmonad-contrib-dev
         - alsa-utils
         - dzen2
         - cabal-install
         - feh
         - ghc
-        - ghc-mod
+        - kitty
         - murrine-themes
         - network-manager
         - network-manager-gnome
         - network-manager-openvpn
         - network-manager-openvpn-gnome
-        - rxvt-unicode
+        - pavucontrol
         - stalonetray
         - suckless-tools
         - xbacklight
@@ -31,11 +30,8 @@
         - xscreensaver
         - xss-lock
 
-        # Dependencies for config-reload extension for urxvt
-        - libanyevent-perl
-        - libcommon-sense-perl
-        - liblinux-fd-perl
-        - liblog-log4perl-perl
+        # Dependencies for statnot
+        - python-dbus
 
     - name: compile xmonad config
       shell: xmonad --recompile
