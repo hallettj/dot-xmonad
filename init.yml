@@ -24,6 +24,7 @@
         - stalonetray
         - suckless-tools
         - xbacklight
+        - xcape
         - xdotool
         - xfce4-appfinder
         - xmobar
