@@ -98,11 +98,10 @@ myScratchPads :: [NamedScratchpad]
 myScratchPads = [ TS.taggedScratchpad (TS.TS { TS.tag = "primary Firefox", TS.cmd = "firefox", TS.hook = leftPanel 0.67 })
                 , NS "google music"    spawnGoogleMusic   findGoogleMusic   (leftPanel  0.67)
                 , NS "austinspace.slack"   spawnAustinSlack   findAustinSlack   (rightPanel  0.67)
-                , NS "startuprobot.slack"  spawnStartupRobotSlack findStartupRobotSlack (rightPanel 0.67)
-                , NS "pdxjs.slack"     spawnPdxjs         findPdxjs         (rightPanel 0.67)
+                , NS "nycjsorg.slack"  spawnNycJsSlack    findNycJsSlack    (rightPanel 0.67)
                 , NS "olioapps.slack"  spawnOlioApps      findOlioApps      (rightPanel 0.67)
+                , NS "pdxjs.slack"     spawnPdxjs         findPdxjs         (rightPanel 0.67)
                 , NS "poodle"          spawnPoodle        findPoodle        (rightPanel 0.67)
-                , NS "caribtech.slack" spawnCaribTech     findCaribTech     (rightPanel 0.67)
                 , NS "vanta.slack"     spawnVantaSlack    findVantaSlack    (rightPanel 0.67)
                 , NS "tox"             spawnTox           findTox           (rightPanel 0.67)
                 , NS "gitter"          spawnGitter        findGitter        (rightPanel 0.67)
@@ -119,20 +118,17 @@ myScratchPads = [ TS.taggedScratchpad (TS.TS { TS.tag = "primary Firefox", TS.cm
     spawnAustinSlack = chromeApp "https://theaustinspace.slack.com/"
     findAustinSlack = resource =? "theaustinspace.slack.com"
 
-    spawnStartupRobotSlack = chromeApp "https://startuprobot.slack.com/"
-    findStartupRobotSlack = resource =? "startuprobot.slack.com"
-
-    spawnPdxjs = chromeApp "https://pdxjs.slack.com/"
-    findPdxjs = resource =? "pdxjs.slack.com"
+    spawnNycJsSlack = chromeApp "https://nycjsorg.slack.com/"
+    findNycJsSlack = resource =? "nycjsorg.slack.com"
 
     spawnOlioApps = chromeApp "https://olioapps.slack.com/"
     findOlioApps = resource =? "olioapps.slack.com"
 
+    spawnPdxjs = chromeApp "https://pdxjs.slack.com/"
+    findPdxjs = resource =? "pdxjs.slack.com"
+
     spawnPoodle = "cd /home/jesse/projects/socialmail/poodle && npm start"
     findPoodle = className =? "poodle"
-
-    spawnCaribTech = chromeApp "https://caribbeantech.slack.com/"
-    findCaribTech = resource =? "caribbeantech.slack.com"
 
     spawnVantaSlack = chromeApp "https://vantahq.slack.com/"
     findVantaSlack = resource =? "vantahq.slack.com"
@@ -264,15 +260,14 @@ myKeys conf =
   , ("M-S-<Backspace>", clearUrgents)
 
   , ("M-, p", namedScratchpadAction myScratchPads "primary Firefox")
-  , ("M-, r", namedScratchpadAction myScratchPads "caribtech.slack")
   , ("M-, m", namedScratchpadAction myScratchPads "google music")
   , ("M-, a", namedScratchpadAction myScratchPads "austinspace.slack")
+  , ("M-, n", namedScratchpadAction myScratchPads "nycjsorg.slack")
   , ("M-, o", namedScratchpadAction myScratchPads "olioapps.slack")
   , ("M-, v", namedScratchpadAction myScratchPads "vanta.slack")
   , ("M-, x", namedScratchpadAction myScratchPads "tox")
   , ("M-, g", namedScratchpadAction myScratchPads "gitter")
   , ("M-, h", namedScratchpadAction myScratchPads "hangouts")
-  , ("M-, c", namedScratchpadAction myScratchPads "startuprobot.slack")
   , ("M-, w", namedScratchpadAction myScratchPads "whatsapp")
   , ("M-, l", namedScratchpadAction myScratchPads "rememberthemilk")
   , ("M-, s", namedScratchpadAction myScratchPads "signal")
