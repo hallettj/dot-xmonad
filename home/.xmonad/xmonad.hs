@@ -95,43 +95,36 @@ myManageHook = composeAll
     <+> namedScratchpadManageHook myScratchPads
 
 myScratchPads :: [NamedScratchpad]
-myScratchPads = [ TS.taggedScratchpad (TS.TS { TS.tag = "primary Firefox", TS.cmd = "firefox", TS.hook = leftPanel 0.67 })
-                , NS "google music"    spawnGoogleMusic   findGoogleMusic   (leftPanel  0.67)
-                , NS "austinspace.slack"   spawnAustinSlack   findAustinSlack   (rightPanel  0.67)
-                , NS "nycjsorg.slack"  spawnNycJsSlack    findNycJsSlack    (rightPanel 0.67)
-                , NS "olioapps.slack"  spawnOlioApps      findOlioApps      (rightPanel 0.67)
-                , NS "pdxjs.slack"     spawnPdxjs         findPdxjs         (rightPanel 0.67)
-                , NS "poodle"          spawnPoodle        findPoodle        (rightPanel 0.67)
-                , NS "vanta.slack"     spawnVantaSlack    findVantaSlack    (rightPanel 0.67)
-                , NS "tox"             spawnTox           findTox           (rightPanel 0.67)
-                , NS "gitter"          spawnGitter        findGitter        (rightPanel 0.67)
-                , NS "hangouts"        spawnHangouts      findHangouts      (rightPanel 0.67)
-                , NS "whatsapp"        spawnWhatsapp      findWhatsapp      (rightPanel 0.67)
-                , NS "rememberthemilk" spawnRTM           findRTM           (rightPanel 0.67)
-                , NS "signal"          spawnSignal        findSignal        (rightPanel 0.67)
-                , NS "enpass"          spawnEnpass        findEnpass        (leftPanel 0.67)
-                ]
+myScratchPads =
+  [ TS.taggedScratchpad (TS.TS { TS.tag = "primary Firefox", TS.cmd = "firefox", TS.hook = leftPanel 0.67 })
+  , slackCommunity "theaustinspace.slack.com"
+  , slackCommunity "nycjsorg.slack.com"
+  , slackCommunity "olioapps.slack.com"
+  , slackCommunity "originate.slack.com"
+  , slackCommunity "pdxjs.slack.com"
+  , slackCommunity "vantahq.slack.com"
+  , NS "google music"    spawnGoogleMusic   findGoogleMusic   (leftPanel  0.67)
+  , NS "poodle"          spawnPoodle        findPoodle        (rightPanel 0.67)
+  , NS "tox"             spawnTox           findTox           (rightPanel 0.67)
+  , NS "gitter"          spawnGitter        findGitter        (rightPanel 0.67)
+  , NS "hangouts"        spawnHangouts      findHangouts      (rightPanel 0.67)
+  , NS "whatsapp"        spawnWhatsapp      findWhatsapp      (rightPanel 0.67)
+  , NS "rememberthemilk" spawnRTM           findRTM           (rightPanel 0.67)
+  , NS "signal"          spawnSignal        findSignal        (rightPanel 0.67)
+  , NS "enpass"          spawnEnpass        findEnpass        (leftPanel 0.67)
+  ]
   where
+    slackCommunity domain = NS
+      domain
+      (chromeApp ("https://" ++ domain ++ "/"))
+      (resource =? domain)
+      (rightPanel 0.67)
+
     spawnGoogleMusic = chromeApp "https://play.google.com/music"
     findGoogleMusic = resource =? "play.google.com__music"
 
-    spawnAustinSlack = chromeApp "https://theaustinspace.slack.com/"
-    findAustinSlack = resource =? "theaustinspace.slack.com"
-
-    spawnNycJsSlack = chromeApp "https://nycjsorg.slack.com/"
-    findNycJsSlack = resource =? "nycjsorg.slack.com"
-
-    spawnOlioApps = chromeApp "https://olioapps.slack.com/"
-    findOlioApps = resource =? "olioapps.slack.com"
-
-    spawnPdxjs = chromeApp "https://pdxjs.slack.com/"
-    findPdxjs = resource =? "pdxjs.slack.com"
-
     spawnPoodle = "cd /home/jesse/projects/socialmail/poodle && npm start"
     findPoodle = className =? "poodle"
-
-    spawnVantaSlack = chromeApp "https://vantahq.slack.com/"
-    findVantaSlack = resource =? "vantahq.slack.com"
 
     spawnTox = "qtox"
     findTox = className =? "qTox"
@@ -261,10 +254,11 @@ myKeys conf =
 
   , ("M-, p", namedScratchpadAction myScratchPads "primary Firefox")
   , ("M-, m", namedScratchpadAction myScratchPads "google music")
-  , ("M-, a", namedScratchpadAction myScratchPads "austinspace.slack")
-  , ("M-, n", namedScratchpadAction myScratchPads "nycjsorg.slack")
-  , ("M-, o", namedScratchpadAction myScratchPads "olioapps.slack")
-  , ("M-, v", namedScratchpadAction myScratchPads "vanta.slack")
+  , ("M-, a", namedScratchpadAction myScratchPads "theaustinspace.slack.com")
+  , ("M-, n", namedScratchpadAction myScratchPads "nycjsorg.slack.com")
+  , ("M-, o", namedScratchpadAction myScratchPads "olioapps.slack.com")
+  , ("M-, c", namedScratchpadAction myScratchPads "originate.slack.com")
+  , ("M-, v", namedScratchpadAction myScratchPads "vantahq.slack.com")
   , ("M-, x", namedScratchpadAction myScratchPads "tox")
   , ("M-, g", namedScratchpadAction myScratchPads "gitter")
   , ("M-, h", namedScratchpadAction myScratchPads "hangouts")
