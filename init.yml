@@ -13,6 +13,8 @@
         - dzen2
         - cabal-install
         - feh
+        - fonts-firacode
+        - fonts-font-awesome
         - ghc
         - kitty
         - murrine-themes
