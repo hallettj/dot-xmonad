@@ -44,11 +44,3 @@
       git: repo=git@github.com:Lokaltog/powerline-fonts.git
            dest=~/.fonts/powerline-fonts
            update=no
-
-    - file: path=/usr/local/lib/urxvt state=directory
-      become: yes
-    - name: install extensions for urxvt
-      git: repo=https://github.com/muennich/urxvt-perls.git
-           dest=/usr/local/lib/urxvt/perl
-           update=no
-      become: yes
