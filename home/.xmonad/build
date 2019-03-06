@@ -4,6 +4,6 @@
 
 set -e
 
-stack build :my-xmonad --verbosity error
-stack install :my-xmonad --local-bin-path bin/ --verbosity error
+stack build :my-xmonad
+stack install :my-xmonad --local-bin-path bin/
 mv bin/my-xmonad "$1"
