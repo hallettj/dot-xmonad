@@ -35,6 +35,7 @@
 
         # Dependencies for statnot
         - python-dbus
+        - python-gobject
 
     - name: compile xmonad config
       shell: xmonad --recompile
