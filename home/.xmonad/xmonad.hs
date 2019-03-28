@@ -104,6 +104,7 @@ myScratchPads =
   , slackCommunity "pdxjs.slack.com"
   , slackCommunity "vantahq.slack.com"
   , NS "google music"    spawnGoogleMusic   findGoogleMusic   (leftPanel  0.67)
+  , NS "keybase"         spawnKeybase       findKeybase       (rightPanel 0.67)
   , NS "poodle"          spawnPoodle        findPoodle        (rightPanel 0.67)
   , NS "tox"             spawnTox           findTox           (rightPanel 0.67)
   , NS "gitter"          spawnGitter        findGitter        (rightPanel 0.67)
@@ -122,6 +123,9 @@ myScratchPads =
 
     spawnGoogleMusic = chromeApp "https://play.google.com/music"
     findGoogleMusic = resource =? "play.google.com__music"
+
+    spawnKeybase = undefined
+    findKeybase = className =? "Keybase"
 
     spawnPoodle = "cd /home/jesse/projects/socialmail/poodle && npm start"
     findPoodle = className =? "poodle"
@@ -266,6 +270,7 @@ myKeys conf =
   , ("M-, l", namedScratchpadAction myScratchPads "rememberthemilk")
   , ("M-, s", namedScratchpadAction myScratchPads "signal")
   , ("M-, e", namedScratchpadAction myScratchPads "enpass")
+  , ("M-, k", namedScratchpadAction myScratchPads "keybase")
   , ("M-p", spawn "/opt/enpass/Enpass showassistant")
 
   -- Arranging windows
