@@ -214,7 +214,7 @@ xmobarUrgentFG = Colors.base03
 xmobarUrgentBG = Colors.yellow
 
 -- Width of the window border in pixels.
-myBorderWidth = 2
+myBorderWidth = 3
 
 myFont = "xft:monospace:size=12:antialias=true"
 
