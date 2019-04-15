@@ -14,6 +14,7 @@ import Graphics.X11.ExtraTypes.XF86 (xF86XK_MonBrightnessDown, xF86XK_MonBrightn
 import System.IO
 import System.Exit
 import XMonad
+import qualified XMonad.Actions.Navigation2D as DD
 import XMonad.Actions.CycleWS (nextScreen, swapNextScreen, toggleWS')
 import XMonad.Actions.TagWindows (addTag, tagPrompt)
 import XMonad.Hooks.DynamicLog
@@ -29,7 +30,6 @@ import XMonad.Layout.NoBorders
 import XMonad.Layout.Renamed (Rename(..), renamed)
 import XMonad.Layout.ResizableTile (MirrorResize(MirrorExpand, MirrorShrink), ResizableTall(..))
 import XMonad.Layout.ThreeColumns (ThreeCol(ThreeColMid))
-import XMonad.Layout.WindowNavigation (Navigate(Go), Direction2D(U, D, L, R), windowNavigation)
 import qualified XMonad.Prompt as Prompt
 import XMonad.Util.Run (runProcessWithInput, spawnPipe)
 import XMonad.Util.EZConfig (mkKeymap)
@@ -181,7 +181,6 @@ myLayout = layoutHintsToCenter             $
            smartBorders                    $
            mkToggle (SFULL ?? FULL ?? EOT) $
            avoidStruts                     $
-           windowNavigation                $
            split ||| ThreeColMid 1 (1/60) (20/60)
 
 split = renamed [Replace "tall"] $
@@ -297,10 +296,6 @@ myKeys conf =
   , ("M-s", nextScreen)
   , ("M-S-s", swapNextScreen)
 
-  -- mouse scroll emulation
-  , ("M-j", sendScrollDown)
-  , ("M-k", sendScrollUp)
-
   -- prompts
   , ("M-S-f", WP.fuzzyWindowPrompt promptConfig WP.Goto WP.matchTitle WP.wsWindows)
   , ("M-b", WP.fuzzyWindowPrompt promptConfig WP.Bring WP.matchTitleAndTags WP.allWindows)
@@ -309,7 +304,7 @@ myKeys conf =
 
 vicfryzelKeys conf@(XConfig {modMask}) = M.fromList $
   -- Lock the screen using xscreensaver.
-  [ ((modMask .|. shiftMask, xK_l),
+  [ ((modMask .|. controlMask .|. shiftMask, xK_l),
      spawn "xset s activate")
 
   -- Take a screenshot in select mode.
@@ -394,31 +389,6 @@ vicfryzelKeys conf@(XConfig {modMask}) = M.fromList $
      windows W.focusUp)
   , ((modMask .|. shiftMask .|. mod5Mask, xK_Tab),
      windows W.focusUp)
-
-  , ((modMask, xK_period),
-     sendMessage $ Go U)
-  , ((modMask, xK_e),
-     sendMessage $ Go D)
-  , ((modMask, xK_o),
-     sendMessage $ Go L)
-  , ((modMask, xK_u),
-     sendMessage $ Go R)
-
-  -- Swap the focused window with the next window.
-  , ((modMask .|. shiftMask, xK_j),
-     windows W.swapDown  )
-
-  -- Swap the focused window with the previous window.
-  , ((modMask .|. shiftMask, xK_k),
-     windows W.swapUp    )
-
-  -- Shrink the master area.
-  , ((modMask .|. controlMask, xK_h),
-     sendMessage Shrink)
-
-  -- Expand the master area.
-  , ((modMask .|. controlMask, xK_l),
-     sendMessage Expand)
 
   -- Push window back into tiling.
   , ((modMask .|. controlMask, xK_t),
@@ -508,31 +478,39 @@ myStartupHook = do
 main :: IO ()
 main = do
   xmproc <- spawnPipe "xmobar ~/.xmonad/xmobar.hs"
-  xmonad $ docks $ withUrgencyHook NoUrgencyHook $ def {
-    -- simple stuff
-    terminal           = myTerminal,
-    focusFollowsMouse  = False,
-    clickJustFocuses   = False,
-    borderWidth        = myBorderWidth,
-    modMask            = myModMask,
-    workspaces         = myWorkspaces,
-    normalBorderColor  = myNormalBorderColor,
-    focusedBorderColor = myFocusedBorderColor,
+  xmonad
+    $ docks
+    $ withUrgencyHook NoUrgencyHook
+    $ DD.navigation2DP def
+                       ("k", "h", "j", "l")
+                       [("M-", DD.windowGo),
+                        ("M-S-", DD.windowSwap)]
+                       False
+    $ def {
+      -- simple stuff
+      terminal           = myTerminal,
+      focusFollowsMouse  = False,
+      clickJustFocuses   = False,
+      borderWidth        = myBorderWidth,
+      modMask            = myModMask,
+      workspaces         = myWorkspaces,
+      normalBorderColor  = myNormalBorderColor,
+      focusedBorderColor = myFocusedBorderColor,
 
-    -- key bindings
-    keys               = \c -> vicfryzelKeys c `M.union` mkKeymap c (myKeys c),
-    mouseBindings      = myMouseBindings,
+      -- key bindings
+      keys               = \c -> vicfryzelKeys c `M.union` mkKeymap c (myKeys c),
+      mouseBindings      = myMouseBindings,
 
-    -- hooks, layouts
-    layoutHook         = myLayout,
-    manageHook         = myManageHook,
-    handleEventHook    = mconcat [ handleEventHook def
-                                 , fullscreenEventHook
-                                 -- , makeFirefoxFullScreen (return True)
-                                 ],
-    logHook            = myLogHook xmproc,
-    startupHook        = myStartupHook
-  }
+      -- hooks, layouts
+      layoutHook         = myLayout,
+      manageHook         = myManageHook,
+      handleEventHook    = mconcat [ handleEventHook def
+                                   , fullscreenEventHook
+                                   -- , makeFirefoxFullScreen (return True)
+                                   ],
+      logHook            = myLogHook xmproc,
+      startupHook        = myStartupHook
+      }
 
 
 ------------------------------------------------------------------------
@@ -574,12 +552,6 @@ withActiveNamedScratchpad f confs names =
 
 sendKeyPress :: String -> Window -> X ()
 sendKeyPress key win = spawn $ "xdotool key --window " ++ show win ++ " " ++ key
-
-sendScrollDown :: X ()
-sendScrollDown = spawn $ "xdotool getwindowfocus --repeat 5 --window '%1' click 5"
-
-sendScrollUp :: X ()
-sendScrollUp = spawn $ "xdotool getwindowfocus --repeat 5 --window '%1' click 4"
 
 -- generalized from someNamedScratchpadAction in XMonad.Util.NamedScratchpad
 findActiveNamedScratchpad :: NamedScratchpads
