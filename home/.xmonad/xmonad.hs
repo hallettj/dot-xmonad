@@ -16,6 +16,7 @@ import System.Exit
 import XMonad
 import qualified XMonad.Actions.Navigation2D as DD
 import XMonad.Actions.CycleWS (nextScreen, swapNextScreen, toggleWS')
+import qualified XMonad.Actions.DynamicWorkspaces as DWS
 import XMonad.Actions.TagWindows (addTag, tagPrompt)
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops (fullscreenEventHook)
@@ -63,7 +64,7 @@ myTerminal = "/usr/bin/kitty"
 -- The default number of workspaces (virtual screens) and their names.
 --
 myWorkspaces :: [String]
-myWorkspaces = ["1:web","2:work","3:comms","4:terminal","5:vim"] ++ map show ([6..9] :: [Int])
+myWorkspaces = ["home"]
 
 
 ------------------------------------------------------------------------
@@ -296,15 +297,20 @@ myKeys conf =
   , ("M-s", nextScreen)
   , ("M-S-s", swapNextScreen)
 
+  -- dynamic workspaces
+  , ("M-w", DWS.selectWorkspace promptConfig)
+  , ("M-C-S-w", DWS.removeWorkspace)
+
   -- prompts
-  , ("M-S-f", WP.fuzzyWindowPrompt promptConfig WP.Goto WP.matchTitle WP.wsWindows)
+  , ("M-g", WP.fuzzyWindowPrompt promptConfig WP.Goto WP.matchTitle WP.allWindows)
   , ("M-b", WP.fuzzyWindowPrompt promptConfig WP.Bring WP.matchTitleAndTags WP.allWindows)
+  , ("M-S-w", DWS.withWorkspace promptConfig (\ws -> windows (W.shift ws)))
   , ("M-, S-t", tagPrompt promptConfig (\s -> withFocused (addTag s)))
   ]
 
 vicfryzelKeys conf@(XConfig {modMask}) = M.fromList $
   -- Lock the screen using xscreensaver.
-  [ ((modMask .|. controlMask .|. shiftMask, xK_l),
+  [ ((modMask .|. controlMask, xK_l),
      spawn "xset s activate")
 
   -- Take a screenshot in select mode.
@@ -394,31 +400,6 @@ vicfryzelKeys conf@(XConfig {modMask}) = M.fromList $
   , ((modMask .|. controlMask, xK_t),
      withFocused $ windows . W.sink)
   ]
-  ++
-
-  -- mod-[1..9], Switch to workspace N
-  -- mod-shift-[1..9], Move client to workspace N
-  [((m .|. modMask, k), windows $ f i)
-      | (i, k) <- zip (XMonad.workspaces conf) emulatedNumpadKeys
-      , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
-  -- ++
-
-  -- -- mod-{w,e,r}, Switch to physical/Xinerama screens 1, 2, or 3
-  -- -- mod-shift-{w,e,r}, Move client to screen 1, 2, or 3
-  -- [((m .|. modMask, key), screenWorkspace sc >>= flip whenJust (windows . f))
-  --     | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
-  --     , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
-
-emulatedNumpadKeys :: [KeySym]
-emulatedNumpadKeys = [ xK_m
-                     , xK_w
-                     , xK_v
-                     , xK_h
-                     , xK_t
-                     , xK_n
-                     , xK_g
-                     , xK_c
-                     , xK_r ]
 
 ------------------------------------------------------------------------
 -- Mouse bindings
