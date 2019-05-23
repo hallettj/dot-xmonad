@@ -106,7 +106,7 @@ myScratchPads =
   , slackCommunity "vantahq.slack.com"
   , NS "google music"    spawnGoogleMusic   findGoogleMusic   (leftPanel  0.67)
   , NS "keybase"         spawnKeybase       findKeybase       (rightPanel 0.67)
-  , NS "poodle"          spawnPoodle        findPoodle        (rightPanel 0.67)
+  , NS "poodle"          spawnPoodle        findPoodle        (leftPanel 0.67)
   , NS "tox"             spawnTox           findTox           (rightPanel 0.67)
   , NS "gitter"          spawnGitter        findGitter        (rightPanel 0.67)
   , NS "hangouts"        spawnHangouts      findHangouts      (rightPanel 0.67)
@@ -129,7 +129,7 @@ myScratchPads =
     findKeybase = className =? "Keybase"
 
     spawnPoodle = "cd /home/jesse/projects/socialmail/poodle && npm start"
-    findPoodle = className =? "poodle"
+    findPoodle = title =? "Poodle"
 
     spawnTox = "qtox"
     findTox = className =? "qTox"
@@ -256,7 +256,7 @@ myKeys conf =
   , ("M-<Backspace>", focusUrgent)
   , ("M-S-<Backspace>", clearUrgents)
 
-  , ("M-, p", namedScratchpadAction myScratchPads "primary Firefox")
+  , ("M-, p", namedScratchpadAction myScratchPads "poodle")
   , ("M-, m", namedScratchpadAction myScratchPads "google music")
   , ("M-, a", namedScratchpadAction myScratchPads "theaustinspace.slack.com")
   , ("M-, n", namedScratchpadAction myScratchPads "nycjsorg.slack.com")
