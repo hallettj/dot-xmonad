@@ -2,7 +2,7 @@
 # Script to launch trayer in the correct position next to xmobar.
 
 icon_size=24
-screen_width=$(xrandr | fgrep '*' | awk -F'[ x]+' '{print $2}')
+screen_width=$(xrandr | fgrep '*' -m1 | awk -F'[ x]+' '{print $2}')
 start_position=$(expr $screen_width - $icon_size)
 
 stalonetray -i $icon_size --window-type normal --geometry 1x1+$start_position \
