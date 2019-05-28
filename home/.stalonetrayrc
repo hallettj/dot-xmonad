@@ -1,0 +1,10 @@
+decorations none
+transparent false
+dockapp_mode none
+background "#002b36"
+kludges force_icons_size
+sticky true
+window_strut none
+window_type dock
+window_layer bottom
+skip_taskbar true
