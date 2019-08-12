@@ -29,8 +29,8 @@ xkb_symbols "lsgt_control" {
 };
 
 partial modifier_keys
-xkb_symbols "rwin_lvl3_latch" {
-    replace key <RWIN> { [ ISO_Level3_Latch, ISO_Level3_Latch, ISO_Level3_Latch ] };
+xkb_symbols "lwin_lvl3_latch" {
+    replace key <LWIN> { [ ISO_Level3_Latch, ISO_Level3_Latch, ISO_Level3_Latch ] };
     include "level3(modifier_mapping)"
 };
 
