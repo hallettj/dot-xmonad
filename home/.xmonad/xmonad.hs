@@ -124,7 +124,7 @@ myScratchPads =
     spawnKeybase = undefined
     findKeybase = className =? "Keybase"
 
-    spawnPoodle = "cd /home/jesse/projects/socialmail/poodle && npm start"
+    spawnPoodle = "poodle"
     findPoodle = title =? "Poodle"
 
     spawnTox = "qtox"
