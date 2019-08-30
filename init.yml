@@ -16,6 +16,7 @@
         - fonts-firacode
         - fonts-font-awesome
         - ghc
+        - haskell-stack
         - kitty
         - murrine-themes
         - network-manager
