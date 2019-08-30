@@ -33,6 +33,7 @@
         - xmobar
         - xscreensaver
         - xss-lock
+        - xsel
 
         # Dependencies for statnot
         - python-dbus
