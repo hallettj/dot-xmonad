@@ -22,17 +22,13 @@ function default_sink {
 }
 
 function current_volume {
-  local sink="$1"
-  # From https://unix.stackexchange.com/a/230533
-  pactl list sinks | grep '^[[:space:]]Volume:' | \
-    head -n $(( $sink + 1 )) | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,'
+  pulsemixer --get-volume | cut -f1 -d' '
 }
 
 function change_volumes {
   local sinks="$1"
-  for sink in $(running_sinks); do
+  for sink in $sinks; do
     pactl set-sink-volume "$sink" $change
-    current_volume "$sink"
   done
 }
 
@@ -41,4 +37,5 @@ if [ -z "$sinks" ]; then
   sinks=$(default_sink)
 fi
 
-change_volumes "$sinks" | tail -n1
+change_volumes "$sinks"
+current_volume "$sink"
