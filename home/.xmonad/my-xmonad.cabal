@@ -15,6 +15,7 @@ executable my-xmonad
                      , Custom.Prompt.FuzzyWindow
                      , XMonad.Layout.Flip
                      , XMonad.Util.FirefoxScratchpad
+                     , XMonad.Util.Run
   build-depends:       base
                      , containers
                      , data-default
