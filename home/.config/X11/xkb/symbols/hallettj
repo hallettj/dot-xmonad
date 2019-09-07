@@ -35,6 +35,12 @@ xkb_symbols "lwin_lvl3_latch" {
 };
 
 partial modifier_keys
+xkb_symbols "rwin_lvl3_latch" {
+    replace key <RWIN> { [ ISO_Level3_Latch, ISO_Level3_Latch, ISO_Level3_Latch ] };
+    include "level3(modifier_mapping)"
+};
+
+partial modifier_keys
 xkb_symbols "return_ctrl_r" {
     key <RTRN> { [ Control_R ] };
     modifier_map Control { Control_L, Control_R, Return };

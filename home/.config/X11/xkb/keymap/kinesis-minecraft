@@ -1,0 +1,36 @@
+xkb_keymap {
+    xkb_keycodes  { include "evdev+aliases(qwerty)" };
+    xkb_types     { include "complete" };
+    xkb_compat    {
+        include "complete"
+
+        indicator "Caps Lock" {
+            !allowExplicit;
+            whichModState= locked;
+            modifiers= Shift;
+        };
+        indicator "Num Lock" {
+            !allowExplicit;
+            whichModState= locked;
+            modifiers= LevelThree;
+        };
+    };
+    xkb_symbols   {
+        include "pc"
+        include "us(dvorak)"
+        include "inet(evdev)"
+
+        include "capslock(ctrl_modifier)"
+        include "compose(sclk)"
+        include "terminate(ctrl_alt_bksp)"
+
+        //include "hallettj(invert_number_row)"
+        //include "hallettj(lsgt_lvl3_latch)"
+        include "hallettj(lsgt_control)"
+        include "hallettj(rwin_lvl3_latch)"
+        //include "hallettj(sticky_shift)"
+        include "hallettj(virtual_movement)"
+        include "hallettj(virtual_numpad)"
+    };
+    xkb_geometry  { include "kinesis(model100)" };
+};
