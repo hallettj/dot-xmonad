@@ -83,8 +83,6 @@ myWorkspaces = ["home"]
 myManageHook :: Query (Endo WindowSet)
 myManageHook = composeAll
     [ resource  =? "desktop_window" --> doIgnore
-    , className =? "Steam"          --> doFloat
-    , className =? "steam"          --> doFullFloat  -- bigpicture-mode
     , className =? "Gimp"           --> doFloat
     , isDialog                      --> doCenterFloat
     , isFullscreen --> (doF W.focusDown <+> doFullFloat)
