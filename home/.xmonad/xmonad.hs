@@ -92,19 +92,10 @@ myManageHook = composeAll
 myScratchPads :: [NamedScratchpad]
 myScratchPads =
   [ TS.taggedScratchpad (TS.TS { TS.tag = "primary Firefox", TS.cmd = "firefox", TS.hook = leftPanel 0.67 })
-  , slackCommunity "theaustinspace.slack.com"
-  , slackCommunity "nycjsorg.slack.com"
-  , slackCommunity "olioapps.slack.com"
-  , slackCommunity "originate.slack.com"
-  , slackCommunity "pdxjs.slack.com"
-  , slackCommunity "vantahq.slack.com"
   , NS "slack"           spawnSlack         findSlack         (rightPanel 0.67)
   , NS "google music"    spawnGoogleMusic   findGoogleMusic   (leftPanel  0.67)
   , NS "keybase"         spawnKeybase       findKeybase       (rightPanel 0.67)
   , NS "poodle"          spawnPoodle        findPoodle        (leftPanel 0.67)
-  , NS "tox"             spawnTox           findTox           (rightPanel 0.67)
-  , NS "gitter"          spawnGitter        findGitter        (rightPanel 0.67)
-  , NS "hangouts"        spawnHangouts      findHangouts      (rightPanel 0.67)
   , NS "whatsapp"        spawnWhatsapp      findWhatsapp      (rightPanel 0.67)
   , NS "rememberthemilk" spawnRTM           findRTM           (rightPanel 0.67)
   , NS "signal"          spawnSignal        findSignal        (rightPanel 0.67)
@@ -114,12 +105,6 @@ myScratchPads =
     spawnSlack = "slack"
     findSlack = className =? "Slack"
 
-    slackCommunity domain = NS
-      domain
-      (chromeApp ("https://" ++ domain ++ "/"))
-      (resource =? domain)
-      (rightPanel 0.67)
-
     spawnGoogleMusic = chromeApp "https://play.google.com/music"
     findGoogleMusic = resource =? "play.google.com__music"
 
@@ -128,15 +113,6 @@ myScratchPads =
 
     spawnPoodle = "poodle"
     findPoodle = title =? "Poodle"
-
-    spawnTox = "qtox"
-    findTox = className =? "qTox"
-
-    spawnGitter = "/opt/Gitter/linux64/Gitter"
-    findGitter = title =? "Gitter"
-
-    spawnHangouts = chromeApp' "knipolnnllmklapflnccelgolnpehhpl"
-    findHangouts = title =? "Hangouts - hallettj@gmail.com"
 
     spawnWhatsapp = chromeApp "https://web.whatsapp.com/"
     findWhatsapp = resource =? "web.whatsapp.com"
@@ -151,7 +127,6 @@ myScratchPads =
     findEnpass = title =? "Enpass"
 
     chromeApp  = (("google-chrome --user-data-dir=" ++ dataDir ++ " --app=") ++)
-    chromeApp' = (("google-chrome --user-data-dir=" ++ dataDir ++ " --app-id=") ++)
     dataDir   = "$HOME/.config/google-chrome-apps"
 
     rightPanel w = customFloating $ W.RationalRect l t w h
@@ -256,14 +231,7 @@ myKeys conf =
 
   , ("M-, p", namedScratchpadAction myScratchPads "poodle")
   , ("M-, m", namedScratchpadAction myScratchPads "google music")
-  , ("M-, a", namedScratchpadAction myScratchPads "theaustinspace.slack.com")
-  , ("M-, n", namedScratchpadAction myScratchPads "nycjsorg.slack.com")
-  , ("M-, o", namedScratchpadAction myScratchPads "olioapps.slack.com")
   , ("M-, c", namedScratchpadAction myScratchPads "slack")
-  , ("M-, v", namedScratchpadAction myScratchPads "vantahq.slack.com")
-  , ("M-, x", namedScratchpadAction myScratchPads "tox")
-  , ("M-, g", namedScratchpadAction myScratchPads "gitter")
-  , ("M-, h", namedScratchpadAction myScratchPads "hangouts")
   , ("M-, w", namedScratchpadAction myScratchPads "whatsapp")
   , ("M-, l", namedScratchpadAction myScratchPads "rememberthemilk")
   , ("M-, s", namedScratchpadAction myScratchPads "signal")
