@@ -98,6 +98,7 @@ myScratchPads =
   , slackCommunity "originate.slack.com"
   , slackCommunity "pdxjs.slack.com"
   , slackCommunity "vantahq.slack.com"
+  , NS "slack"           spawnSlack         findSlack         (rightPanel 0.67)
   , NS "google music"    spawnGoogleMusic   findGoogleMusic   (leftPanel  0.67)
   , NS "keybase"         spawnKeybase       findKeybase       (rightPanel 0.67)
   , NS "poodle"          spawnPoodle        findPoodle        (leftPanel 0.67)
@@ -110,6 +111,9 @@ myScratchPads =
   , NS "enpass"          spawnEnpass        findEnpass        (leftPanel 0.67)
   ]
   where
+    spawnSlack = "slack"
+    findSlack = className =? "Slack"
+
     slackCommunity domain = NS
       domain
       (chromeApp ("https://" ++ domain ++ "/"))
@@ -255,7 +259,7 @@ myKeys conf =
   , ("M-, a", namedScratchpadAction myScratchPads "theaustinspace.slack.com")
   , ("M-, n", namedScratchpadAction myScratchPads "nycjsorg.slack.com")
   , ("M-, o", namedScratchpadAction myScratchPads "olioapps.slack.com")
-  , ("M-, c", namedScratchpadAction myScratchPads "originate.slack.com")
+  , ("M-, c", namedScratchpadAction myScratchPads "slack")
   , ("M-, v", namedScratchpadAction myScratchPads "vantahq.slack.com")
   , ("M-, x", namedScratchpadAction myScratchPads "tox")
   , ("M-, g", namedScratchpadAction myScratchPads "gitter")
