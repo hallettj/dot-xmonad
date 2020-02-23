@@ -14,8 +14,6 @@ executable my-xmonad
   other-modules:       Custom.Colors
                      , Custom.Prompt.FuzzyWindow
                      , XMonad.Layout.Flip
-                     , XMonad.Util.FirefoxScratchpad
-                     , XMonad.Util.Run
   build-depends:       base
                      , containers
                      , data-default

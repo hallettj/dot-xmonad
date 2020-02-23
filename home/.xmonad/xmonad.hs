@@ -47,8 +47,6 @@ import Data.Monoid (Endo, mconcat)
 import Control.Applicative ((<$>))
 import Control.Monad (filterM, mapM_, sequence, void)
 
-import qualified XMonad.Util.FirefoxScratchpad as TS
-
 ------------------------------------------------------------------------
 -- Terminal
 -- The preferred terminal program, which is used in a binding below and by
@@ -91,8 +89,7 @@ myManageHook = composeAll
 
 myScratchPads :: [NamedScratchpad]
 myScratchPads =
-  [ TS.taggedScratchpad (TS.TS { TS.tag = "primary Firefox", TS.cmd = "firefox", TS.hook = leftPanel 0.67 })
-  , NS "slack"           spawnSlack         findSlack         (rightPanel 0.67)
+  [ NS "slack"           spawnSlack         findSlack         (rightPanel 0.67)
   , NS "google music"    spawnGoogleMusic   findGoogleMusic   (leftPanel  0.67)
   , NS "keybase"         spawnKeybase       findKeybase       (rightPanel 0.67)
   , NS "poodle"          spawnPoodle        findPoodle        (leftPanel 0.67)
@@ -453,7 +450,6 @@ main = do
       manageHook         = myManageHook,
       handleEventHook    = mconcat [ handleEventHook def
                                    , fullscreenEventHook
-                                   -- , makeFirefoxFullScreen (return True)
                                    ],
       logHook            = myLogHook xmproc,
       startupHook        = myStartupHook
