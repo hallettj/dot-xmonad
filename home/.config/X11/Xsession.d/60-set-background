@@ -1,3 +1,5 @@
 # Sets desktop background color
-feh --bg-scale "$HOME/Dropbox/wallpapers/EM35_The_Snake_Queen_4K_Wallpaper1.jpg" \
-  || xsetroot -solid "#002b36"
+xsetroot -solid "#002b36"
+
+# feh --bg-scale "$HOME/Dropbox/wallpapers/EM35_The_Snake_Queen_4K_Wallpaper1.jpg" \
+#   || xsetroot -solid "#002b36"
