@@ -1,6 +1,6 @@
 CTRL='Control_L=Escape'
 CTRL_R='Control_R=Escape'
-ALT='Alt_L=F12;Alt_R=F12'
+ALT='Alt_L=Control_L|B;Alt_R=Control_L|B'
 RETURN='Control_R=Return'
 
 function ergodox_connected {
@@ -28,18 +28,16 @@ function stop_xcape {
   killall xcape &> /dev/null || true
 }
 
-if [ -n "$(ergodox_connected)" ]; then
+if [ -n "$(kinesis_connected)" ]; then
   stop_xcape
-elif [ -n "$(kinesis_connected)" ]; then
-  stop_xcape
-  start_xcape "$CTRL;$CTRL_R;$ALT"
+  start_xcape "$CTRL;$CTRL_R"
 elif [ -n "$(kinesis2_connected)" ]; then
   stop_xcape
-  start_xcape "$CTRL;$CTRL_R;$ALT"
+  start_xcape "$CTRL;$CTRL_R"
 elif [ -n "$(keyboardio_connected)" ]; then
   stop_xcape
-  start_xcape "$CTRL;$CTRL_R;$ALT"
+  start_xcape "$CTRL;$CTRL_R"
 else
   stop_xcape
-  start_xcape "$CTRL;$ALT"
+  start_xcape "$CTRL"
 fi
