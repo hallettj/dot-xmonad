@@ -102,8 +102,8 @@ myScratchPads =
     spawnSlack = "slack"
     findSlack = className =? "Slack"
 
-    spawnGoogleMusic = chromeApp "https://play.google.com/music"
-    findGoogleMusic = resource =? "play.google.com__music"
+    spawnGoogleMusic = "google-play-music-desktop-player"
+    findGoogleMusic = className =? "Google Play Music Desktop Player"
 
     spawnKeybase = undefined
     findKeybase = className =? "Keybase"
