@@ -1,0 +1,8 @@
+# Use neovide as the default editor in GUI sessions, nvim otherwise.
+if [ -n "$DISPLAY" ]; then
+  EDITOR=neovide
+else
+  EDITOR=nvim
+fi
+
+VISUAL=$EDITOR
