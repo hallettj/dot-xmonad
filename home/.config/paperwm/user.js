@@ -26,7 +26,7 @@ function init() {
   Examples.keybindings.moveSpaceToMonitor();
 
   // Place certain windows in the scratch layer automatically
-  const scratchWmClasses = ["explorer.exe", "Slack", "Spotify"];
+  const scratchWmClasses = ["Slack", "Spotify"];
   for (const wm_class of scratchWmClasses) {
     Tiling.defwinprop({
       wm_class,
