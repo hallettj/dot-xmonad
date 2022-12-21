@@ -163,4 +163,5 @@ include "%L"
 
 ## Emoji
 <Multi_key> <C> <C> : "✔" U2714
+<Multi_key> <X> <X> : "❌" U2714
 <Multi_key> <u> <p> : "☝️" U261D
